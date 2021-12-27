@@ -10,10 +10,16 @@ namespace ButiEngineEditor
 {
     public partial class App : Application
     {
+        private static string[] argments;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             DispatcherHelper.UIDispatcher = Dispatcher;
+            argments = e.Args;
             //AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+        }
+        public static string[] GetArgments()
+        {
+            return argments;
         }
 
         // Application level error handling

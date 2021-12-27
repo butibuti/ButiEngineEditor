@@ -14,9 +14,10 @@
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks" 
         xmlns:i1="http://schemas.microsoft.com/xaml/behaviors"
-    Title="ButiEngine" Height="480" Width="640"
+    Title="ButiEngine" Width="720" Height="480" 
+        
         NonActiveWindowTitleBrush="White"
-        BorderThickness="1" Foreground="Black" Background="White" SaveWindowPosition="True" ShowDialogsOverTitleBar="True" ShowMinButton="True" ShowMaxRestoreButton="True" WindowTitleBrush="#00000000"
+        BorderThickness="1" Foreground="Black"  Background="White" SaveWindowPosition="True" ShowDialogsOverTitleBar="True" ShowMinButton="True" ShowMaxRestoreButton="True" WindowTitleBrush="#00000000"
         >
 
     <Window.DataContext>
@@ -34,8 +35,12 @@
             <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
         </i1:EventTrigger>
 
+        <i1:EventTrigger EventName="Loaded">
+            <i1:CallMethodAction MethodName="LayoutLoad" />
+        </i1:EventTrigger>
         <!--Windowが閉じたタイミングでViewModelのDisposeメソッドが呼ばれます-->
         <i1:EventTrigger EventName="Closed">
+            <i1:CallMethodAction MethodName="LayoutSave" />
             <l:DataContextDisposeAction/>
         </i1:EventTrigger>
 
@@ -53,12 +58,9 @@
 
         <!-- ======== メニュー ======== -->
         <Menu Grid.Row="0">
-            <MenuItem Header="File" Background="#FFCCCEF5">
-                <MenuItem Header="New" Background="#FF6167EE" />
-            </MenuItem>
-            <Button ToolTip="3dObj" Command="{Binding ObjClick}">
-                <icon:PackIconModern Kind="_3dObj"/>
-            </Button>
+            <MenuItem Header="Save" Background="#FFCCCEF5" Click="LayoutSave_Click"/>
+            <MenuItem Header="Load" Background="#FFCCCEF5" Click="LayoutLoad_Click"/>
+
         </Menu>
         <!-- ======== ドッキングエリア ======== -->
         <avalonDock:DockingManager 
@@ -74,12 +76,14 @@
                     <v:LayoutItemTypedStyle DataType="{x:Type vmDocuments:DocumentViewModelBase}">
                         <Style TargetType="{x:Type avalonDock:LayoutItem}">
                             <Setter Property="Title" Value="{Binding Model.Title}" />
+                            <Setter Property="ContentId" Value="{Binding Model.ContentId}"/>
                         </Style>
                     </v:LayoutItemTypedStyle>
                     <!-- Pane のスタイル -->
                     <v:LayoutItemTypedStyle DataType="{x:Type vmPanes:PaneViewModelBase}">
                         <Style TargetType="{x:Type avalonDock:LayoutAnchorableItem}">
                             <Setter Property="Title" Value="{Binding Model.Title}"/>
+                            <Setter Property="ContentId" Value="{Binding Model.ContentId}"/>
                         </Style>
                     </v:LayoutItemTypedStyle>
                 </v:LayoutItemContainerStyleSelector>
@@ -104,17 +108,17 @@
                     <DataTemplate DataType="{x:Type vmPanes:OutputPaneViewModel}">
                         <vPanes:OutputPane Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" />
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type vmPanes:SceneControllerViewModel}">
+                        <vPanes:SceneControllerPane/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vmPanes:FPSMonitorViewModel}">
+                        <vPanes:FPSMonitorPane/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vmPanes:SceneViewerViewModel}">
+                        <vPanes:SceneViewerPane/>
+                    </DataTemplate>
                 </v:LayoutItemTemplateSelector>
             </avalonDock:DockingManager.LayoutItemTemplateSelector>
-
-            <!-- ======== デフォルトレイアウト ======== -->
-
-            <!-- ContentId で識別される ViewModel を持つ LayoutAnchorable を、TargetLayoutName で識別される LayoutAnchorablePane に接続する -->
-            <avalonDock:DockingManager.LayoutUpdateStrategy>
-                <v:LayoutInitializer>
-                    <v:LayoutInsertTarget ContentId="ErrorListPaneViewModel" TargetLayoutName="BottomSideArea" />
-                </v:LayoutInitializer>
-            </avalonDock:DockingManager.LayoutUpdateStrategy>
 
 
         </avalonDock:DockingManager>

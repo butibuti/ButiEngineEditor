@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ButiEngineEditor": {
+      "commandName": "Project",
+      "commandLineArgs": "D:\\K019G1120\\Projects\\ButiEngine\\ButiEngine_User\\SampleProject.beproj"
+    }
+  }
+}

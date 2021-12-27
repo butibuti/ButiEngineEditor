@@ -50,7 +50,7 @@ namespace ButiEngineEditor.Views
 
             var target = Items.Find((t) => t.ContentId == contentId);
             if (target == null) return false;
-
+            anchorableToShow.ContentId = target.ContentId;
             // 選択した名前の領域を取得し、そこにドッキングウィンドウを追加する
             var pane = layout.Descendents().OfType<LayoutAnchorablePane>().FirstOrDefault(d => d.Name == target.TargetLayoutName);
             if (pane != null)

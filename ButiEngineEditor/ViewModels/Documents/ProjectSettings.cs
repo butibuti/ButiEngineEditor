@@ -10,22 +10,32 @@ using Livet.Messaging;
 using Livet.Messaging.IO;
 using Livet.EventListeners;
 using Livet.Messaging.Windows;
+using ButiEngineEditor.Models;
 
 namespace ButiEngineEditor.ViewModels.Documents
 {
     public class ProjectSettingDocumentViewModel : DocumentViewModelBase
     {
+
+        public ProjectSettingsModel ProjectSettings { get; set; }
+        public ProjectSettingDocumentViewModel()
+        {
+            ProjectSettings = EditorInstances.ProjectSettingsModel;
+        }
+        public void Initialize()
+        {
+        }
         #region Title Property
         public override string Title
         {
-            get { return "MyProject"; }
+            get { return ProjectSettings.projFilePath; }
         }
         #endregion
 
         #region ContentId Property
         public override string ContentId
         {
-            get { return "ProjectSettingDocumentViewModel"; }   // 実際はファイルのフルパス等を使用するべき
+            get { return "ProjectSettingDocumentViewModel"; }
         }
         #endregion
     }

@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="ButiEngineEditor.Views.Panes.SceneControllerPane"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:v="clr-namespace:ButiEngineEditor.Views"
+        xmlns:vmp="clr-namespace:ButiEngineEditor.ViewModels.Panes"
+             xmlns:local="clr-namespace:ButiEngineEditor.Views.Panes"
+        xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
+        xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+        xmlns:i1="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             Padding="5">
+
+    <UserControl.DataContext>
+        <vmp:SceneControllerViewModel/>
+    </UserControl.DataContext>
+
+    <i1:Interaction.Triggers>
+        <i1:EventTrigger EventName="Loaded">
+            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
+        </i1:EventTrigger>
+    </i1:Interaction.Triggers>
+
+    <Grid>
+        <Menu Grid.Row="0">
+            <Button ToolTip="Play" x:Name="PlayButton" Click="PlayClick">
+                <icon:Entypo x:Name="PlayIcon" Kind="ControllerPlay" />
+            </Button>
+            <Button ToolTip="Reload" Click="ReloadClick">
+                <icon:Material Kind="Reload"/>
+            </Button>
+            <Button ToolTip="Save" x:Name="SaveButton" Command="{Binding SaveClick}">
+                <icon:Material Kind="ContentSave"/>
+            </Button>
+
+            <Button ToolTip="SceneChange" x:Name="SceneChange" Click="SceneChange_Click">
+                <icon:Material  Kind="ArrowUp" />
+            </Button>
+            <Button ToolTip="SceneChange" x:Name="AppStart" Click="AppStart_Click">
+                <icon:Material  Kind="ArrowDown" />
+            </Button>
+            <Button ToolTip="SceneChange" x:Name="AppShutDown" Click="AppShutDown_Click">
+                <icon:Material  Kind="ArrowDown" />
+            </Button>
+        </Menu>
+    </Grid>
+</UserControl>

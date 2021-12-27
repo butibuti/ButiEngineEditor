@@ -11,7 +11,6 @@ using Livet.Messaging;
 using Livet.Messaging.IO;
 using Livet.EventListeners;
 using Livet.Messaging.Windows;
-
 using ButiEngineEditor.Models;
 using System.Windows.Input;
 
@@ -55,6 +54,7 @@ namespace ButiEngineEditor.ViewModels
         }
         #endregion
 
+        private Models.MainWindowModel mainWindowModel;
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -67,8 +67,10 @@ namespace ButiEngineEditor.ViewModels
             DockingPaneViewModels = new ObservableCollection<ViewModel>();
             DockingPaneViewModels.Add(new ViewModels.Panes.ErrorListPaneViewModel());
             DockingPaneViewModels.Add(new ViewModels.Panes.OutputPaneViewModel());
-            //DockingPaneViewModels.Add(new ViewModels.Panes.PropertyPaneViewModel());
-            //DockingPaneViewModels.Add(new ViewModels.Panes.SolutionExplorerPaneViewModel());
+            DockingPaneViewModels.Add(new ViewModels.Panes.SceneControllerViewModel());
+            DockingPaneViewModels.Add(new ViewModels.Panes.FPSMonitorViewModel());
+            DockingPaneViewModels.Add(new ViewModels.Panes.SceneViewerViewModel());
+            mainWindowModel = new MainWindowModel();
         }
 
         /// <summary>
@@ -77,25 +79,10 @@ namespace ButiEngineEditor.ViewModels
         public void Initialize()
         {
         }
-
-        private ViewModelCommand objClick;
-
-        public ICommand ObjClick
+        public new void Dispose()
         {
-            get
-            {
-                if (objClick == null)
-                {
-                    objClick = new ViewModelCommand(PerformObjClick);
-                }
-
-                return objClick;
-            }
+            Models.Modules.ButiEngineIO.ShutDown();
         }
-
-        private void PerformObjClick()
-        {
-            Modules.ButiEngineIO.SceneStart();
-        }
+        
     }
 }

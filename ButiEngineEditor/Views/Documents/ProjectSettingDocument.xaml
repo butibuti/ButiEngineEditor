@@ -3,17 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
              xmlns:local="clr-namespace:ButiEngineEditor.Views.Documents"
+        xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+        xmlns:i1="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              Padding="5">
-    <Grid>
 
+    <i1:Interaction.Triggers>
+        <i1:EventTrigger EventName="Loaded">
+            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
+        </i1:EventTrigger>
+    </i1:Interaction.Triggers>
+    <Grid>
         <StackPanel>
-            <TextBlock Margin="5">ProjectSettingDocument</TextBlock>
-            <TextBox Margin="5">Text</TextBox>
-            <CheckBox Content="Check" Margin="5"/>
-            <Button Content="Button"  Margin="5"/>
+            <TextBlock Margin="5">ProjectSetting</TextBlock>
+            <TextBox x:Name="ProjectNameBox" Margin="5"/>
+            <Button Content="Apply" Name="ProjectNameReset"  Margin="5" Click="ProjectSettingsUpdate"/>
         </StackPanel>
     </Grid>
 </UserControl>

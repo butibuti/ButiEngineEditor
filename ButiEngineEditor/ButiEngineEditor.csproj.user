@@ -7,6 +7,12 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Models\ButiEngineCommunicate.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Models\MainWindowModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ViewModels\Documents\ProjectSettings.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -16,7 +22,16 @@
     <Compile Update="ViewModels\Panes\ErrorList.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="ViewModels\Panes\FPSMonitorViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ViewModels\Panes\Output.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ViewModels\Panes\SceneControllerViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ViewModels\Panes\SceneViewerViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Documents\ProjectSettingDocument.xaml.cs">
@@ -28,7 +43,16 @@
     <Compile Update="Views\Panes\ErrorListPane.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Panes\FPSMonitorPane.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Panes\OutputPane.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Panes\SceneControllerPane.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Panes\SceneViewerPane.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -45,7 +69,16 @@
     <Page Update="Views\Panes\ErrorListPane.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\Panes\FPSMonitorPane.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Panes\OutputPane.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Panes\SceneControllerPane.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Panes\SceneViewerPane.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

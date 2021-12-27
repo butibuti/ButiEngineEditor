@@ -1,0 +1,35 @@
+﻿<UserControl x:Class="ButiEngineEditor.Views.Panes.FPSMonitorPane"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        xmlns:vmp="clr-namespace:ButiEngineEditor.ViewModels.Panes"
+        xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+        xmlns:v="clr-namespace:ButiEngineEditor.Views.Panes"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="430">
+
+    <UserControl.DataContext>
+        <vmp:FPSMonitorViewModel/>
+    </UserControl.DataContext>
+    <behaviors:Interaction.Triggers>
+        <behaviors:EventTrigger EventName="Loaded">
+            <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize" />
+        </behaviors:EventTrigger>
+    </behaviors:Interaction.Triggers>
+
+    
+    <Grid>
+
+        <Menu Grid.Row="0">
+            <Button ToolTip="Play" x:Name="PlayButton" Click="MonitorStartButton_Click">
+                <icon:Entypo x:Name="PlayIcon" Kind="ControllerPlay" />
+            </Button>
+        </Menu>
+        <TextBlock Name="FPSText" Margin="0,44,0,-44">
+            FPSがここに入るよ
+        </TextBlock>
+    </Grid>
+</UserControl>

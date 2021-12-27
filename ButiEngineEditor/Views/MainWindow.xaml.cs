@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -13,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 
+using Xceed.Wpf.AvalonDock.Layout.Serialization;
 namespace ButiEngineEditor.Views
 {
     /* 
@@ -27,6 +29,35 @@ namespace ButiEngineEditor.Views
         public MainWindow()
         {
             InitializeComponent();
+        }
+        readonly string UILayoutPath = "uiLayout.xml";
+        public void LayoutLoad()
+        {
+            if (!File.Exists(UILayoutPath))
+            {
+                return;
+            }
+            XmlLayoutSerializer layoutSerializer = new XmlLayoutSerializer(_dockingManager);
+            using (StreamReader reader = new StreamReader(UILayoutPath))
+            {
+                layoutSerializer.Deserialize(reader);
+            }
+        }
+        public void LayoutSave()
+        {
+            XmlLayoutSerializer layoutSerializer = new XmlLayoutSerializer(_dockingManager);
+            using (StreamWriter writer = new StreamWriter(UILayoutPath))
+            {
+                layoutSerializer.Serialize(writer);
+            }
+        }
+        private void LayoutSave_Click(object sender, RoutedEventArgs e)
+        {
+            LayoutSave();
+        }
+        private void LayoutLoad_Click(object sender, RoutedEventArgs e)
+        {
+            LayoutLoad();
         }
     }
 }

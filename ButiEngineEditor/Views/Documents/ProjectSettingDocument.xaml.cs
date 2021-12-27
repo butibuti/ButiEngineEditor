@@ -23,6 +23,19 @@ namespace ButiEngineEditor.Views.Documents
         public ProjectSettingDocument()
         {
             InitializeComponent();
+            Loaded += TextBoxInit;
+        }
+
+        private void TextBoxInit(object sender, RoutedEventArgs e)
+        {
+            ProjectNameBox.Text = ((ViewModels.Documents.ProjectSettingDocumentViewModel)DataContext).ProjectSettings.projectName;
+        }
+
+        private void ProjectSettingsUpdate(object sender, RoutedEventArgs e)
+        {
+            ((ViewModels.Documents.ProjectSettingDocumentViewModel)DataContext).ProjectSettings.projectName = ProjectNameBox.Text;
+            ((ViewModels.Documents.ProjectSettingDocumentViewModel)DataContext).ProjectSettings.FileOutput();
+
         }
     }
 }

@@ -14,7 +14,7 @@ namespace ButiEngineEditor.Views
     public class LayoutItemContainerStyleSelector : StyleSelector
     {
         /// <summary>
-        /// Style のリスト。XAML でこのクラスの個要素として定義した Style はこのリストに追加される。
+        /// Style のリスト。XAML でこのクラスの子要素として定義した Style はこのリストに追加される。
         /// </summary>
         public List<LayoutItemTypedStyle> Items { get; set; }
 
