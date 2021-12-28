@@ -26,43 +26,47 @@ namespace ButiEngineEditor.Models
 
         public void Update()
         {
-            Modules.ButiEngineIO.GetFPS(ref _currentFPS,ref _averageFPS,ref _drawTime,ref _updateTime);
+            ButiEngineIO.GetFPS(ref _currentFPS,ref _averageFPS,ref _drawTime,ref _updateTime);
         }
-
     }
-    public class SceneViewerModel : NotificationObject 
+
+
+    public class RenderTargetViewerModel : NotificationObject 
     {
-
-        private static readonly string SceneRTVName = ":/NormalBuffer/1920/1080/28";
-        private RenderTargetViewInformation _renderTargetViewInformation;
-        private static bool isViewd = false;
+        private string _renderTargetName ;
+        public string RenderTargetName { get { return _renderTargetName; } }
+        private RenderTargetInformation _renderTargetViewInformation;
+        private bool isViewd = false;
         public bool IsView { get { return isViewd; } }
-        private RenderTargetViewInformation RTVInfo { get { if (_renderTargetViewInformation == null) { _renderTargetViewInformation = ButiEngineIO.GetRenderTargetInformation(SceneRTVName); } return _renderTargetViewInformation; } }
+        public RenderTargetInformation RTInfo { get { if (_renderTargetViewInformation == null) { _renderTargetViewInformation = ButiEngineIO.GetRenderTargetInformation(RenderTargetName); } return _renderTargetViewInformation; } }
 
-        private string _sceneName;
-        public string SceneName { get { return _sceneName; } }
-        public SceneViewerModel()
+        public RenderTargetViewerModel(string arg_renderTargetName)
         {
-            _sceneName = "DefaultScene";
+            _renderTargetName = arg_renderTargetName;
         }
         public void ViewStart()
         {
             if (!isViewd)
             {
-                isViewd = ButiEngineIO.SetRenderTargetViewedByEditor(SceneRTVName, true);
+                isViewd = ButiEngineIO.SetRenderTargetViewedByEditor(_renderTargetName, true);
             }
         }
         public void ViewEnd()
         {
             if (isViewd)
             {
-                isViewd = ButiEngineIO.SetRenderTargetViewedByEditor(SceneRTVName, false);
+                isViewd = ButiEngineIO.SetRenderTargetViewedByEditor(_renderTargetName, false);
             }
         }
-        public void GetRTVData(ref BitmapSource arg_bitmapSrc)
+        public void GetRTData(ref Byte[] arg_bitmapAry)
         {
-            var buff = ButiEngineIO.GetRenderTargetData(SceneRTVName, RTVInfo);
-            arg_bitmapSrc = FormatConvertedBitmap.Create(RTVInfo.width, RTVInfo.height, 96, 96, RTVInfo.format, null, buff.Result, RTVInfo.stride);
+            arg_bitmapAry= ButiEngineIO.GetRenderTargetData(_renderTargetName, RTInfo).Result;
+
+        }
+        public void GetRTData(ref BitmapSource arg_bitmapSrc)
+        {
+            var buff = ButiEngineIO.GetRenderTargetData(_renderTargetName, RTInfo);
+            arg_bitmapSrc = FormatConvertedBitmap.Create(RTInfo.width, RTInfo.height, 96, 96, RTInfo.format, null, buff.Result, RTInfo.stride);
 
         }
     }
@@ -89,7 +93,6 @@ namespace ButiEngineEditor.Models
         {
             IsActive= Modules.ButiEngineIO.SetSceneActive(arg_isActive);
         }
-
         public void SceneReload()
         {
             Modules.ButiEngineIO.SceneReload();

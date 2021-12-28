@@ -4,11 +4,27 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ButiEngineEditor.Views.Panes"
+        xmlns:behaviors="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+        xmlns:vmp="clr-namespace:ButiEngineEditor.ViewModels.Panes"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="430">
+
+    <UserControl.DataContext>
+        <vmp:OutputPaneViewModel/>
+    </UserControl.DataContext>
     <Grid>
-        <TextBox>
-            出力がここに入るよ
-        </TextBox>
+        <ListView Name="ConsoleList" Grid.Row="0" ItemsSource="{Binding}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Foreground" Value="{Binding Color}"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Message"  DisplayMemberBinding="{Binding Content}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>

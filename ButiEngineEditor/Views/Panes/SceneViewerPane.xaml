@@ -33,14 +33,6 @@
     </behaviors:Interaction.Triggers>
 
     <Grid>
-
         <Image x:Name="SceneImage" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center"/>
-
-        <Menu Grid.Row="0" Background="{x:Null}">
-            <Button ToolTip="Play" x:Name="PlayButton" Click="PlayButton_Click">
-                <icon:Entypo x:Name="PlayIcon" Kind="ControllerPlay" />
-            </Button>
-        </Menu>
-
     </Grid>
 </UserControl>

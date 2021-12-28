@@ -49,7 +49,7 @@ namespace ButiEngineEditor.Views.Panes
             }
 
             view.Source = customers;
-            //this.listView1.DataContext = view;
+            this.listView1.DataContext = view;
         }
     }
 }

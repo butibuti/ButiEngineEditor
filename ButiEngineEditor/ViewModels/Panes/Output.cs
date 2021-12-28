@@ -27,5 +27,9 @@ namespace ButiEngineEditor.ViewModels.Panes
             get { return "OutputPaneViewModel"; }
         }
         #endregion
+
+        public OutputPaneViewModel()
+        {
+        }
     }
 }

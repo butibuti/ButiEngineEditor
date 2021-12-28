@@ -71,6 +71,8 @@ namespace ButiEngineEditor.ViewModels
             DockingPaneViewModels.Add(new ViewModels.Panes.FPSMonitorViewModel());
             DockingPaneViewModels.Add(new ViewModels.Panes.SceneViewerViewModel());
             mainWindowModel = new MainWindowModel();
+
+            var t=Models.Modules.ButiEngineIO.MessageStream();
         }
 
         /// <summary>

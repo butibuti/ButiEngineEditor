@@ -78,7 +78,6 @@ namespace ButiEngineEditor.Views.Panes
             if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
             {
                 var selected = dlg.FileName.Replace(dlg.InitialDirectory,"").Replace("\\","");
-                MessageBox.Show($"{selected}が選択されました。");
 
                 ((SceneControllerViewModel)DataContext).PerformSceneChange(selected);
                 IconChange(((SceneControllerViewModel)DataContext).isActive);

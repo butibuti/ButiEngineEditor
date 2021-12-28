@@ -1,11 +1,8 @@
 ﻿using ButiEngineEditor.Models;
 using ButiEngineEditor.Models.Modules;
 using ButiEngineEditor.ViewModels.Panes;
-using System;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 
 namespace ButiEngineEditor.Views.Panes
 {
@@ -18,47 +15,24 @@ namespace ButiEngineEditor.Views.Panes
      */
     public partial class SceneViewerPane : UserControl
     {
-        BitmapSource src = null;
+
         public SceneViewerPane()
         {
             InitializeComponent();
             Loaded += SceneViewerPane_Loaded;
-            ((SceneViewerViewModel)DataContext).model.ViewStart();
+            Unloaded += SceneViewerPane_Unloaded;
             SceneImage.Effect =new RBFlipShader();
+        }
+
+        private void SceneViewerPane_Unloaded(object sender, RoutedEventArgs e)
+        {
+            ((SceneViewerViewModel)DataContext).RenderTargetUpdateStop();
         }
 
         private void SceneViewerPane_Loaded(object sender, RoutedEventArgs e)
         {
-            ImageUpdateStart();
+            ((SceneViewerViewModel)DataContext).RenderTargetUpdateStart(SceneImage,Dispatcher);
         }
 
-        private void SceneImageUpdate()
-        {
-            BitmapSource src =null;
-            ((SceneViewerViewModel)DataContext).model.GetRTVData(ref src);
-            SceneImage.Source = src;
-        }
-        private async void ImageUpdateStart()
-        {
-            await Task.Run(() => {
-
-                var m = new SceneViewerModel();
-                while (m.IsView)
-                {
-                    System.Threading.Thread.Sleep(5);
-                    this.Dispatcher.Invoke((Action)(()=> {
-                        m.GetRTVData(ref src);
-                        SceneImage.Source = src;
-
-                    }));
-                }
-            }
-            );
-        }
-
-        private void PlayButton_Click(object sender, RoutedEventArgs e)
-        {
-            SceneImageUpdate();
-        }
     }
 }

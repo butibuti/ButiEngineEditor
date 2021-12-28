@@ -71,9 +71,9 @@ namespace ButiEngineEditor.Models.Modules
             arg_ref_drawMillSec= frameRate.DrawMillSec;
             arg_ref_updateMillSec= frameRate.UpdateMillSec;
         }
-        public static RenderTargetViewInformation GetRenderTargetInformation(string arg_renderTargetName)
+        public static RenderTargetInformation GetRenderTargetInformation(string arg_renderTargetName)
         {
-            RenderTargetViewInformation output = new RenderTargetViewInformation();
+            RenderTargetInformation output = new RenderTargetInformation();
             var reply = EditorClient.GetRenderTargetInformation(new ButiEngine.String { Value = arg_renderTargetName });
             output.width = reply.Width;
             output.height = reply.Height;
@@ -92,7 +92,7 @@ namespace ButiEngineEditor.Models.Modules
             var reply = EditorClient.SetRenderTargetView(new ButiEngine.RenderTargetViewed { Name = arg_renderTargetViewName, IsViewed = arg_isViewd });
             return reply.Value;
         }
-        async public static Task<Byte[]> GetRenderTargetData(string arg_renderTargetTextureName,RenderTargetViewInformation rtvInfo)
+        public async static Task<Byte[]> GetRenderTargetData(string arg_renderTargetTextureName,RenderTargetInformation rtvInfo)
         {
             var key = new ButiEngine.String { Value = arg_renderTargetTextureName };
             Byte[] output = new Byte[rtvInfo.width* rtvInfo.height*rtvInfo.pixelSize];
@@ -118,13 +118,35 @@ namespace ButiEngineEditor.Models.Modules
             }
 
         }
+        public async static Task MessageStream()
+        {
+            var i = new ButiEngine.Integer { Value = 0};
+            using (AsyncServerStreamingCall<ButiEngine.OutputMessage> call = EditorClient.StreamOutputMessage(i))
+            {
+                while (await call.ResponseStream.MoveNext().ConfigureAwait(false))
+                {
+                    ButiEngine.OutputMessage response = call.ResponseStream.Current;
+
+                    if (response.MessageType == ButiEngine.OutputMessage.Types.MessageType.Console&&response.Content.Length>0)
+                    {
+                        int t = 0;
+                    }
+
+                    if (response.MessageType==ButiEngine.OutputMessage.Types.MessageType.End)
+                    {
+                        break;
+                    }
+                }
+                return ;
+            }
+        }
         public static void ShutDown()
         {
             ButiEngineChannel.ShutdownAsync().Wait();
         }
     }
 
-    class RenderTargetViewInformation
+    public class RenderTargetInformation
     {
         public System.Windows.Media. PixelFormat format;
         public int stride;

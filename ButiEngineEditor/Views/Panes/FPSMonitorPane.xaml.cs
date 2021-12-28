@@ -27,18 +27,28 @@ namespace ButiEngineEditor.Views.Panes
         public FPSMonitorPane()
         {
             InitializeComponent();
+            Loaded += FPSMonitorPane_Loaded;
+            Unloaded += FPSMonitorPane_Unloaded;
+        }
+
+        private void FPSMonitorPane_Unloaded(object sender, RoutedEventArgs e)
+        {
+            FPSMonitorUpdateStop();
+        }
+
+        private void FPSMonitorPane_Loaded(object sender, RoutedEventArgs e)
+        {
+            FPSMonitorUpdateStart();
         }
 
         public void FPSMonitorUpdateStart()
         {
-            var model = ((FPSMonitorViewModel)DataContext).FPSMonitorModel;
-            model.Update();
-            FPSText.Text ="Average:"+ model.AverageFPS.ToString()+"\nCurrent:"+model.CurrentFPS.ToString();
+            ((FPSMonitorViewModel)DataContext).UpdateStart(FPSText,Dispatcher);
+        }
+        public void FPSMonitorUpdateStop()
+        {
+            ((FPSMonitorViewModel)DataContext).UpdateStop();
         }
 
-        private void MonitorStartButton_Click(object sender, RoutedEventArgs e)
-        {
-            FPSMonitorUpdateStart();
-        }
     }
 }

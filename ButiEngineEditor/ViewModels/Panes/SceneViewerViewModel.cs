@@ -11,16 +11,21 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 
 namespace ButiEngineEditor.ViewModels.Panes
 {
     public class SceneViewerViewModel : PaneViewModelBase
     {
-        public SceneViewerModel model;
+        public RenderTargetViewerModel model;
+        Byte[] src = null;
         #region Title Property
         public override string Title
         {
-            get { return model.SceneName; }
+            get { return "SceneView"; }
         }
         #endregion
 
@@ -38,6 +43,21 @@ namespace ButiEngineEditor.ViewModels.Panes
         public void Initialize()
         {
 
+        }
+        public void RenderTargetUpdateStop()
+        {
+            model.ViewEnd();
+            CommunicateEachFrame.PopActions("SceneViewer");
+        }
+        public void RenderTargetUpdateStart(Image arg_image,Dispatcher arg_dispatcher)
+        {
+            model.ViewStart();
+            CommunicateEachFrame.PushActions("SceneViewer", () => {
+                model.GetRTData(ref src);
+                arg_dispatcher.Invoke(() => {
+                    arg_image.Source = FormatConvertedBitmap.Create(model.RTInfo.width, model.RTInfo.height, 96, 96, model.RTInfo.format, null, src, model.RTInfo.stride);
+                });
+            });
         }
     }
 }

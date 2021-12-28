@@ -21,10 +21,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Views\Images\NewPage.png" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.2.0" />
     <PackageReference Include="LivetCask" Version="4.0.1" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
@@ -35,10 +31,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="SharpDX.D3DCompiler" Version="4.2.0" />
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Views\Images\NewPage.png" />
   </ItemGroup>
 
   <ItemGroup>

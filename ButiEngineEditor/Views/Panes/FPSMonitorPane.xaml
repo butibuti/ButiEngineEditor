@@ -19,17 +19,7 @@
             <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize" />
         </behaviors:EventTrigger>
     </behaviors:Interaction.Triggers>
-
-    
     <Grid>
-
-        <Menu Grid.Row="0">
-            <Button ToolTip="Play" x:Name="PlayButton" Click="MonitorStartButton_Click">
-                <icon:Entypo x:Name="PlayIcon" Kind="ControllerPlay" />
-            </Button>
-        </Menu>
-        <TextBlock Name="FPSText" Margin="0,44,0,-44">
-            FPSがここに入るよ
-        </TextBlock>
+        <TextBlock Name="FPSText">FPSがここに入るよ</TextBlock>
     </Grid>
 </UserControl>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ButiEngineEditor.Models;
 using MahApps.Metro.Controls;
 
 using Xceed.Wpf.AvalonDock.Layout.Serialization;
@@ -29,7 +30,20 @@ namespace ButiEngineEditor.Views
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += MainWindow_Loaded;
+            Unloaded += MainWindow_Unloaded;
         }
+
+        private void MainWindow_Unloaded(object sender, RoutedEventArgs e)
+        {
+            CommunicateEachFrame.Stop();
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            CommunicateEachFrame.Start();
+        }
+
         readonly string UILayoutPath = "uiLayout.xml";
         public void LayoutLoad()
         {
