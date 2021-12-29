@@ -70,6 +70,9 @@ namespace ButiEngineEditor.Models
 
         }
     }
+    public class ConsoleModel : NotificationObject
+    {
+    }
 
     public class SceneControllerModel : NotificationObject
     {

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ButiEngineEditor.Models;
+using ButiEngineEditor.ViewModels;
 using MahApps.Metro.Controls;
 
 using Xceed.Wpf.AvalonDock.Layout.Serialization;
@@ -30,18 +31,10 @@ namespace ButiEngineEditor.Views
         public MainWindow()
         {
             InitializeComponent();
-            Loaded += MainWindow_Loaded;
-            Unloaded += MainWindow_Unloaded;
-        }
-
-        private void MainWindow_Unloaded(object sender, RoutedEventArgs e)
-        {
-            CommunicateEachFrame.Stop();
-        }
-
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            CommunicateEachFrame.Start();
+            Loaded += (s,e)=> { CommunicateEachFrame.Start(); };
+            Unloaded += (s, e)=>{CommunicateEachFrame.Stop();};
+            Activated += (s, e) => { ((MainWindowViewModel)DataContext).SetWindowActive(true); };
+            Deactivated  += (s, e) => { ((MainWindowViewModel)DataContext).SetWindowActive(false); };
         }
 
         readonly string UILayoutPath = "uiLayout.xml";

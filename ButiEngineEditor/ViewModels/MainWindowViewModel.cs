@@ -81,10 +81,14 @@ namespace ButiEngineEditor.ViewModels
         public void Initialize()
         {
         }
-        public new void Dispose()
+        protected override void Dispose(bool arg_disposing)
         {
+            Models.Modules.ButiEngineIO.MessageStreamStop();
             Models.Modules.ButiEngineIO.ShutDown();
         }
-        
+        public void SetWindowActive(bool arg_active)
+        {
+            Models.Modules.ButiEngineIO.SetWindowActive(arg_active);
+        }
     }
 }

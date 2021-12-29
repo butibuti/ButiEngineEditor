@@ -4,7 +4,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Media;
 using Grpc.Core;
 namespace ButiEngineEditor.Models.Modules
 {
@@ -13,6 +13,8 @@ namespace ButiEngineEditor.Models.Modules
     {
         private static Channel _ch;
         private static ButiEngine.EngineCommunicate.EngineCommunicateClient _cl;
+        private static bool _isMessageStream=false;
+        private static Action<string, Color> _consoleAct;
         private static Channel ButiEngineChannel {
             get
             {
@@ -118,8 +120,13 @@ namespace ButiEngineEditor.Models.Modules
             }
 
         }
+        public static void SetConsoleAction(Action<string,Color> arg_act)
+        {
+            _consoleAct = arg_act;
+        }
         public async static Task MessageStream()
         {
+            _isMessageStream = true;
             var i = new ButiEngine.Integer { Value = 0};
             using (AsyncServerStreamingCall<ButiEngine.OutputMessage> call = EditorClient.StreamOutputMessage(i))
             {
@@ -127,12 +134,12 @@ namespace ButiEngineEditor.Models.Modules
                 {
                     ButiEngine.OutputMessage response = call.ResponseStream.Current;
 
-                    if (response.MessageType == ButiEngine.OutputMessage.Types.MessageType.Console&&response.Content.Length>0)
+                    if (response.MessageType == ButiEngine.OutputMessage.Types.MessageType.Console&&_consoleAct!=null)
                     {
-                        int t = 0;
+                        _consoleAct(response.Content, Color.FromArgb(255, (byte)(response.R * 255), (byte)(response.G * 255), (byte)(response.B * 255)));
                     }
 
-                    if (response.MessageType==ButiEngine.OutputMessage.Types.MessageType.End)
+                    if (response.MessageType==ButiEngine.OutputMessage.Types.MessageType.End|!_isMessageStream)
                     {
                         break;
                     }
@@ -140,9 +147,18 @@ namespace ButiEngineEditor.Models.Modules
                 return ;
             }
         }
+        public static void MessageStreamStop()
+        {
+            _isMessageStream = false;
+            EditorClient.StreamOutputStop(new ButiEngine.Integer { Value = 0 });
+        }
+        public static bool SetWindowActive(bool arg_isActive)
+        {
+            return EditorClient.SetWindowActive(new ButiEngine.Boolean { Value = arg_isActive }).Value;
+        }
         public static void ShutDown()
         {
-            ButiEngineChannel.ShutdownAsync().Wait();
+            ButiEngineChannel.ShutdownAsync();
         }
     }
 

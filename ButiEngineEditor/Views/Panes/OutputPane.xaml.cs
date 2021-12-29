@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using ButiEngineEditor.ViewModels.Panes;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,34 +16,31 @@ namespace ButiEngineEditor.Views.Panes
     /// <summary>
     /// OutputPane.xaml の相互作用ロジック
     /// </summary>
-    public partial class OutputPane : UserControl
+    public partial class OutputPane : UserControl 
     {
-        class ConsoleMessage {
-            public string Content { get; set; }
-            public Brush Color{ get; set; }
-            public int Count{ get; set; }
-        }
-        CollectionViewSource view = new CollectionViewSource();
-        ObservableCollection<ConsoleMessage> customers = new ObservableCollection<ConsoleMessage>();
+        private CollectionViewSource view = new CollectionViewSource();
         public OutputPane()
         {
             InitializeComponent();
-            Loaded += OutputPane_Loaded;
+            view.Source = ((OutputPaneViewModel)DataContext).Messages;
+            ((OutputPaneViewModel)DataContext).SetConsoleAction(Dispatcher);
+            ConsoleList.DataContext = view;
+            view.SortDescriptions.Add(new SortDescription("ID", ListSortDirection.Descending));
         }
 
-        private void OutputPane_Loaded(object sender, RoutedEventArgs e)
+        private void OrderFlip_Click(object sender, RoutedEventArgs e)
         {
-            ConsoleMessage msg = new ConsoleMessage();
-            msg.Content = "TestMessage!!!!";
-            msg.Color = new SolidColorBrush(Color.FromArgb(255,222,10,0));
-            customers.Add(msg); 
-            msg = new ConsoleMessage();
-            msg.Content = "Green";
-            msg.Color = new SolidColorBrush(Color.FromArgb(255, 22, 125, 10));
-            customers.Add(msg);
+            var sortDesc=view.SortDescriptions.FirstOrDefault();
+            view.SortDescriptions.Clear();
 
-            view.Source = customers;
-            this.ConsoleList.DataContext = view;
+            view.SortDescriptions.Add(new SortDescription("ID", sortDesc.Direction == ListSortDirection.Descending ? ListSortDirection.Ascending : ListSortDirection.Descending));
+            ((MahApps.Metro.IconPacks.PackIconMaterial)OrderFlip.Content).Kind =(sortDesc.Direction == ListSortDirection.Descending )? MahApps.Metro.IconPacks.PackIconMaterialKind.SortClockAscending: MahApps.Metro.IconPacks.PackIconMaterialKind.SortClockDescending;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ((OutputPaneViewModel)DataContext).Messages.Clear();
+        }
+
     }
 }
