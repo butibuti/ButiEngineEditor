@@ -61,7 +61,6 @@ namespace ButiEngineEditor.Models
         public void GetRTData(ref Byte[] arg_bitmapAry)
         {
             arg_bitmapAry= ButiEngineIO.GetRenderTargetData(_renderTargetName, RTInfo).Result;
-
         }
         public void GetRTData(ref BitmapSource arg_bitmapSrc)
         {

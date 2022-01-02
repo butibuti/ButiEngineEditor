@@ -21,14 +21,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ViewModels\Panes\SceneViewerViewModel.cs~RF3faecc0d.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Extended.Wpf.Toolkit" Version="4.2.0" />
     <PackageReference Include="LivetCask" Version="4.0.1" />
     <PackageReference Include="MahApps.Metro" Version="2.4.9" />
     <PackageReference Include="MahApps.Metro.IconPacks.Entypo" Version="4.11.0" />
+    <PackageReference Include="MahApps.Metro.IconPacks.FileIcons" Version="4.11.0" />
     <PackageReference Include="MahApps.Metro.IconPacks.Material" Version="4.11.0" />
     <PackageReference Include="MahApps.Metro.IconPacks.Modern" Version="4.11.0" />
     <PackageReference Include="MahApps.Metro.IconPacks.SimpleIcons" Version="4.11.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="PixiEditor.ColorPicker" Version="3.1.0" />
     <PackageReference Include="SharpDX.D3DCompiler" Version="4.2.0" />
     <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
   </ItemGroup>

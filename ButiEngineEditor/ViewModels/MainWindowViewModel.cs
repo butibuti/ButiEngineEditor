@@ -66,10 +66,11 @@ namespace ButiEngineEditor.ViewModels
 
             DockingPaneViewModels = new ObservableCollection<ViewModel>();
             DockingPaneViewModels.Add(new ViewModels.Panes.ErrorListPaneViewModel());
-            DockingPaneViewModels.Add(new ViewModels.Panes.OutputPaneViewModel());
+            DockingPaneViewModels.Add(new ViewModels.Panes.ConsoleViewModel());
             DockingPaneViewModels.Add(new ViewModels.Panes.SceneControllerViewModel());
             DockingPaneViewModels.Add(new ViewModels.Panes.FPSMonitorViewModel());
             DockingPaneViewModels.Add(new ViewModels.Panes.SceneViewerViewModel());
+            DockingPaneViewModels.Add(new ViewModels.Panes.ResourceLoadViewModel());
             mainWindowModel = new MainWindowModel();
 
             var t=Models.Modules.ButiEngineIO.MessageStream();

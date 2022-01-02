@@ -105,8 +105,8 @@
                         <vPanes:ErrorListPane Background="Black" BorderBrush="Black" OpacityMask="Black" Foreground="Black" />
                     </DataTemplate>
                     <!-- [出力] Pane -->
-                    <DataTemplate DataType="{x:Type vmPanes:OutputPaneViewModel}">
-                        <vPanes:OutputPane Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" />
+                    <DataTemplate DataType="{x:Type vmPanes:ConsoleViewModel}">
+                        <vPanes:ConsolePane Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type vmPanes:SceneControllerViewModel}">
                         <vPanes:SceneControllerPane/>
@@ -116,6 +116,9 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type vmPanes:SceneViewerViewModel}">
                         <vPanes:SceneViewerPane/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vmPanes:ResourceLoadViewModel}">
+                        <vPanes:ResourceLoadView/>
                     </DataTemplate>
                 </v:LayoutItemTemplateSelector>
             </avalonDock:DockingManager.LayoutItemTemplateSelector>

@@ -25,7 +25,10 @@
     <Compile Update="ViewModels\Panes\FPSMonitorViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="ViewModels\Panes\Output.cs">
+    <Compile Update="ViewModels\Panes\Console.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ViewModels\Panes\ResourceLoadViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="ViewModels\Panes\SceneControllerViewModel.cs">
@@ -46,7 +49,10 @@
     <Compile Update="Views\Panes\FPSMonitorPane.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\Panes\OutputPane.xaml.cs">
+    <Compile Update="Views\Panes\ConsolePane.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Panes\ResourceLoadView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Panes\SceneControllerPane.xaml.cs">
@@ -72,7 +78,10 @@
     <Page Update="Views\Panes\FPSMonitorPane.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\Panes\OutputPane.xaml">
+    <Page Update="Views\Panes\ConsolePane.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Panes\ResourceLoadView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Panes\SceneControllerPane.xaml">

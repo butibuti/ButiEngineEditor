@@ -16,14 +16,14 @@ namespace ButiEngineEditor.Views.Panes
     /// <summary>
     /// OutputPane.xaml の相互作用ロジック
     /// </summary>
-    public partial class OutputPane : UserControl 
+    public partial class ConsolePane : UserControl 
     {
         private CollectionViewSource view = new CollectionViewSource();
-        public OutputPane()
+        public ConsolePane()
         {
             InitializeComponent();
-            view.Source = ((OutputPaneViewModel)DataContext).Messages;
-            ((OutputPaneViewModel)DataContext).SetConsoleAction(Dispatcher);
+            view.Source = ((ConsoleViewModel)DataContext).Messages;
+            ((ConsoleViewModel)DataContext).SetConsoleAction(Dispatcher);
             ConsoleList.DataContext = view;
             view.SortDescriptions.Add(new SortDescription("ID", ListSortDirection.Descending));
         }
@@ -39,7 +39,7 @@ namespace ButiEngineEditor.Views.Panes
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ((OutputPaneViewModel)DataContext).Messages.Clear();
+            ((ConsoleViewModel)DataContext).Messages.Clear();
         }
 
     }

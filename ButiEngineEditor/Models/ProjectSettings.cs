@@ -53,15 +53,13 @@ namespace ButiEngineEditor.Models
 
         public string GetResourceAbsoluteDirectory()
         {
-
-            var splitedProjectPath = projFilePath.Split('\\');
-
-
-
-            return App.GetArgments()[0].Replace(splitedProjectPath[splitedProjectPath.Length - 1], "")+resourceDir;
-            
+            return GetProjFilePathDirectory ()+ resourceDir;
         }
-
+        public string GetProjFilePathDirectory()
+        {
+            var splitedProjectPath = projFilePath.Split('\\');
+            return App.GetArgments()[0].Replace(splitedProjectPath[splitedProjectPath.Length - 1], "");
+        }
         [JsonObject("ProjectData")]
         class ProjectData
         {

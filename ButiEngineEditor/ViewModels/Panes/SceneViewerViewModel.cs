@@ -38,7 +38,7 @@ namespace ButiEngineEditor.ViewModels.Panes
 
         public SceneViewerViewModel()
         {
-            model = EditorInstances.sceneViewerModel;
+            model = EditorInstances.SceneViewerModel;
         }
         public void Initialize()
         {

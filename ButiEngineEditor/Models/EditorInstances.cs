@@ -12,10 +12,12 @@ namespace ButiEngineEditor.Models
         private static ProjectSettingsModel _projectSettingsModel;
         private static FPSMonitorModel _fpsMonitorModel;
         private static RenderTargetViewerModel _sceneViewerModel;
+        private static ResourceLoadModel _resourceLoadModel;
         public static SceneControllerModel SceneControllerModel { get { if (_sceneControllerModel == null) { _sceneControllerModel = new SceneControllerModel(); } return _sceneControllerModel; } }
         public static ProjectSettingsModel ProjectSettingsModel { get { if (_projectSettingsModel == null) { _projectSettingsModel = new ProjectSettingsModel(App.GetArgments()[0]); }   return _projectSettingsModel; } }
         public static FPSMonitorModel FPSMonitorModel { get { if (_fpsMonitorModel == null) { _fpsMonitorModel = new FPSMonitorModel(); }   return _fpsMonitorModel; } }
-        public static RenderTargetViewerModel sceneViewerModel { get { if (_sceneViewerModel == null) { _sceneViewerModel= new RenderTargetViewerModel(":/_editorScreen/1920/1080"); }   return _sceneViewerModel; } }
+        public static RenderTargetViewerModel SceneViewerModel { get { if (_sceneViewerModel == null) { _sceneViewerModel= new RenderTargetViewerModel(":/_editorScreen/1920/1080"); }   return _sceneViewerModel; } }
+        public static ResourceLoadModel ResourceLoadModel { get { if (_resourceLoadModel== null) { _resourceLoadModel= new ResourceLoadModel(ProjectSettingsModel.GetProjFilePathDirectory()+"ResourceLoadData.json");_resourceLoadModel.FileInput(); }   return _resourceLoadModel; } }
     }
     class CommunicateEachFrame
     {

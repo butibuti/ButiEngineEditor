@@ -16,7 +16,7 @@ using System.Windows.Threading;
 
 namespace ButiEngineEditor.ViewModels.Panes
 {
-    public class OutputPaneViewModel : PaneViewModelBase
+    public class ConsoleViewModel : PaneViewModelBase
     {
         public class ConsoleMessage : System.ComponentModel.INotifyPropertyChanged
         {
@@ -38,7 +38,7 @@ namespace ButiEngineEditor.ViewModels.Panes
         #region Title Property
         public override string Title
         {
-            get { return "出力"; }
+            get { return "Console"; }
         }
         #endregion
 
@@ -49,7 +49,7 @@ namespace ButiEngineEditor.ViewModels.Panes
         }
         #endregion
 
-        public OutputPaneViewModel()
+        public ConsoleViewModel()
         {
         }
         public void SetConsoleAction(Dispatcher arg_dispatcher)
