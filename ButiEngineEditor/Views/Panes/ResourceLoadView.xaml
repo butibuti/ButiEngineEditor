@@ -10,6 +10,7 @@
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks" 
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
              xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
+             xmlns:dd="urn:gong-wpf-dragdrop"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="430">
 
@@ -35,6 +36,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <local:BoolToInvertedBoolConverter x:Key="BoolToInvertedBoolConverter" />
+            <local:ColorToBrushConverter x:Key="ColorToBrushConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <UserControl.DataContext>
@@ -84,43 +86,13 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <Menu Grid.Row="0">
-                        <ToggleButton ToolTip="Create Material" x:Name="MaterialCreateButton">
+                        <Button ToolTip="Create Material" x:Name="MaterialCreateWindowButton" Click="MaterialCreateWindowButton_Click">
                             <icon:Material x:Name="MaterialLoad" Kind="FilePlus" />
-                        </ToggleButton>
+                        </Button>
                         <Button ToolTip="MaterialUnLoad" x:Name="MaterialUnLoadButton" Click="MaterialUnLoadButton_Click">
                             <icon:Material x:Name="MaterialUnLoad" Kind="TrashCan" />
                         </Button>
                     </Menu>
-                    <Popup Name="MaterialCreatePopUp" PopupAnimation="Scroll" Placement="Top" IsOpen="{Binding IsChecked, ElementName=MaterialCreateButton}" >
-                        <Grid Margin="5" Background="#FF26272C" >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Text="・Create Material" Foreground="White" />
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="・Name" Foreground="White" />
-                            <TextBox Grid.Row="1" Grid.Column="1" Name="MaterialNameBox" Background="{x:Null}" Foreground="White" MinWidth="103"/>
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="・Diffuse" Foreground="White" />
-                            <colorpicker:PortableColorPicker Name="DiffuseColorPicker" Grid.Row="2" Grid.Column="1" SelectedColor="White"  Background="Black"  />
-                            <TextBlock Grid.Row="3" Grid.Column="0" Text="・Ambient" Foreground="White" />
-                            <TextBlock Grid.Row="4" Grid.Column="0" Text="・Emissive" Foreground="White" />
-                            <TextBlock Grid.Row="5" Grid.Column="0" Text="・Specular" Foreground="White" />
-                            <TextBlock Grid.Row="6" Grid.Column="0" Text="・Roughness" Foreground="White" />
-                            <Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" ToolTip="OK" x:Name="MaterialOKButton" Click="MaterialCreateButton_Click">
-                                 <icon:Material  Kind="CheckOutline" />
-                            </Button>
-                        </Grid>
-                    </Popup>
                     <ListView Grid.Row="1" Name="MaterialList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" >
                         <ListView.ItemsPanel >
                             <ItemsPanelTemplate>
@@ -134,7 +106,7 @@
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{Binding Title}"/>
+                                    <TextBlock Grid.Row="0" Text="{Binding MaterialName}"/>
                                     <icon:PackIconFileIcons Grid.Row="1" Kind="Obj" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
                                 </Grid>
                             </DataTemplate>
@@ -156,15 +128,17 @@
                             <icon:Material x:Name="ImageUnLoad" Kind="TrashCan" />
                         </Button>
                     </Menu>
-                    <ListView Grid.Row="1" Name="TextureList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" >
+                    <ListView Grid.Row="1" Name="TextureList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" 
+                              dd:DragDrop.IsDragSource="True" dd:DragDrop.UseDefaultDragAdorner="True"
+                              >
                         <ListView.ItemsPanel >
                             <ItemsPanelTemplate>
-                                <WrapPanel />
+                                <WrapPanel/>
                             </ItemsPanelTemplate>
                         </ListView.ItemsPanel>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Width="300" Height="200">
+                                <Grid Width="300" Height="200" Name="imageDragSource" >
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition />

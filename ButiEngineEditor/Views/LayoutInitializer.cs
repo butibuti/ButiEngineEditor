@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using System.Windows.Markup;
 using System.Reflection;
 using Xceed.Wpf.AvalonDock.Layout;
+using ButiEngineEditor.ViewModels;
+using System.Windows;
+
 namespace ButiEngineEditor.Views
 {/// <summary>
  /// アプリを始めて起動したとき等、各ウィンドウの初期レイアウトを決めるためのクラス
@@ -38,18 +41,28 @@ namespace ButiEngineEditor.Views
             LayoutAnchorablePane destPane = destinationContainer as LayoutAnchorablePane;
             if (destinationContainer != null &&
                 destinationContainer.FindParent<LayoutFloatingWindow>() != null)
+            {
                 return false;
+            }
+                
 
+            anchorableToShow.CanClose = true;
             var viewModel = anchorableToShow.Content;
-            if (viewModel == null) return false;
+            if (viewModel == null)
+            {
+                return false;
+            }
 
+            anchorableToShow.Closed += (_, __) => {
+                ((MainWindowViewModel)Application.Current.MainWindow.DataContext).RemoveDockingPanel(viewModel.GetType());
+            };
             var propInfo = viewModel.GetType().GetProperty("ContentId", BindingFlags.Public | BindingFlags.Instance);
-            if (viewModel == null) return false;
+            
 
             var contentId = (string)propInfo.GetValue(viewModel);
 
             var target = Items.Find((t) => t.ContentId == contentId);
-            if (target == null) return false;
+            if (target == null) { return false; }
             anchorableToShow.ContentId = target.ContentId;
             // 選択した名前の領域を取得し、そこにドッキングウィンドウを追加する
             var pane = layout.Descendents().OfType<LayoutAnchorablePane>().FirstOrDefault(d => d.Name == target.TargetLayoutName);
@@ -96,6 +109,10 @@ namespace ButiEngineEditor.Views
         {
             get;
             set;
+        }
+        public bool CanClose
+        {
+            get { return true; }
         }
     }
 }

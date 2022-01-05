@@ -1,4 +1,5 @@
 ﻿using ButiEngineEditor.Models;
+using ButiEngineEditor.Views;
 using Livet;
 using Livet.Commands;
 using Livet.EventListeners;
@@ -12,6 +13,8 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Media;
+using static ButiEngineEditor.Models.ResourceLoadModel;
 
 namespace ButiEngineEditor.ViewModels.Panes
 {
@@ -44,6 +47,7 @@ namespace ButiEngineEditor.ViewModels.Panes
         public ObservableCollection<FilePathData> gShaders = new ObservableCollection<FilePathData>();
         public ObservableCollection<ShaderData> shaders = new ObservableCollection<ShaderData>();
         public ObservableCollection<MaterialData> materials = new ObservableCollection<MaterialData>();
+        private PropertyChangedEventListener materialListListener;
         ResourceLoadModel _model;
         ResourceLoadModel Model { get { if (_model == null) { _model = EditorInstances.ResourceLoadModel; } return _model; } }
         public override string Title { get { return "ResourceLoad"; } }
@@ -78,6 +82,15 @@ namespace ButiEngineEditor.ViewModels.Panes
             Model.Data.List_shaders.ForEach(data => {
                 shaders.Add(new ShaderData() { ShaderName = data.ShaderName });
             });
+            materialListListener= new PropertyChangedEventListener(_model)
+            {
+                ()=>_model.MaterialAddition, (_, __) => {
+                    materials.Clear();
+                    Model.Data.List_materials.ForEach(data => {
+                        materials.Add(new MaterialData() { MaterialName = data.materialName });
+                    }); 
+                }
+            };
         }
         public void Save()
         {
@@ -134,6 +147,16 @@ namespace ButiEngineEditor.ViewModels.Panes
             Model.Data.List_renderTargets.Add(path);
             renderTargetTextures.Add(new FilePathData() { FilePath = path, Title = path });
 
+            Save();
+        }
+        public void LoadMaterial(MaterialLoadInfo arg_material)
+        {
+            if (Model.Data.List_materials.Exists(s => s.materialName == arg_material.materialName))
+            {
+                return;
+            }
+            Model.Data.List_materials.Add(arg_material);
+            materials.Add(new MaterialData() { MaterialName = arg_material.materialName });
             Save();
         }
         public void LoadModel(string path)
@@ -242,6 +265,7 @@ namespace ButiEngineEditor.ViewModels.Panes
                     break;
                 }
             }
+            Save();
         }
         public void UnLoadMaterial(string materialName)
         {
@@ -265,6 +289,7 @@ namespace ButiEngineEditor.ViewModels.Panes
                     break;
                 }
             }
+            Save();
         }
         public void UnLoadSound(string path)
         {

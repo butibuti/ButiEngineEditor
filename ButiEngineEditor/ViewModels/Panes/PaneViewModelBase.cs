@@ -31,5 +31,7 @@ namespace ButiEngineEditor.ViewModels.Panes
         /// </summary>
         public abstract string ContentId { get; }
         #endregion
+
+        public virtual bool CanClose { get { return true; } }
     }
 }

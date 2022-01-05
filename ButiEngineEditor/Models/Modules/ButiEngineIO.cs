@@ -36,37 +36,75 @@ namespace ButiEngineEditor.Models.Modules
             }
             set { } }
 
+        public static bool IsEngineActive()
+        {
+            return false;
+        }
 
         public static bool SetSceneActive(bool arg_isActive)
         {
+            if (!IsEngineActive())
+            {
+                return false;
+            }
+
             return EditorClient.SceneActive(new ButiEngine.Boolean { Value = arg_isActive }).Value;
         }
         public static void SceneSave()
         {
+            if (!IsEngineActive())
+            {
+                return ;
+            }
             EditorClient.SceneSave(new ButiEngine.Integer { Value = 0 });
         }
         public static void SceneReload()
         {
+            if (!IsEngineActive())
+            {
+                return;
+            }
             EditorClient.SceneReload(new ButiEngine.Integer { Value = 0 });
         }
         public static int SceneChange(string arg_sceneChangeName)
         {
+            if (!IsEngineActive())
+            {
+                return 0;
+            }
             return EditorClient.SceneChange(new ButiEngine.String { Value = arg_sceneChangeName }).Value;
         }
         public static int ApplicationStartUp()
         {
+            if (!IsEngineActive())
+            {
+                return 0;
+            }
             return EditorClient.ApplicationStartUp(new ButiEngine.Integer { Value = 0 }).Value;
         }
         public static int ApplicationShutDown()
         {
+            if (!IsEngineActive())
+            {
+                return 0;
+            }
             return EditorClient.ApplicationShutDown(new ButiEngine.Integer { Value = 0 }).Value;
         }
         public static int ApplicationReload()
         {
+
+            if (!IsEngineActive())
+            {
+                return 0;
+            }
             return EditorClient.ApplicationReload(new ButiEngine.Integer { Value = 0 }).Value;
         }
         public static void GetFPS(ref float arg_ref_current,ref float arg_ref_average ,ref int arg_ref_drawMillSec,ref int arg_ref_updateMillSec)
         {
+            if (!IsEngineActive())
+            {
+                return;
+            }
             var frameRate = EditorClient.GetFPS(new ButiEngine.Integer { Value = 0 });
             arg_ref_current = frameRate.Current;
             arg_ref_average = frameRate.Average;
@@ -76,28 +114,50 @@ namespace ButiEngineEditor.Models.Modules
         public static RenderTargetInformation GetRenderTargetInformation(string arg_renderTargetName)
         {
             RenderTargetInformation output = new RenderTargetInformation();
-            var reply = EditorClient.GetRenderTargetInformation(new ButiEngine.String { Value = arg_renderTargetName });
-            output.width = reply.Width;
-            output.height = reply.Height;
-            output.stride = reply.Stride;
-            switch (reply.Format) {
-                case 28:
-                    output.format = System.Windows.Media.PixelFormats.Pbgra32;
-                    output.pixelSize = 4;
-                break;
+            if (!IsEngineActive())
+            {
+                output.width = 0;
+                output.width = 0;
+                output.height = 0;
+                output.stride = 0;
+                output.format = System.Windows.Media.PixelFormats.Pbgra32;
+                output.pixelSize = 0;
+            }
+            else
+            {
+                var reply = EditorClient.GetRenderTargetInformation(new ButiEngine.String { Value = arg_renderTargetName });
+                output.width = reply.Width;
+                output.height = reply.Height;
+                output.stride = reply.Stride;
+                switch (reply.Format)
+                {
+                    case 28:
+                        output.format = System.Windows.Media.PixelFormats.Pbgra32;
+                        output.pixelSize = 4;
+                        break;
+                }
             }
 
             return output;
         }
         public static bool SetRenderTargetViewedByEditor(string arg_renderTargetViewName, bool arg_isViewd)
         {
+            if (!IsEngineActive())
+            {
+                return false;
+            }
             var reply = EditorClient.SetRenderTargetView(new ButiEngine.RenderTargetViewed { Name = arg_renderTargetViewName, IsViewed = arg_isViewd });
             return reply.Value;
         }
         public async static Task<Byte[]> GetRenderTargetData(string arg_renderTargetTextureName,RenderTargetInformation rtvInfo)
         {
+
             var key = new ButiEngine.String { Value = arg_renderTargetTextureName };
             Byte[] output = new Byte[rtvInfo.width* rtvInfo.height*rtvInfo.pixelSize];
+            if (!IsEngineActive())
+            {
+                return output;
+            }
             int index = 0;
             using (AsyncServerStreamingCall<ButiEngine.FileData> call = EditorClient.GetRenderTargetImage(key))
             {
@@ -126,6 +186,10 @@ namespace ButiEngineEditor.Models.Modules
         }
         public async static Task MessageStream()
         {
+            if (!IsEngineActive())
+            {
+                return;
+            }
             _isMessageStream = true;
             var i = new ButiEngine.Integer { Value = 0};
             using (AsyncServerStreamingCall<ButiEngine.OutputMessage> call = EditorClient.StreamOutputMessage(i))
@@ -144,20 +208,32 @@ namespace ButiEngineEditor.Models.Modules
                         break;
                     }
                 }
-                return ;
+                return;
             }
         }
         public static void MessageStreamStop()
         {
+            if (!IsEngineActive())
+            {
+                return ;
+            }
             _isMessageStream = false;
             EditorClient.StreamOutputStop(new ButiEngine.Integer { Value = 0 });
         }
         public static bool SetWindowActive(bool arg_isActive)
         {
+            if (!IsEngineActive())
+            {
+                return false;
+            }
             return EditorClient.SetWindowActive(new ButiEngine.Boolean { Value = arg_isActive }).Value;
         }
         public static void ShutDown()
         {
+            if (!IsEngineActive())
+            {
+                return ;
+            }
             ButiEngineChannel.ShutdownAsync();
         }
     }

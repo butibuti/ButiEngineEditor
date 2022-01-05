@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ButiEngineEditor.Models;
 using ButiEngineEditor.ViewModels;
+using ButiEngineEditor.ViewModels.Documents;
+using ButiEngineEditor.ViewModels.Panes;
 using MahApps.Metro.Controls;
 
 using Xceed.Wpf.AvalonDock.Layout.Serialization;
@@ -44,6 +46,7 @@ namespace ButiEngineEditor.Views
             {
                 return;
             }
+            ((MainWindowViewModel)DataContext).RestoreViewModels(UILayoutPath);
             XmlLayoutSerializer layoutSerializer = new XmlLayoutSerializer(_dockingManager);
             using (StreamReader reader = new StreamReader(UILayoutPath))
             {
@@ -65,6 +68,58 @@ namespace ButiEngineEditor.Views
         private void LayoutLoad_Click(object sender, RoutedEventArgs e)
         {
             LayoutLoad();
+        }
+        private void WindowCreate_SceneController(object sender, RoutedEventArgs e)
+        {
+            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<SceneControllerViewModel>();
+        }
+        private void WindowCreate_Console(object sender, RoutedEventArgs e)
+        {
+            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<ConsoleViewModel>();
+        }
+        private void WindowCreate_Error(object sender, RoutedEventArgs e)
+        {
+            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<ErrorListPaneViewModel>();
+        }
+        private void WindowCreate_Resource(object sender, RoutedEventArgs e)
+        {
+            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<ResourceLoadViewModel>();
+        }
+        private void WindowCreate_MaterialCreate(object sender, RoutedEventArgs e)
+        {
+            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<MaterialCreateViewModel>();
+        }
+        private void WindowCreate_FPSMonitor(object sender, RoutedEventArgs e)
+        {
+            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<FPSMonitorViewModel>();
+        }
+        private void WindowCreate_SceneViewer(object sender, RoutedEventArgs e)
+        {
+            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<SceneViewerViewModel>();
+        }
+        private void WindowCreate_ProjectSettings(object sender, RoutedEventArgs e)
+        {
+            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingDocument<ProjectSettingDocumentViewModel>();
+        }
+        private void WindowCreate_Inspector(object sender, RoutedEventArgs e)
+        {
+            //((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<SceneControllerViewModel>();
+        }
+        private void WindowCreate_Hierarchy(object sender, RoutedEventArgs e)
+        {
+            //((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<SceneControllerViewModel>();
+        }
+        private void WindowCreate_ButiScriptCompiler(object sender, RoutedEventArgs e)
+        {
+            //((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<SceneControllerViewModel>();
+        }
+        private void WindowCreate_ShaderCreater(object sender, RoutedEventArgs e)
+        {
+            //((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<SceneControllerViewModel>();
+        }
+        private void WindowCreate_HLSLCompiler(object sender, RoutedEventArgs e)
+        {
+            //((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<SceneControllerViewModel>();
         }
     }
 }

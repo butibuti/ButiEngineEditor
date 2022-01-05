@@ -81,6 +81,9 @@
     <Page Update="Views\Panes\ConsolePane.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\Panes\MaterialCreateView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Panes\ResourceLoadView.xaml">
       <SubType>Designer</SubType>
     </Page>

@@ -1,4 +1,5 @@
 ﻿using ButiEngineEditor.Models;
+using ButiEngineEditor.ViewModels;
 using ButiEngineEditor.ViewModels.Panes;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
@@ -48,6 +49,23 @@ namespace ButiEngineEditor.Views.Panes
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException("ConvertBack() of BoolToInvertedBoolConverter is not implemented");
+        }
+    }
+    [ValueConversion(typeof(Color), typeof(SolidColorBrush))]
+    internal class ColorToBrushConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            Color col = (Color)value;
+            Color c = Color.FromArgb(col.A, col.R, col.G, col.B);
+            return new SolidColorBrush(c);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            SolidColorBrush c = (SolidColorBrush)value;
+            Color col = Color.FromArgb(c.Color.A, c.Color.R, c.Color.G, c.Color.B);
+            return col;
         }
     }
     public enum RenderTargetFormat
@@ -140,9 +158,7 @@ namespace ButiEngineEditor.Views.Panes
             SetDropAction(GeometryShaderList, path => ((ResourceLoadViewModel)DataContext).LoadGeometryShader(path));
             RenderTargetAddPopUp.LostFocus += delegate { RenderTargetAddPopUp.IsOpen = false; };
         }
-        private void SetDragAction(ListView arg_list)
-        {
-        }
+
         private void SetDropAction(ListView arg_list,Action<string> arg_act)
         {
             arg_list.AllowDrop = true;
@@ -208,10 +224,6 @@ namespace ButiEngineEditor.Views.Panes
             private void RenderTargetUnLoadButton_Click(object sender, RoutedEventArgs e)
         {
             SelectedFileUnLoad(RenderTargetTextureList, s => ((ResourceLoadViewModel)DataContext).UnLoadRenderTargetTexture(s));
-        }
-        private void MaterialCreateButton_Click(object sender, RoutedEventArgs e)
-        {
-            //FileLoadDialog("読み込む3Dモデルファイルを選択してください", new List<CommonFileDialogFilter> { new CommonFileDialogFilter("buti3Dmodel file", "*.b3m") }, @"Model\", fn => ((ResourceLoadViewModel)DataContext).LoadModel(fn));
         }
         private void MaterialUnLoadButton_Click(object sender, RoutedEventArgs e)
         {
@@ -320,5 +332,9 @@ namespace ButiEngineEditor.Views.Panes
             SelectedFileUnLoad(VertexShaderList, s => ((ResourceLoadViewModel)DataContext).UnLoadVertexShader(s));
         }
 
+        private void MaterialCreateWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<MaterialCreateViewModel>();
+        }
     }
 }

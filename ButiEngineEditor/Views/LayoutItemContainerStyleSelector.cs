@@ -37,7 +37,9 @@ namespace ButiEngineEditor.Views
             // item には ViewModel が入っている。
             // ViewModel の型に対応するテンプレートを返す。
             var styleData = Items.Find((s) => item.GetType().IsSubclassOf(s.DataType));
-            if (styleData != null) return styleData.Style;
+            if (styleData != null) {
+                return styleData.Style;
+            }
 
             return base.SelectStyle(item, container);
         }

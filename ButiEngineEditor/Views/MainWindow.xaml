@@ -58,8 +58,21 @@
 
         <!-- ======== メニュー ======== -->
         <Menu Grid.Row="0">
-            <MenuItem Header="Save" Background="#FFCCCEF5" Click="LayoutSave_Click"/>
-            <MenuItem Header="Load" Background="#FFCCCEF5" Click="LayoutLoad_Click"/>
+            <MenuItem Header="Save"  Click="LayoutSave_Click"/>
+            <MenuItem Header="Load"  Click="LayoutLoad_Click"/>
+            <MenuItem Header="Window">
+                <MenuItem Header="Scene Controller" Background="#FFCCCEF5" Click="WindowCreate_SceneController"/>
+                <MenuItem Header="FPSMonitor" Background="#FFCCCEF5" Click="WindowCreate_FPSMonitor" />
+                <MenuItem Header="Resources" Background="#FFCCCEF5" Click="WindowCreate_Resource"/>
+                <MenuItem Header="Material Creater" Background="#FFCCCEF5" Click="WindowCreate_MaterialCreate"/>
+                <MenuItem Header="Shader Creater" Background="#FFCCCEF5" Click="WindowCreate_ShaderCreater"/>
+                <MenuItem Header="Inspector" Background="#FFCCCEF5" Click="WindowCreate_Inspector"/>
+                <MenuItem Header="Hierarchy" Background="#FFCCCEF5" Click="WindowCreate_Hierarchy"/>
+                <MenuItem Header="Console" Background="#FFCCCEF5" Click="WindowCreate_Console"/>
+                <MenuItem Header="ErrorLog" Background="#FFCCCEF5" Click="WindowCreate_Error"/>
+                <MenuItem Header="ButiScript Compiler" Background="#FFCCCEF5" Click="WindowCreate_ButiScriptCompiler"/>
+                <MenuItem Header="HLSL Compiler" Background="#FFCCCEF5" Click="WindowCreate_HLSLCompiler"/>
+            </MenuItem>
 
         </Menu>
         <!-- ======== ドッキングエリア ======== -->
@@ -77,6 +90,7 @@
                         <Style TargetType="{x:Type avalonDock:LayoutItem}">
                             <Setter Property="Title" Value="{Binding Model.Title}" />
                             <Setter Property="ContentId" Value="{Binding Model.ContentId}"/>
+                            <Setter Property="CanClose" Value="True" />
                         </Style>
                     </v:LayoutItemTypedStyle>
                     <!-- Pane のスタイル -->
@@ -84,6 +98,7 @@
                         <Style TargetType="{x:Type avalonDock:LayoutAnchorableItem}">
                             <Setter Property="Title" Value="{Binding Model.Title}"/>
                             <Setter Property="ContentId" Value="{Binding Model.ContentId}"/>
+                            <Setter Property="CanClose" Value="True" />
                         </Style>
                     </v:LayoutItemTypedStyle>
                 </v:LayoutItemContainerStyleSelector>
@@ -104,7 +119,6 @@
                     <DataTemplate DataType="{x:Type vmPanes:ErrorListPaneViewModel}">
                         <vPanes:ErrorListPane Background="Black" BorderBrush="Black" OpacityMask="Black" Foreground="Black" />
                     </DataTemplate>
-                    <!-- [出力] Pane -->
                     <DataTemplate DataType="{x:Type vmPanes:ConsoleViewModel}">
                         <vPanes:ConsolePane Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" />
                     </DataTemplate>
@@ -120,9 +134,14 @@
                     <DataTemplate DataType="{x:Type vmPanes:ResourceLoadViewModel}">
                         <vPanes:ResourceLoadView/>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type vmPanes:MaterialCreateViewModel}">
+                        <vPanes:MaterialCreateView/>
+                    </DataTemplate>
                 </v:LayoutItemTemplateSelector>
             </avalonDock:DockingManager.LayoutItemTemplateSelector>
-
+            <avalonDock:DockingManager.LayoutUpdateStrategy>
+                <v:LayoutInitializer/>
+            </avalonDock:DockingManager.LayoutUpdateStrategy>
 
         </avalonDock:DockingManager>
     </Grid>

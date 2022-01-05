@@ -29,5 +29,6 @@ namespace ButiEngineEditor.ViewModels.Documents
         /// </summary>
         public abstract string ContentId { get; }
         #endregion
+        public virtual bool CanClose { get { return true;} }
     }
 }

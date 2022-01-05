@@ -54,6 +54,7 @@ namespace ButiEngineEditor.ViewModels.Panes
             model.ViewStart();
             CommunicateEachFrame.PushActions("SceneViewer", () => {
                 model.GetRTData(ref src);
+                if(src.Length>0)
                 arg_dispatcher.Invoke(() => {
                     arg_image.Source = FormatConvertedBitmap.Create(model.RTInfo.width, model.RTInfo.height, 96, 96, model.RTInfo.format, null, src, model.RTInfo.stride);
                 });

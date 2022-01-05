@@ -106,6 +106,7 @@ namespace ButiEngineEditor.Models
         private string _filePath;
 
         public ResourceLoadData Data { get { return _data; } }
+        public bool MaterialAddition { get { RaisePropertyChanged(); return true;}set { RaisePropertyChanged(); } }
         public string GetFilePath { get { return _filePath; } }
 
         public ResourceLoadModel(string arg_filePath)
