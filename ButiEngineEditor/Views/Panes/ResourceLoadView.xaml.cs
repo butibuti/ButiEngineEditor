@@ -68,43 +68,6 @@ namespace ButiEngineEditor.Views.Panes
             return col;
         }
     }
-    public enum RenderTargetFormat
-    {
-        R8G8B8A8_UNORM=28, R32G32B32A32_FLOAT=2, R32G32B32_FLOAT=6, R32G32_FLOAT=16, R32_FLOAT= 41
-    }
-    public class ComnboBoxShowData<Type> { 
-        public Type Code { get; set; }
-        public string Name { get; set; }
-    }
-
-    public class EnumSourceProvider<T> : MarkupExtension
-    {
-        private static string DisplayName(T value)
-        {
-            var fileInfo = value.GetType().GetField(value.ToString());
-
-            if(fileInfo.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault() == null)
-            {
-                return value.ToString();
-            }
-            else
-            {
-                var descriptionAttribute = (DescriptionAttribute)fileInfo
-                    .GetCustomAttributes(typeof(DescriptionAttribute), false)
-                    .FirstOrDefault();
-                return descriptionAttribute.Description;
-            }
-
-        }
-
-        public IEnumerable Source { get; }
-            = typeof(T).GetEnumValues()
-                .Cast<T>()
-                .Select(value => new ComnboBoxShowData<T> { Code = value, Name = DisplayName(value) });
-
-        public override object ProvideValue(IServiceProvider serviceProvider) => this;
-    }
-    public class RTFormatSourceProvider : EnumSourceProvider<RenderTargetFormat> { }
     public partial class ResourceLoadView : UserControl
     {
 
@@ -156,7 +119,6 @@ namespace ButiEngineEditor.Views.Panes
             SetDropAction(PixelShaderList, path => ((ResourceLoadViewModel)DataContext).LoadPixelShader(path));
             SetDropAction(VertexShaderList, path => ((ResourceLoadViewModel)DataContext).LoadVertexShader(path));
             SetDropAction(GeometryShaderList, path => ((ResourceLoadViewModel)DataContext).LoadGeometryShader(path));
-            RenderTargetAddPopUp.LostFocus += delegate { RenderTargetAddPopUp.IsOpen = false; };
         }
 
         private void SetDropAction(ListView arg_list,Action<string> arg_act)
@@ -215,11 +177,7 @@ namespace ButiEngineEditor.Views.Panes
         }
         private void RenderTargetCreateButton_Click(object sender, RoutedEventArgs e)
         {
-            if (RTNameBox.Text.Length < 1|| RTFormatBox.SelectedItem==null) {return;}
-
-            var format =(ComnboBoxShowData<RenderTargetFormat>)  RTFormatBox.SelectedItem;
-            
-            ((ResourceLoadViewModel)DataContext).LoadRenderTarget(":/"+RTNameBox.Text+"/"+RTWidthBox.Value+"/"+RTHeightBox.Value + "/"+ ((int)format.Code).ToString());
+            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<RenderTargetCreateViewModel>();
         }
             private void RenderTargetUnLoadButton_Click(object sender, RoutedEventArgs e)
         {

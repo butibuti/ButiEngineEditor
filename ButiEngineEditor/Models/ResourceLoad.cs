@@ -107,6 +107,8 @@ namespace ButiEngineEditor.Models
 
         public ResourceLoadData Data { get { return _data; } }
         public bool MaterialAddition { get { RaisePropertyChanged(); return true;}set { RaisePropertyChanged(); } }
+        public bool RenderTargetAddition { get { RaisePropertyChanged(); return true;}set { RaisePropertyChanged(); } }
+        public bool ShaderAddition { get { RaisePropertyChanged(); return true;}set { RaisePropertyChanged(); } }
         public string GetFilePath { get { return _filePath; } }
 
         public ResourceLoadModel(string arg_filePath)

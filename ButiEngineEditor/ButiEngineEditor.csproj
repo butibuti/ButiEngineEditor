@@ -48,7 +48,19 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Update="ViewModels\Panes\ShaderCreateViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ViewModels\Panes\RenderTargetCreateViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ViewModels\Panes\MaterialCreateViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Panes\RenderTargetCreateView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Panes\ShaderCreateView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Panes\MaterialCreateView.xaml.cs">
@@ -72,6 +84,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Views\Panes\RenderTargetCreateView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Panes\ShaderCreateView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Panes\MaterialCreateView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

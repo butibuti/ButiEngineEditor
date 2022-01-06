@@ -13,17 +13,45 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace ButiEngineEditor.ViewModels.Panes
 {
     public class MaterialCreateViewModel : PaneViewModelBase
     {
+        public class TextureDataForMaterialCreate: ResourceLoadViewModel.TextureData
+        {
+            public CustomDropHandler DropHandler { get; set; }
+        }
 
-        public ObservableCollection<ResourceLoadViewModel. FilePathData> textures = new ObservableCollection<ResourceLoadViewModel.FilePathData>();
-        public TextBoxCustomDropHandler TextBoxCustomDropHandler { get; set; } = new TextBoxCustomDropHandler();
-        ResourceLoadModel _model;
-        ResourceLoadModel Model { get { if (_model == null) { _model = EditorInstances.ResourceLoadModel; } return _model; } }
+        private ObservableCollection<TextureDataForMaterialCreate> _textures = new ObservableCollection<TextureDataForMaterialCreate>();
+        public ObservableCollection<TextureDataForMaterialCreate> Textures { get { return _textures; } }
+        private CustomDropHandler _textureListCustomDropHandler;
+        public CustomDropHandler TextureListCustomDropHandler 
+        { 
+            get {
+                if (_textureListCustomDropHandler == null)
+                {
+                    _textureListCustomDropHandler = new CustomDropHandler((arg_dropInfo) => {
+                        if (Textures.First().FilePath == "Dummy")
+                        {
+                            Textures.Clear();
+                        }
+                        Textures.Add(new TextureDataForMaterialCreate() { DropHandler= TextureListCustomDropHandler, Title = ((ResourceLoadViewModel.TextureData)arg_dropInfo.Data).Title, FilePath = ((ResourceLoadViewModel.TextureData)arg_dropInfo.Data).FilePath });
+                        ModelUpdate();
+                    }, typeof(ResourceLoadViewModel.TextureData));
+                }
+                return _textureListCustomDropHandler;
+            }  
+        }
+        private ResourceLoadModel ResourceLoadModel { get { return EditorInstances.ResourceLoadModel;  } }
+        private MaterialCreateModel MaterialCreateModel { get { return EditorInstances.MaterialCreateModel; } }
+        public Color Diffuse { get { return MaterialCreateModel.Diffuse; } set { MaterialCreateModel.Diffuse = value; } }
+        public Color Ambient  { get { return MaterialCreateModel.Ambient; } set { MaterialCreateModel.Ambient= value; } }
+        public Color Emissive { get { return MaterialCreateModel.Emissive; } set { MaterialCreateModel.Emissive= value; } }
+        public Color Specular { get { return MaterialCreateModel.Specular; } set { MaterialCreateModel.Specular = value; } }
+        public string MaterialName { get { return MaterialCreateModel.MaterialName; } set { MaterialCreateModel.MaterialName = value; } }
         public override string Title { get { return "MaterialCreate"; } }
 
         public override string ContentId { get { return "MaterialCreateViewModel"; } }
@@ -33,27 +61,65 @@ namespace ButiEngineEditor.ViewModels.Panes
         // This method would be called from View, when ContentRendered event was raised.
         public MaterialCreateViewModel()
         {
+            MaterialCreateModel.List_currentSelectTextures.ForEach(td => { Textures.Add(new TextureDataForMaterialCreate() { DropHandler = TextureListCustomDropHandler, Title = td.Title, FilePath = td.FilePath }); });
+            CreateTextureDummy();
         }
         public void Initialize()
         {
         }
         public void Save()
         {
-            Model.FileOutput();
+            ResourceLoadModel.FileOutput();
+        }
+        public void ModelUpdate()
+        {
+            MaterialCreateModel.List_currentSelectTextures.Clear();
+            foreach(var t in Textures)
+            {
+                if (t.FilePath == "Dummy")
+                {
+                    continue;
+                }
+                MaterialCreateModel.List_currentSelectTextures.Add(new ResourceLoadViewModel.TextureData() { Title = t.Title, FilePath = t.FilePath });
+            }
+        }
+        public void CreateTextureDummy()
+        {
+            if (Textures.Count == 0)
+            {
+                Textures.Add(new TextureDataForMaterialCreate() { DropHandler = TextureListCustomDropHandler, Title = "Drag Texture...", FilePath = "Dummy" });
+            }
         }
 
 
-        public void CreateMaterial(string arg_materialName, Color arg_diffuse, Color arg_ambient, Color arg_emissive, Color arg_specular)
+        public void CreateMaterial()
         {
-            ResourceLoadModel.MaterialValue materialValue = new ResourceLoadModel.MaterialValue();
-            materialValue.diffuse = new System.Numerics.Vector4() { X = arg_diffuse.R * (1.0f / 255), Y = arg_diffuse.G * (1.0f / 255), Z = arg_diffuse.B * (1.0f / 255), W = arg_diffuse.A * (1.0f / 255) };
-            materialValue.ambient = new System.Numerics.Vector4() { X = arg_ambient.R * (1.0f / 255), Y = arg_ambient.G * (1.0f / 255), Z = arg_ambient.B * (1.0f / 255), W = arg_ambient.A * (1.0f / 255) };
-            materialValue.emissive = new System.Numerics.Vector4() { X = arg_emissive.R * (1.0f / 255), Y = arg_emissive.G * (1.0f / 255), Z = arg_emissive.B * (1.0f / 255), W = arg_emissive.A * (1.0f / 255) };
-            materialValue.specular = new System.Numerics.Vector4() { X = arg_specular.R * (1.0f / 255), Y = arg_specular.G * (1.0f / 255), Z = arg_specular.B * (1.0f / 255), W = arg_specular.A * (1.0f / 255) };
+            if (ResourceLoadModel.Data.List_materials.Exists(md=>md.materialName==MaterialName))
+            {
+                return;
+            }
 
-            Model.Data.List_materials.Add(new ResourceLoadModel.MaterialLoadInfo() { materialName = arg_materialName, var = materialValue });
-            Model.MaterialAddition=true;
-            Model.FileOutput();
+            ResourceLoadModel.MaterialValue materialValue = new ResourceLoadModel.MaterialValue();
+            materialValue.diffuse = new System.Numerics.Vector4() { X = Diffuse.R * (1.0f / 255), Y = Diffuse.G * (1.0f / 255), Z = Diffuse.B * (1.0f / 255), W = Diffuse.A * (1.0f / 255) };
+            materialValue.ambient = new System.Numerics.Vector4() { X = Ambient.R * (1.0f / 255), Y = Ambient.G * (1.0f / 255), Z = Ambient.B * (1.0f / 255), W = Ambient.A * (1.0f / 255) };
+            materialValue.emissive = new System.Numerics.Vector4() { X = Emissive.R * (1.0f / 255), Y = Emissive.G * (1.0f / 255), Z = Emissive.B * (1.0f / 255), W = Emissive.A * (1.0f / 255) };
+            materialValue.specular = new System.Numerics.Vector4() { X = Specular.R * (1.0f / 255), Y = Specular.G * (1.0f / 255), Z = Specular.B * (1.0f / 255), W = Specular.A * (1.0f / 255) };
+
+            ResourceLoadModel.Data.List_materials.Add(new ResourceLoadModel.MaterialLoadInfo() { materialName = MaterialName, var = materialValue });
+            ResourceLoadModel.MaterialAddition=true;
+            Save();
+        }
+
+        public void UnLoadTexture(string arg_title)
+        {
+            var temp = Textures.Where(fd => fd.Title == arg_title);
+            foreach (var t in temp)
+            {
+                Textures.Remove(t);
+                break;
+            }
+            ModelUpdate();
+            CreateTextureDummy();
         }
     }
 }

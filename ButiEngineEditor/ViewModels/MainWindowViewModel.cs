@@ -98,6 +98,8 @@ namespace ButiEngineEditor.ViewModels
             RegistPaneType<SceneViewerViewModel>(true);
             RegistPaneType<ResourceLoadViewModel>(true);
             RegistPaneType<MaterialCreateViewModel>(true);
+            RegistPaneType<RenderTargetCreateViewModel>(true);
+            RegistPaneType<ShaderCreateViewModel>(true);
             mainWindowModel = new MainWindowModel();
 
             var t=Models.Modules.ButiEngineIO.MessageStream();
@@ -159,7 +161,7 @@ namespace ButiEngineEditor.ViewModels
                 }
                 dic_uniqueViewModels[arg_VM.GetType()] = arg_VM;
             }
-            DockingPaneViewModels.Add(arg_VM);
+            _DockingPaneViewModels.Add(arg_VM);
             return arg_VM;
         }
         public Type AddDockingDocument<Type>() where Type : ViewModel, new()

@@ -128,9 +128,7 @@
                             <icon:Material x:Name="ImageUnLoad" Kind="TrashCan" />
                         </Button>
                     </Menu>
-                    <ListView Grid.Row="1" Name="TextureList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" 
-                              dd:DragDrop.IsDragSource="True" dd:DragDrop.UseDefaultDragAdorner="True"
-                              >
+                    <ListView Grid.Row="1" Name="TextureList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" >
                         <ListView.ItemsPanel >
                             <ItemsPanelTemplate>
                                 <WrapPanel/>
@@ -138,7 +136,8 @@
                         </ListView.ItemsPanel>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Width="300" Height="200" Name="imageDragSource" >
+                                <Grid Width="300" Height="200" Name="imageDragSource"
+                                      dd:DragDrop.IsDragSource="True" dd:DragDrop.UseDefaultDragAdorner="True"  >
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition />
@@ -158,42 +157,13 @@
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <Menu Grid.Row="0" FocusManager.IsFocusScope="False">
-                        <ToggleButton x:Name="RenderTargetLoadButton"  ClickMode="Release" IsEnabled="{Binding Path=IsOpen, ElementName=RenderTargetAddPopUp, Converter={StaticResource BoolToInvertedBoolConverter}}" >
+                        <Button x:Name="RenderTargetLoadButton"  ClickMode="Release" Click="RenderTargetCreateButton_Click" >
                             <icon:Material x:Name="RenderTargetLoad" Kind="ImagePlus" />
-                        </ToggleButton>
+                        </Button>
                         <Button ToolTip="RenderTargetUnLoad" x:Name="RenderTargetUnLoadButton" Click="RenderTargetUnLoadButton_Click">
                             <icon:Material x:Name="RenderTargetUnLoad" Kind="TrashCan" />
                         </Button>
                     </Menu>
-                    <Popup Name="RenderTargetAddPopUp" StaysOpen="False"  Placement="Top" IsOpen="{Binding Path=IsChecked, ElementName=RenderTargetLoadButton, Mode=TwoWay}" >
-                        
-                        <Grid Margin="5" Background="#FF26272C" >
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Name="PopUpTitle" Text="・Create RenderTargetTexture" Foreground="White" />
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="・Name" Foreground="White" />
-                            <TextBox Grid.Row="1" Grid.Column="1" Name="RTNameBox" Background="{x:Null}" Foreground="White"/>
-                            <TextBlock Grid.Row="2" Grid.Column="0"  Text="・Width " Foreground="White"/>
-                            <mah:NumericUpDown Name="RTWidthBox" Grid.Row="2" Grid.Column="1"  Maximum="4056" Minimum="1" Value="1024" Foreground="White"/>
-                            <TextBlock Grid.Row="3" Grid.Column="0"  Text="・Height" Foreground="White"/>
-                            <mah:NumericUpDown Name="RTHeightBox" Grid.Row="3" Grid.Column="1"  Maximum="4056" Minimum="1" Value="1024" Foreground="White"/>
-                            <ComboBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Name="RTFormatBox"  ItemsSource="{Binding Source, Source={local:RTFormatSourceProvider}}" DisplayMemberPath="Name" SelectedValuePath="Code" Text="Format" IsEditable="True" IsReadOnly="True" Foreground="Black" Background="{x:Null}"/>
-
-                            <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" ToolTip="RenderTargetCreate" x:Name="RenderTargetCreateButton" Click="RenderTargetCreateButton_Click">
-                                <icon:Material  Kind="CheckOutline" />
-                            </Button>
-                        </Grid>
-                    </Popup>
                     <ListView Grid.Row="1" Name="RenderTargetTextureList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" >
                         <ListView.ItemsPanel >
                             <ItemsPanelTemplate>

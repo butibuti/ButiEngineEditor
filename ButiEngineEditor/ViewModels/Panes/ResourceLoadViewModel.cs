@@ -25,6 +25,9 @@ namespace ButiEngineEditor.ViewModels.Panes
             public string FilePath { get; set; }
             public string Title { get; set; }
         }
+        public class TextureData : FilePathData
+        {
+        }
         public class ShaderData
         {
             public string ShaderName { get; set; }
@@ -35,8 +38,8 @@ namespace ButiEngineEditor.ViewModels.Panes
         }
 
 
-        public ObservableCollection<FilePathData> textures = new ObservableCollection<FilePathData>();
-        public ObservableCollection<FilePathData> renderTargetTextures = new ObservableCollection<FilePathData>();
+        public ObservableCollection<TextureData> textures = new ObservableCollection<TextureData>();
+        public ObservableCollection<TextureData> renderTargetTextures = new ObservableCollection<TextureData>();
         public ObservableCollection<FilePathData> motions = new ObservableCollection<FilePathData>();
         public ObservableCollection<FilePathData> models = new ObservableCollection<FilePathData>();
         public ObservableCollection<FilePathData> fonts = new ObservableCollection<FilePathData>();
@@ -47,7 +50,7 @@ namespace ButiEngineEditor.ViewModels.Panes
         public ObservableCollection<FilePathData> gShaders = new ObservableCollection<FilePathData>();
         public ObservableCollection<ShaderData> shaders = new ObservableCollection<ShaderData>();
         public ObservableCollection<MaterialData> materials = new ObservableCollection<MaterialData>();
-        private PropertyChangedEventListener materialListListener;
+        private PropertyChangedEventListener materialListListener,renderTargetListner,shaderListListner;
         ResourceLoadModel _model;
         ResourceLoadModel Model { get { if (_model == null) { _model = EditorInstances.ResourceLoadModel; } return _model; } }
         public override string Title { get { return "ResourceLoad"; } }
@@ -59,10 +62,10 @@ namespace ButiEngineEditor.ViewModels.Panes
         // This method would be called from View, when ContentRendered event was raised.
         public void Initialize()
         {
-            void CollectionInit(List<string> arg_src,  ObservableCollection<FilePathData> arg_initList,string arg_baseDir)
+            void CollectionInit<T>(List<string> arg_src, ObservableCollection<T> arg_initList,string arg_baseDir) where T:FilePathData,new()
             {
                arg_src.ForEach(title => {
-                    arg_initList.Add(new FilePathData() { Title = title, FilePath = Path.Combine(arg_baseDir, title) });
+                    arg_initList.Add(new T() { Title = title, FilePath = Path.Combine(arg_baseDir, title) });
                 });
             }
             string resourceAbsPath=EditorInstances.ProjectSettingsModel.GetResourceAbsoluteDirectory();
@@ -91,12 +94,22 @@ namespace ButiEngineEditor.ViewModels.Panes
                     }); 
                 }
             };
+            renderTargetListner=new PropertyChangedEventListener(_model)
+            {
+                ()=>_model.RenderTargetAddition, (_, __) => {
+                    renderTargetTextures.Clear();
+                    Model.Data.List_renderTargets.ForEach(data => {
+                        renderTargetTextures.Add(new TextureData() { FilePath = data,Title=data });
+                    });
+                }
+            };
+
         }
         public void Save()
         {
             Model.FileOutput();
         }
-        public void LoadPath(string path, List<string> dataList, ObservableCollection<FilePathData> viewList)
+        public void LoadPath<T>(string path, List<string> dataList, ObservableCollection<T> viewList) where T : FilePathData, new()
         {
             if (!File.Exists(path))
             {
@@ -110,10 +123,10 @@ namespace ButiEngineEditor.ViewModels.Panes
                 return;
             }
             dataList.Add(title);
-            viewList.Add(new FilePathData() { FilePath = path, Title = title });
+            viewList.Add(new T() { FilePath = path, Title = title });
             Save();
         }
-        public void UnLoadPath(string path, List<string> dataList, ObservableCollection<FilePathData> viewList)
+        public void UnLoadPath<T>(string path, List<string> dataList, ObservableCollection<T> viewList) where T : FilePathData, new()
         {
             string title = new Uri(EditorInstances.ProjectSettingsModel.GetResourceAbsoluteDirectory()).MakeRelativeUri(new Uri(path)).ToString();
             title = title.Replace('/', '\\');
@@ -145,7 +158,7 @@ namespace ButiEngineEditor.ViewModels.Panes
                 return;
             }
             Model.Data.List_renderTargets.Add(path);
-            renderTargetTextures.Add(new FilePathData() { FilePath = path, Title = path });
+            renderTargetTextures.Add(new TextureData() { FilePath = path, Title = path });
 
             Save();
         }

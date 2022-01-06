@@ -11,8 +11,15 @@ using static ButiEngineEditor.ViewModels.Panes.ResourceLoadViewModel;
 
 namespace ButiEngineEditor.Views
 {
-    public class TextBoxCustomDropHandler : IDropTarget
+    public class CustomDropHandler : IDropTarget
     {
+        private Type dropType;
+        private Action<IDropInfo> dropAction;
+        public CustomDropHandler(Action<IDropInfo> arg_action,Type arg_dropDataType)
+        {
+            dropAction = arg_action;
+            dropType = arg_dropDataType;
+        }
         public void DragEnter(IDropInfo dropInfo)
         {
 
@@ -31,9 +38,9 @@ namespace ButiEngineEditor.Views
 
         public void Drop(IDropInfo dropInfo)
         {
-            if (dropInfo.Data.GetType().Equals(typeof(FilePathData)))
+            if (dropInfo.Data.GetType().Equals(dropType))
             {
-                ((TextBox)dropInfo.VisualTarget).Text = ((FilePathData)dropInfo.Data).FilePath;
+                dropAction(dropInfo);
             }
         }
     }
@@ -48,7 +55,7 @@ namespace ButiEngineEditor.Views
         {
             _pen = new Pen(Brushes.DeepSkyBlue, 0.5);
             _pen.Freeze();
-            _brush = new SolidColorBrush(Colors.Coral) { Opacity = 0.2 };
+            _brush = new SolidColorBrush(Colors.SkyBlue) { Opacity = 0.2 };
             this._brush.Freeze();
 
             this.SetValue(SnapsToDevicePixelsProperty, true);
@@ -56,7 +63,7 @@ namespace ButiEngineEditor.Views
 
         protected override void OnRender(DrawingContext drawingContext)
         {
-            var visualTarget = this.DropInfo.VisualTarget;
+            var visualTarget = DropInfo.VisualTarget;
             if (visualTarget != null)
             {
                 var translatePoint = visualTarget.TranslatePoint(new Point(), this.AdornedElement);

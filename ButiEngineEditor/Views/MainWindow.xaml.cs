@@ -48,10 +48,41 @@ namespace ButiEngineEditor.Views
             }
             ((MainWindowViewModel)DataContext).RestoreViewModels(UILayoutPath);
             XmlLayoutSerializer layoutSerializer = new XmlLayoutSerializer(_dockingManager);
+
             using (StreamReader reader = new StreamReader(UILayoutPath))
             {
                 layoutSerializer.Deserialize(reader);
             }
+            var contents = new List<Xceed.Wpf.AvalonDock.Layout.LayoutContent>();
+            RecursiveLayoutGetElements(_dockingManager.Layout, contents);
+            contents.ForEach(
+                layout =>
+                {
+                    layout.Closed += (_, __) =>
+                    {
+                        ((MainWindowViewModel)Application.Current.MainWindow.DataContext).RemoveDockingPanel(layout.Content.GetType());
+                    };
+                }
+             );
+        }
+        private void RecursiveLayoutGetElements(Xceed.Wpf.AvalonDock.Layout.ILayoutContainer arg_layout,List< Xceed.Wpf.AvalonDock.Layout.LayoutContent> arg_outputContents)
+        {
+            if (arg_layout.ChildrenCount == 0)
+            {
+                return;
+            }
+
+            arg_layout.Children.ToList().ForEach(layout =>
+            {
+                if (layout.GetType().IsSubclassOf(typeof(Xceed.Wpf.AvalonDock.Layout.LayoutContent)))
+                {
+                    arg_outputContents.Add((Xceed.Wpf.AvalonDock.Layout.LayoutContent)layout);
+                }
+                if (layout.GetType().GetInterfaces().Contains(typeof(Xceed.Wpf.AvalonDock.Layout.ILayoutContainer)))
+                {
+                    RecursiveLayoutGetElements((Xceed.Wpf.AvalonDock.Layout.ILayoutContainer)layout, arg_outputContents);
+                }
+            });
         }
         public void LayoutSave()
         {
@@ -100,6 +131,10 @@ namespace ButiEngineEditor.Views
         private void WindowCreate_ProjectSettings(object sender, RoutedEventArgs e)
         {
             ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingDocument<ProjectSettingDocumentViewModel>();
+        }
+        private void WindowCreate_RenderTargetCreate(object sender, RoutedEventArgs e)
+        {
+            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<RenderTargetCreateViewModel>();
         }
         private void WindowCreate_Inspector(object sender, RoutedEventArgs e)
         {

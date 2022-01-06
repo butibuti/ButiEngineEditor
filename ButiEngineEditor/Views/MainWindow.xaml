@@ -65,6 +65,7 @@
                 <MenuItem Header="FPSMonitor" Background="#FFCCCEF5" Click="WindowCreate_FPSMonitor" />
                 <MenuItem Header="Resources" Background="#FFCCCEF5" Click="WindowCreate_Resource"/>
                 <MenuItem Header="Material Creater" Background="#FFCCCEF5" Click="WindowCreate_MaterialCreate"/>
+                <MenuItem Header="RenderTarget Creater" Background="#FFCCCEF5" Click="WindowCreate_RenderTargetCreate"/>
                 <MenuItem Header="Shader Creater" Background="#FFCCCEF5" Click="WindowCreate_ShaderCreater"/>
                 <MenuItem Header="Inspector" Background="#FFCCCEF5" Click="WindowCreate_Inspector"/>
                 <MenuItem Header="Hierarchy" Background="#FFCCCEF5" Click="WindowCreate_Hierarchy"/>
@@ -136,6 +137,12 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type vmPanes:MaterialCreateViewModel}">
                         <vPanes:MaterialCreateView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vmPanes:RenderTargetCreateViewModel}">
+                        <vPanes:RenderTargetCreateView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vmPanes:ShaderCreateViewModel}">
+                        <vPanes:ShaderCreateView/>
                     </DataTemplate>
                 </v:LayoutItemTemplateSelector>
             </avalonDock:DockingManager.LayoutItemTemplateSelector>

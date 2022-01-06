@@ -25,10 +25,10 @@ using System.Windows.Shapes;
 
 namespace ButiEngineEditor.Views.Panes
 {
-    public partial class MaterialCreateView : UserControl
+    public partial class ShaderCreateView : UserControl
     {
         private CollectionViewSource textureView = new CollectionViewSource();
-        public MaterialCreateView()
+        public ShaderCreateView()
         {
             InitializeComponent();
             textureView.Source = ((MaterialCreateViewModel)DataContext).Textures;
