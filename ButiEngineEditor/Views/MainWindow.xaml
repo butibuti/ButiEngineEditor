@@ -6,6 +6,7 @@
         xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
         xmlns:v="clr-namespace:ButiEngineEditor.Views"
         xmlns:vm="clr-namespace:ButiEngineEditor.ViewModels"
+        xmlns:vt="clr-namespace:ButiEngineEditor.Views.Themes"
         xmlns:vDocuments="clr-namespace:ButiEngineEditor.Views.Documents"
         xmlns:vPanes="clr-namespace:ButiEngineEditor.Views.Panes"
         xmlns:vmDocuments="clr-namespace:ButiEngineEditor.ViewModels.Documents"
@@ -15,10 +16,11 @@
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks" 
         xmlns:i1="http://schemas.microsoft.com/xaml/behaviors"
     Title="ButiEngine" Width="720" Height="480" 
-        
-        NonActiveWindowTitleBrush="White"
-        BorderThickness="1" Foreground="Black"  Background="White" SaveWindowPosition="True" ShowDialogsOverTitleBar="True" ShowMinButton="True" ShowMaxRestoreButton="True" WindowTitleBrush="#00000000"
-        >
+        WindowTitleBrush="Transparent"
+        NonActiveWindowTitleBrush="Transparent"
+        GlowBrush="{DynamicResource MahApps.Brushes.Accent}"
+        BorderBrush="{DynamicResource  MahApps.Brushes.Accent}"
+        BorderThickness="1" SaveWindowPosition="True" ShowDialogsOverTitleBar="True" ShowMinButton="True" ShowMaxRestoreButton="True" >
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>
@@ -50,7 +52,7 @@
 
     <!-- ====================================================================== -->
     <!-- レイアウトルート -->
-    <Grid Margin="3" Background="White">
+    <Grid Margin="3" >
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -58,21 +60,22 @@
 
         <!-- ======== メニュー ======== -->
         <Menu Grid.Row="0">
-            <MenuItem Header="Save"  Click="LayoutSave_Click"/>
-            <MenuItem Header="Load"  Click="LayoutLoad_Click"/>
             <MenuItem Header="Window">
-                <MenuItem Header="Scene Controller" Background="#FFCCCEF5" Click="WindowCreate_SceneController"/>
-                <MenuItem Header="FPSMonitor" Background="#FFCCCEF5" Click="WindowCreate_FPSMonitor" />
-                <MenuItem Header="Resources" Background="#FFCCCEF5" Click="WindowCreate_Resource"/>
-                <MenuItem Header="Material Creater" Background="#FFCCCEF5" Click="WindowCreate_MaterialCreate"/>
-                <MenuItem Header="RenderTarget Creater" Background="#FFCCCEF5" Click="WindowCreate_RenderTargetCreate"/>
-                <MenuItem Header="Shader Creater" Background="#FFCCCEF5" Click="WindowCreate_ShaderCreater"/>
-                <MenuItem Header="Inspector" Background="#FFCCCEF5" Click="WindowCreate_Inspector"/>
-                <MenuItem Header="Hierarchy" Background="#FFCCCEF5" Click="WindowCreate_Hierarchy"/>
-                <MenuItem Header="Console" Background="#FFCCCEF5" Click="WindowCreate_Console"/>
-                <MenuItem Header="ErrorLog" Background="#FFCCCEF5" Click="WindowCreate_Error"/>
-                <MenuItem Header="ButiScript Compiler" Background="#FFCCCEF5" Click="WindowCreate_ButiScriptCompiler"/>
-                <MenuItem Header="HLSL Compiler" Background="#FFCCCEF5" Click="WindowCreate_HLSLCompiler"/>
+                <MenuItem Header="Scene Controller"  Click="WindowCreate_SceneController"/>
+                <MenuItem Header="FPSMonitor" Click="WindowCreate_FPSMonitor" />
+                <MenuItem Header="Resources" Click="WindowCreate_Resource"/>
+                <MenuItem Header="Material Creater" Click="WindowCreate_MaterialCreate"/>
+                <MenuItem Header="RenderTarget Creater" Click="WindowCreate_RenderTargetCreate"/>
+                <MenuItem Header="Shader Creater" Click="WindowCreate_ShaderCreater"/>
+                <MenuItem Header="Inspector" Click="WindowCreate_Inspector"/>
+                <MenuItem Header="Hierarchy" Click="WindowCreate_Hierarchy"/>
+                <MenuItem Header="Console" Click="WindowCreate_Console"/>
+                <MenuItem Header="ErrorLog" Click="WindowCreate_Error"/>
+                <MenuItem Header="ProjectSettings" Click="WindowCreate_ProjectSettings"/>
+                <MenuItem Header="RenderingSettings" Click="WindowCreate_RenderingSettings"/>
+                <MenuItem Header="CollisionSettings" Click="WindowCreate_CollisionSettings"/>
+                <MenuItem Header="ButiScript Compiler" Click="WindowCreate_ButiScriptCompiler"/>
+                <MenuItem Header="HLSL Compiler" Click="WindowCreate_HLSLCompiler"/>
             </MenuItem>
 
         </Menu>
@@ -80,9 +83,12 @@
         <avalonDock:DockingManager 
             x:Name="_dockingManager" Grid.Row="1" 
             DocumentsSource="{Binding DockingDocumentViewModels}"
-            AnchorablesSource="{Binding DockingPaneViewModels}" BorderBrush="#FF8BD5FF" Background="#FFEEE0E0" OpacityMask="Black">
-            
+            AnchorablesSource="{Binding DockingPaneViewModels}">
 
+
+            <avalonDock:DockingManager.Theme>
+                <vt:ButiEngineTheme />
+            </avalonDock:DockingManager.Theme>
             <!-- ======== LayoutItem コンテナ (ウィンドウやタブ) のスタイル ======== -->
             <avalonDock:DockingManager.LayoutItemContainerStyleSelector>
                 <v:LayoutItemContainerStyleSelector>
@@ -118,10 +124,10 @@
                     </DataTemplate>
                     <!-- [エラー一覧] Pane -->
                     <DataTemplate DataType="{x:Type vmPanes:ErrorListPaneViewModel}">
-                        <vPanes:ErrorListPane Background="Black" BorderBrush="Black" OpacityMask="Black" Foreground="Black" />
+                        <vPanes:ErrorListPane/>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type vmPanes:ConsoleViewModel}">
-                        <vPanes:ConsolePane Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" />
+                        <vPanes:ConsolePane />
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type vmPanes:SceneControllerViewModel}">
                         <vPanes:SceneControllerPane/>
@@ -143,6 +149,12 @@
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type vmPanes:ShaderCreateViewModel}">
                         <vPanes:ShaderCreateView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vmPanes:ButiScriptCompilerViewModel}">
+                        <vPanes:ButiScriptCompilerView/>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type vmPanes:HLSLCompilerViewModel}">
+                        <vPanes:HLSLCompilerView/>
                     </DataTemplate>
                 </v:LayoutItemTemplateSelector>
             </avalonDock:DockingManager.LayoutItemTemplateSelector>

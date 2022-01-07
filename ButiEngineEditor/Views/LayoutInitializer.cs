@@ -8,6 +8,7 @@ using System.Reflection;
 using Xceed.Wpf.AvalonDock.Layout;
 using ButiEngineEditor.ViewModels;
 using System.Windows;
+using Xceed.Wpf.AvalonDock.Controls;
 
 namespace ButiEngineEditor.Views
 {/// <summary>
@@ -62,7 +63,9 @@ namespace ButiEngineEditor.Views
             var contentId = (string)propInfo.GetValue(viewModel);
 
             var target = Items.Find((t) => t.ContentId == contentId);
-            if (target == null) { return false; }
+            if (target == null) {
+                return false;
+            }
             anchorableToShow.ContentId = target.ContentId;
             // 選択した名前の領域を取得し、そこにドッキングウィンドウを追加する
             var pane = layout.Descendents().OfType<LayoutAnchorablePane>().FirstOrDefault(d => d.Name == target.TargetLayoutName);
@@ -76,6 +79,15 @@ namespace ButiEngineEditor.Views
 
         public void AfterInsertAnchorable(LayoutRoot layout, LayoutAnchorable anchorableShown)
         {
+            //var viewModel = anchorableShown.Content;
+            //var propInfo = viewModel.GetType().GetProperty("ContentId", BindingFlags.Public | BindingFlags.Instance);
+
+            //var contentId = (string)propInfo.GetValue(viewModel);
+            //var target = Items.Find((t) => t.ContentId == contentId);
+            //if (target == null)
+            //{
+            //}
+            //anchorableShown.Float();
         }
 
         public bool BeforeInsertDocument(LayoutRoot layout, LayoutDocument anchorableToShow, ILayoutContainer destinationContainer)

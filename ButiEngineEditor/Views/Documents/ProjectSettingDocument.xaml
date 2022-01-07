@@ -16,11 +16,14 @@
             <l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
         </i1:EventTrigger>
     </i1:Interaction.Triggers>
-    <Grid>
-        <StackPanel>
-            <TextBlock Margin="5">ProjectSetting</TextBlock>
-            <TextBox x:Name="ProjectNameBox" Margin="5"/>
-            <Button Content="Apply" Name="ProjectNameReset"  Margin="5" Click="ProjectSettingsUpdate"/>
-        </StackPanel>
-    </Grid>
+
+    <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <StackPanel>
+                <TextBlock Margin="5">ProjectSetting</TextBlock>
+                <TextBox x:Name="ProjectNameBox" Margin="5"/>
+                <Button Content="Apply" Name="ProjectNameReset"  Margin="5" Click="ProjectSettingsUpdate"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

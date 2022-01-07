@@ -12,7 +12,7 @@
              xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
              xmlns:dd="urn:gong-wpf-dragdrop"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="430">
+             d:DesignHeight="300" d:DesignWidth="430" >
 
     <!--
     If you want to add a ViewModel class to DataContext, then please add your ViewModels namespace to the Window tag like below.
@@ -42,428 +42,430 @@
     <UserControl.DataContext>
         <vmp:ResourceLoadViewModel/>
     </UserControl.DataContext>
-    <Grid>
-        <TabControl>
-            <TabItem Header="Model">
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Menu Grid.Row="0">
-                        <Button ToolTip="ModelLoad" x:Name="ModelLoadButton" Click="ModelLoadButton_Click">
-                            <icon:Material x:Name="ModelLoad" Kind="FilePlus" />
-                        </Button>
-                        <Button ToolTip="ModelUnLoad" x:Name="ModelUnLoadButton" Click="ModelUnLoadButton_Click">
-                            <icon:Material x:Name="ModelUnLoad" Kind="TrashCan" />
-                        </Button>
-                    </Menu>
-                    <ListView Grid.Row="1" Name="ModelList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" >
-                        <ListView.ItemsPanel >
-                            <ItemsPanelTemplate>
-                                <WrapPanel />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Width="300" Height="200">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{Binding Title}"/>
-                                    <icon:PackIconFileIcons Grid.Row="1" Kind="Obj" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Material">
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Menu Grid.Row="0">
-                        <Button ToolTip="Create Material" x:Name="MaterialCreateWindowButton" Click="MaterialCreateWindowButton_Click">
-                            <icon:Material x:Name="MaterialLoad" Kind="FilePlus" />
-                        </Button>
-                        <Button ToolTip="MaterialUnLoad" x:Name="MaterialUnLoadButton" Click="MaterialUnLoadButton_Click">
-                            <icon:Material x:Name="MaterialUnLoad" Kind="TrashCan" />
-                        </Button>
-                    </Menu>
-                    <ListView Grid.Row="1" Name="MaterialList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" >
-                        <ListView.ItemsPanel >
-                            <ItemsPanelTemplate>
-                                <WrapPanel />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Width="300" Height="200">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{Binding MaterialName}"/>
-                                    <icon:PackIconFileIcons Grid.Row="1" Kind="Obj" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Texture">
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Menu Grid.Row="0">
-                        <Button ToolTip="ImageLoad" x:Name="ImageLoadButton" Click="ImageLoadButton_Click">
-                            <icon:Material x:Name="ImageLoad" Kind="ImagePlus" />
-                        </Button>
-                        <Button ToolTip="ImageUnLoad" x:Name="ImageUnLoadButton" Click="ImageUnLoadButton_Click">
-                            <icon:Material x:Name="ImageUnLoad" Kind="TrashCan" />
-                        </Button>
-                    </Menu>
-                    <ListView Grid.Row="1" Name="TextureList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" >
-                        <ListView.ItemsPanel >
-                            <ItemsPanelTemplate>
-                                <WrapPanel/>
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Width="300" Height="200" Name="imageDragSource"
-                                      dd:DragDrop.IsDragSource="True" dd:DragDrop.UseDefaultDragAdorner="True"  >
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{Binding Title}"/>
-                                    <Image Grid.Row="1" Source="{Binding FilePath}"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </TabItem>
-            <TabItem Header="RenderTargetTexture">
-                <Grid Background="White" >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Menu Grid.Row="0" FocusManager.IsFocusScope="False">
-                        <Button x:Name="RenderTargetLoadButton"  ClickMode="Release" Click="RenderTargetCreateButton_Click" >
-                            <icon:Material x:Name="RenderTargetLoad" Kind="ImagePlus" />
-                        </Button>
-                        <Button ToolTip="RenderTargetUnLoad" x:Name="RenderTargetUnLoadButton" Click="RenderTargetUnLoadButton_Click">
-                            <icon:Material x:Name="RenderTargetUnLoad" Kind="TrashCan" />
-                        </Button>
-                    </Menu>
-                    <ListView Grid.Row="1" Name="RenderTargetTextureList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" >
-                        <ListView.ItemsPanel >
-                            <ItemsPanelTemplate>
-                                <WrapPanel />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Width="300" Height="200">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{Binding Title}"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Shader">
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Menu Grid.Row="0">
-                        <Button ToolTip="ShaderLoad" x:Name="ShaderLoadButton" Click="ShaderLoadButton_Click">
-                            <icon:Material x:Name="ShaderLoad" Kind="FilePlus" />
-                        </Button>
-                        <Button ToolTip="ShaderUnLoad" x:Name="ShaderUnLoadButton" Click="ShaderUnLoadButton_Click">
-                            <icon:Material x:Name="ShaderUnLoad" Kind="TrashCan" />
-                        </Button>
-                    </Menu>
-                    <ListView Grid.Row="1" Name="ShaderList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" >
-                        <ListView.ItemsPanel >
-                            <ItemsPanelTemplate>
-                                <WrapPanel />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Width="300" Height="200">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{Binding Title}"/>
-                                    <icon:PackIconFileIcons Grid.Row="1" Kind="Obj" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Script">
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Menu Grid.Row="0">
-                        <Button ToolTip="ScriptLoad" x:Name="ScriptLoadButton" Click="ScriptLoadButton_Click">
-                            <icon:Material x:Name="ScriptLoad" Kind="FilePlus" />
-                        </Button>
-                        <Button ToolTip="ScriptUnLoad" x:Name="ScriptUnLoadButton" Click="ScriptUnLoadButton_Click">
-                            <icon:Material x:Name="ScriptUnLoad" Kind="TrashCan" />
-                        </Button>
-                    </Menu>
-                    <ListView Grid.Row="1" Name="ScriptList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" >
-                        <ListView.ItemsPanel >
-                            <ItemsPanelTemplate>
-                                <WrapPanel />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Width="300" Height="200">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{Binding Title}"/>
-                                    <icon:PackIconMaterial Grid.Row="1" Kind="Script" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Sound">
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Menu Grid.Row="0">
-                        <Button ToolTip="SoundLoad" x:Name="SoundLoadButton" Click="SoundLoadButton_Click">
-                            <icon:Material x:Name="SoundLoad" Kind="FilePlus" />
-                        </Button>
-                        <Button ToolTip="SoundUnLoad" x:Name="SoundUnLoadButton" Click="SoundUnLoadButton_Click">
-                            <icon:Material x:Name="SoundUnLoad" Kind="TrashCan" />
-                        </Button>
-                    </Menu>
-                    <ListView Grid.Row="1" Name="SoundList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" >
-                        <ListView.ItemsPanel >
-                            <ItemsPanelTemplate>
-                                <WrapPanel />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Width="300" Height="200">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{Binding Title}"/>
-                                    <icon:PackIconMaterial Grid.Row="1" Kind="VolumeHigh" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Motion">
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Menu Grid.Row="0">
-                        <Button ToolTip="MotionLoad" x:Name="MotionLoadButton" Click="MotionLoadButton_Click">
-                            <icon:Material x:Name="MotionLoad" Kind="FilePlus" />
-                        </Button>
-                        <Button ToolTip="MotionUnLoad" x:Name="MotionUnLoadButton" Click="MotionUnLoadButton_Click">
-                            <icon:Material x:Name="MotionUnLoad" Kind="TrashCan" />
-                        </Button>
-                    </Menu>
-                    <ListView Grid.Row="1" Name="MotionList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" >
-                        <ListView.ItemsPanel >
-                            <ItemsPanelTemplate>
-                                <WrapPanel />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Width="300" Height="200">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{Binding Title}"/>
-                                    <icon:PackIconFileIcons Grid.Row="1" Kind="Obj" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </TabItem>
-            <TabItem Header="VertexShader">
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Menu Grid.Row="0">
-                        <Button ToolTip="VertexShaderlLoad" x:Name="VertexShaderLoadButton" Click="VertexShaderLoadButton_Click">
-                            <icon:Material x:Name="VertexShaderLoad" Kind="FilePlus" />
-                        </Button>
-                        <Button ToolTip="VertexShaderUnLoad" x:Name="VertexShaderUnLoadButton" Click="VertexShaderUnLoadButton_Click">
-                            <icon:Material x:Name="VertexShaderUnLoad" Kind="TrashCan" />
-                        </Button>
-                    </Menu>
-                    <ListView Grid.Row="1" Name="VertexShaderList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" >
-                        <ListView.ItemsPanel >
-                            <ItemsPanelTemplate>
-                                <WrapPanel />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Width="300" Height="200">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{Binding Title}"/>
-                                    <icon:PackIconFileIcons Grid.Row="1" Kind="VertexShader" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </TabItem>
-            <TabItem Header="PixelShader">
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Menu Grid.Row="0">
-                        <Button ToolTip="PixelShaderlLoad" x:Name="PixelShaderLoadButton" Click="PixelShaderLoadButton_Click">
-                            <icon:Material x:Name="PixelShaderLoad" Kind="FilePlus" />
-                        </Button>
-                        <Button ToolTip="PixelShaderUnLoad" x:Name="PixelShaderUnLoadButton" Click="PixelShaderUnLoadButton_Click">
-                            <icon:Material x:Name="PixelShaderUnLoad" Kind="TrashCan" />
-                        </Button>
-                    </Menu>
-                    <ListView Grid.Row="1" Name="PixelShaderList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" >
-                        <ListView.ItemsPanel >
-                            <ItemsPanelTemplate>
-                                <WrapPanel />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Width="300" Height="200">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{Binding Title}"/>
-                                    <icon:PackIconFileIcons Grid.Row="1" Kind="VertexShader" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </TabItem>
-            <TabItem Header="GeometryShader">
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Menu Grid.Row="0">
-                        <Button ToolTip="GeometryShaderlLoad" x:Name="GeometryShaderLoadButton" Click="GeometryShaderLoadButton_Click">
-                            <icon:Material x:Name="GeometryShaderLoad" Kind="FilePlus" />
-                        </Button>
-                        <Button ToolTip="GeometryShaderUnLoad" x:Name="GeometryShaderUnLoadButton" Click="GeometryShaderUnLoadButton_Click">
-                            <icon:Material x:Name="GeometryShaderUnLoad" Kind="TrashCan" />
-                        </Button>
-                    </Menu>
-                    <ListView Grid.Row="1" Name="GeometryShaderList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" >
-                        <ListView.ItemsPanel >
-                            <ItemsPanelTemplate>
-                                <WrapPanel />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Width="300" Height="200">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{Binding Title}"/>
-                                    <icon:PackIconFileIcons Grid.Row="1" Kind="VertexShader" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </TabItem>
-            <TabItem Header="Font">
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Menu Grid.Row="0">
-                        <Button ToolTip="FontLoad" x:Name="FontLoadButton" Click="FontLoadButton_Click">
-                            <icon:Material x:Name="FontLoad" Kind="FilePlus" />
-                        </Button>
-                        <Button ToolTip="FontUnLoad" x:Name="FontUnLoadButton" Click="FontUnLoadButton_Click">
-                            <icon:Material x:Name="FontUnLoad" Kind="TrashCan" />
-                        </Button>
-                    </Menu>
-                    <ListView Grid.Row="1" Name="FontList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" >
-                        <ListView.ItemsPanel >
-                            <ItemsPanelTemplate>
-                                <WrapPanel />
-                            </ItemsPanelTemplate>
-                        </ListView.ItemsPanel>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid Width="300" Height="200">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{Binding Title}"/>
-                                    <icon:PackIconFileIcons Grid.Row="1" Kind="FontOutline" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
-            </TabItem>
-        </TabControl>
-    </Grid>
+
+    <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <TabControl>
+                <TabItem Header="Model">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Menu Grid.Row="0">
+                            <Button ToolTip="ModelLoad" x:Name="ModelLoadButton" Click="ModelLoadButton_Click">
+                                <icon:Material x:Name="ModelLoad" Kind="FilePlus" />
+                            </Button>
+                            <Button ToolTip="ModelUnLoad" x:Name="ModelUnLoadButton" Click="ModelUnLoadButton_Click">
+                                <icon:Material x:Name="ModelUnLoad" Kind="TrashCan" />
+                            </Button>
+                        </Menu>
+                        <ListView Grid.Row="1" Name="ModelList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}"  dd:DragDrop.IsDragSource="True" dd:DragDrop.UseDefaultDragAdorner="True">
+                            <ListView.ItemsPanel >
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Width="300" Height="200">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{Binding Title}"/>
+                                        <icon:PackIconFileIcons Grid.Row="1" Kind="Obj" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Material">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Menu Grid.Row="0">
+                            <Button ToolTip="Create Material" x:Name="MaterialCreateWindowButton" Click="MaterialCreateWindowButton_Click">
+                                <icon:Material x:Name="MaterialLoad" Kind="FilePlus" />
+                            </Button>
+                            <Button ToolTip="MaterialUnLoad" x:Name="MaterialUnLoadButton" Click="MaterialUnLoadButton_Click">
+                                <icon:Material x:Name="MaterialUnLoad" Kind="TrashCan" />
+                            </Button>
+                        </Menu>
+                        <ListView Grid.Row="1" Name="MaterialList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}"  dd:DragDrop.IsDragSource="True" dd:DragDrop.UseDefaultDragAdorner="True">
+                            <ListView.ItemsPanel >
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Width="300" Height="200">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{Binding MaterialName}"/>
+                                        <icon:PackIconFileIcons Grid.Row="1" Kind="Obj" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Texture">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Menu Grid.Row="0">
+                            <Button ToolTip="ImageLoad" x:Name="ImageLoadButton" Click="ImageLoadButton_Click">
+                                <icon:Material x:Name="ImageLoad" Kind="ImagePlus" />
+                            </Button>
+                            <Button ToolTip="ImageUnLoad" x:Name="ImageUnLoadButton" Click="ImageUnLoadButton_Click">
+                                <icon:Material x:Name="ImageUnLoad" Kind="TrashCan" />
+                            </Button>
+                        </Menu>
+                        <ListView Grid.Row="1" Name="TextureList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}"  dd:DragDrop.IsDragSource="True" dd:DragDrop.UseDefaultDragAdorner="True" >
+                            <ListView.ItemsPanel >
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Width="300" Height="200" Name="imageDragSource" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{Binding Title}"/>
+                                        <Image Grid.Row="1" Source="{Binding FilePath}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="RenderTargetTexture">
+                    <Grid Background="White" >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Menu Grid.Row="0" FocusManager.IsFocusScope="False">
+                            <Button x:Name="RenderTargetLoadButton"  ClickMode="Release" Click="RenderTargetCreateButton_Click" >
+                                <icon:Material x:Name="RenderTargetLoad" Kind="ImagePlus" />
+                            </Button>
+                            <Button ToolTip="RenderTargetUnLoad" x:Name="RenderTargetUnLoadButton" Click="RenderTargetUnLoadButton_Click">
+                                <icon:Material x:Name="RenderTargetUnLoad" Kind="TrashCan" />
+                            </Button>
+                        </Menu>
+                        <ListView Grid.Row="1" Name="RenderTargetTextureList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}"  dd:DragDrop.IsDragSource="True" dd:DragDrop.UseDefaultDragAdorner="True">
+                            <ListView.ItemsPanel >
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate >
+                                <DataTemplate >
+                                    <Grid Width="300" Height="200"  >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{Binding Title}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Shader">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Menu Grid.Row="0">
+                            <Button ToolTip="ShaderLoad" x:Name="ShaderLoadButton" Click="ShaderLoadButton_Click">
+                                <icon:Material x:Name="ShaderLoad" Kind="FilePlus" />
+                            </Button>
+                            <Button ToolTip="ShaderUnLoad" x:Name="ShaderUnLoadButton" Click="ShaderUnLoadButton_Click">
+                                <icon:Material x:Name="ShaderUnLoad" Kind="TrashCan" />
+                            </Button>
+                        </Menu>
+                        <ListView Grid.Row="1" Name="ShaderList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}"  dd:DragDrop.IsDragSource="True" dd:DragDrop.UseDefaultDragAdorner="True">
+                            <ListView.ItemsPanel >
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Width="300" Height="200" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{Binding ShaderName}"/>
+                                        <icon:PackIconFileIcons Grid.Row="1" Kind="Obj" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Script">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Menu Grid.Row="0">
+                            <Button ToolTip="ScriptLoad" x:Name="ScriptLoadButton" Click="ScriptLoadButton_Click">
+                                <icon:Material x:Name="ScriptLoad" Kind="FilePlus" />
+                            </Button>
+                            <Button ToolTip="ScriptUnLoad" x:Name="ScriptUnLoadButton" Click="ScriptUnLoadButton_Click">
+                                <icon:Material x:Name="ScriptUnLoad" Kind="TrashCan" />
+                            </Button>
+                        </Menu>
+                        <ListView Grid.Row="1" Name="ScriptList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" dd:DragDrop.IsDragSource="True" dd:DragDrop.UseDefaultDragAdorner="True">
+                            <ListView.ItemsPanel >
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Width="300" Height="200" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{Binding Title}"/>
+                                        <icon:PackIconMaterial Grid.Row="1" Kind="Script" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Sound">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Menu Grid.Row="0">
+                            <Button ToolTip="SoundLoad" x:Name="SoundLoadButton" Click="SoundLoadButton_Click">
+                                <icon:Material x:Name="SoundLoad" Kind="FilePlus" />
+                            </Button>
+                            <Button ToolTip="SoundUnLoad" x:Name="SoundUnLoadButton" Click="SoundUnLoadButton_Click">
+                                <icon:Material x:Name="SoundUnLoad" Kind="TrashCan" />
+                            </Button>
+                        </Menu>
+                        <ListView Grid.Row="1" Name="SoundList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" dd:DragDrop.IsDragSource="True" dd:DragDrop.UseDefaultDragAdorner="True">
+                            <ListView.ItemsPanel >
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Width="300" Height="200" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{Binding Title}"/>
+                                        <icon:PackIconMaterial Grid.Row="1" Kind="VolumeHigh" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Motion">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Menu Grid.Row="0">
+                            <Button ToolTip="MotionLoad" x:Name="MotionLoadButton" Click="MotionLoadButton_Click">
+                                <icon:Material x:Name="MotionLoad" Kind="FilePlus" />
+                            </Button>
+                            <Button ToolTip="MotionUnLoad" x:Name="MotionUnLoadButton" Click="MotionUnLoadButton_Click">
+                                <icon:Material x:Name="MotionUnLoad" Kind="TrashCan" />
+                            </Button>
+                        </Menu>
+                        <ListView Grid.Row="1" Name="MotionList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" dd:DragDrop.IsDragSource="True" dd:DragDrop.UseDefaultDragAdorner="True">
+                            <ListView.ItemsPanel >
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Width="300" Height="200" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{Binding Title}"/>
+                                        <icon:PackIconFileIcons Grid.Row="1" Kind="Obj" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="VertexShader">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Menu Grid.Row="0">
+                            <Button ToolTip="VertexShaderlLoad" x:Name="VertexShaderLoadButton" Click="VertexShaderLoadButton_Click">
+                                <icon:Material x:Name="VertexShaderLoad" Kind="FilePlus" />
+                            </Button>
+                            <Button ToolTip="VertexShaderUnLoad" x:Name="VertexShaderUnLoadButton" Click="VertexShaderUnLoadButton_Click">
+                                <icon:Material x:Name="VertexShaderUnLoad" Kind="TrashCan" />
+                            </Button>
+                        </Menu>
+                        <ListView Grid.Row="1" Name="VertexShaderList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" dd:DragDrop.IsDragSource="True" dd:DragDrop.UseDefaultDragAdorner="True">
+                            <ListView.ItemsPanel >
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Width="300" Height="200" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{Binding Title}"/>
+                                        <icon:PackIconFileIcons Grid.Row="1" Kind="VertexShader" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="PixelShader">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Menu Grid.Row="0">
+                            <Button ToolTip="PixelShaderlLoad" x:Name="PixelShaderLoadButton" Click="PixelShaderLoadButton_Click">
+                                <icon:Material x:Name="PixelShaderLoad" Kind="FilePlus" />
+                            </Button>
+                            <Button ToolTip="PixelShaderUnLoad" x:Name="PixelShaderUnLoadButton" Click="PixelShaderUnLoadButton_Click">
+                                <icon:Material x:Name="PixelShaderUnLoad" Kind="TrashCan" />
+                            </Button>
+                        </Menu>
+                        <ListView Grid.Row="1" Name="PixelShaderList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" dd:DragDrop.IsDragSource="True" dd:DragDrop.UseDefaultDragAdorner="True">
+                            <ListView.ItemsPanel >
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Width="300" Height="200" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{Binding Title}"/>
+                                        <icon:PackIconFileIcons Grid.Row="1" Kind="VertexShader" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="GeometryShader">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Menu Grid.Row="0">
+                            <Button ToolTip="GeometryShaderlLoad" x:Name="GeometryShaderLoadButton" Click="GeometryShaderLoadButton_Click">
+                                <icon:Material x:Name="GeometryShaderLoad" Kind="FilePlus" />
+                            </Button>
+                            <Button ToolTip="GeometryShaderUnLoad" x:Name="GeometryShaderUnLoadButton" Click="GeometryShaderUnLoadButton_Click">
+                                <icon:Material x:Name="GeometryShaderUnLoad" Kind="TrashCan" />
+                            </Button>
+                        </Menu>
+                        <ListView Grid.Row="1" Name="GeometryShaderList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" dd:DragDrop.IsDragSource="True" dd:DragDrop.UseDefaultDragAdorner="True">
+                            <ListView.ItemsPanel >
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Width="300" Height="200" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{Binding Title}"/>
+                                        <icon:PackIconFileIcons Grid.Row="1" Kind="VertexShader" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Font">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Menu Grid.Row="0">
+                            <Button ToolTip="FontLoad" x:Name="FontLoadButton" Click="FontLoadButton_Click">
+                                <icon:Material x:Name="FontLoad" Kind="FilePlus" />
+                            </Button>
+                            <Button ToolTip="FontUnLoad" x:Name="FontUnLoadButton" Click="FontUnLoadButton_Click">
+                                <icon:Material x:Name="FontUnLoad" Kind="TrashCan" />
+                            </Button>
+                        </Menu>
+                        <ListView Grid.Row="1" Name="FontList"  SelectionMode="Extended" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" dd:DragDrop.IsDragSource="True" dd:DragDrop.UseDefaultDragAdorner="True">
+                            <ListView.ItemsPanel >
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Width="300" Height="200" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Row="0" Text="{Binding Title}"/>
+                                        <icon:PackIconFileIcons Grid.Row="1" Kind="FontOutline" HorizontalAlignment="Center" VerticalAlignment="Center" Width="150" Height="150"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

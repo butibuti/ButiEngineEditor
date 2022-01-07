@@ -72,6 +72,9 @@
     <Page Update="Views\MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\Panes\HLSLCompilerView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Panes\ErrorListPane.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -82,6 +85,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Panes\RenderTargetCreateView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Panes\ButiScriptCompilerView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Panes\ShaderCreateView.xaml">
@@ -97,6 +103,11 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\Panes\SceneViewerPane.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\Themes\ButiEngineThemeBrush.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

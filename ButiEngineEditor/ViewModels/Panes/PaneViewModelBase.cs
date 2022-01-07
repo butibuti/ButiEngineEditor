@@ -10,6 +10,7 @@ using Livet.Messaging;
 using Livet.Messaging.IO;
 using Livet.EventListeners;
 using Livet.Messaging.Windows;
+using Xceed.Wpf.AvalonDock.Layout;
 
 namespace ButiEngineEditor.ViewModels.Panes
 {

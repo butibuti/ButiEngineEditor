@@ -22,6 +22,86 @@
 
   <ItemGroup>
     <None Remove="ViewModels\Panes\SceneViewerViewModel.cs~RF3faecc0d.TMP" />
+    <None Remove="Views\Themes\Images\DockAnchorableBottom.png" />
+    <None Remove="Views\Themes\Images\DockAnchorableLeft.png" />
+    <None Remove="Views\Themes\Images\DockAnchorableRight.png" />
+    <None Remove="Views\Themes\Images\DockAnchorableTop.png" />
+    <None Remove="Views\Themes\Images\DockDocumentAsAnchorableBottom.png" />
+    <None Remove="Views\Themes\Images\DockDocumentAsAnchorableLeft.png" />
+    <None Remove="Views\Themes\Images\DockDocumentAsAnchorableRight.png" />
+    <None Remove="Views\Themes\Images\DockDocumentAsAnchorableTop.png" />
+    <None Remove="Views\Themes\Images\DockDocumentBottom.png" />
+    <None Remove="Views\Themes\Images\DockDocumentInside.png" />
+    <None Remove="Views\Themes\Images\DockDocumentLeft.png" />
+    <None Remove="Views\Themes\Images\DockDocumentRight.png" />
+    <None Remove="Views\Themes\Images\DockDocumentTop.png" />
+    <None Remove="Views\Themes\Images\DockPaneEmpty.png" />
+    <None Remove="Views\Themes\Images\DockPaneLargeEmpty.png" />
+    <None Remove="Views\Themes\Images\HTabGroup.png" />
+    <None Remove="Views\Themes\Images\Locked.png" />
+    <None Remove="Views\Themes\Images\PinAutoHide.png" />
+    <None Remove="Views\Themes\Images\PinAutoHide_Black.png" />
+    <None Remove="Views\Themes\Images\PinAutoHide_Dark.png" />
+    <None Remove="Views\Themes\Images\PinClose.png" />
+    <None Remove="Views\Themes\Images\PinClose_Black.png" />
+    <None Remove="Views\Themes\Images\PinClose_Dark.png" />
+    <None Remove="Views\Themes\Images\PinDocMenu.png" />
+    <None Remove="Views\Themes\Images\PinDocMenu_Black.png" />
+    <None Remove="Views\Themes\Images\PinMaximize.png" />
+    <None Remove="Views\Themes\Images\PinMaximize_Black.png" />
+    <None Remove="Views\Themes\Images\PinMaximize_Dark.png" />
+    <None Remove="Views\Themes\Images\PinMenu.png" />
+    <None Remove="Views\Themes\Images\PinMenu_Black.png" />
+    <None Remove="Views\Themes\Images\PinMenu_Dark.png" />
+    <None Remove="Views\Themes\Images\PinRestore.png" />
+    <None Remove="Views\Themes\Images\PinRestore_Black.png" />
+    <None Remove="Views\Themes\Images\PinRestore_Dark.png" />
+    <None Remove="Views\Themes\Images\VTabGroup.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="Views\Themes\ButiEngineTheme.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Views\Themes\ButiEngineTheme.xaml">
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Resource>
+    <Resource Include="Views\Themes\Images\DockAnchorableBottom.png" />
+    <Resource Include="Views\Themes\Images\DockAnchorableLeft.png" />
+    <Resource Include="Views\Themes\Images\DockAnchorableRight.png" />
+    <Resource Include="Views\Themes\Images\DockAnchorableTop.png" />
+    <Resource Include="Views\Themes\Images\DockDocumentAsAnchorableBottom.png" />
+    <Resource Include="Views\Themes\Images\DockDocumentAsAnchorableLeft.png" />
+    <Resource Include="Views\Themes\Images\DockDocumentAsAnchorableRight.png" />
+    <Resource Include="Views\Themes\Images\DockDocumentAsAnchorableTop.png" />
+    <Resource Include="Views\Themes\Images\DockDocumentBottom.png" />
+    <Resource Include="Views\Themes\Images\DockDocumentInside.png" />
+    <Resource Include="Views\Themes\Images\DockDocumentLeft.png" />
+    <Resource Include="Views\Themes\Images\DockDocumentRight.png" />
+    <Resource Include="Views\Themes\Images\DockDocumentTop.png" />
+    <Resource Include="Views\Themes\Images\DockPaneEmpty.png" />
+    <Resource Include="Views\Themes\Images\DockPaneLargeEmpty.png" />
+    <Resource Include="Views\Themes\Images\HTabGroup.png" />
+    <Resource Include="Views\Themes\Images\Locked.png" />
+    <Resource Include="Views\Themes\Images\PinAutoHide.png" />
+    <Resource Include="Views\Themes\Images\PinAutoHide_Black.png" />
+    <Resource Include="Views\Themes\Images\PinAutoHide_Dark.png" />
+    <Resource Include="Views\Themes\Images\PinClose.png" />
+    <Resource Include="Views\Themes\Images\PinClose_Black.png" />
+    <Resource Include="Views\Themes\Images\PinClose_Dark.png" />
+    <Resource Include="Views\Themes\Images\PinDocMenu.png" />
+    <Resource Include="Views\Themes\Images\PinDocMenu_Black.png" />
+    <Resource Include="Views\Themes\Images\PinMaximize.png" />
+    <Resource Include="Views\Themes\Images\PinMaximize_Black.png" />
+    <Resource Include="Views\Themes\Images\PinMaximize_Dark.png" />
+    <Resource Include="Views\Themes\Images\PinMenu.png" />
+    <Resource Include="Views\Themes\Images\PinMenu_Black.png" />
+    <Resource Include="Views\Themes\Images\PinMenu_Dark.png" />
+    <Resource Include="Views\Themes\Images\PinRestore.png" />
+    <Resource Include="Views\Themes\Images\PinRestore_Black.png" />
+    <Resource Include="Views\Themes\Images\PinRestore_Dark.png" />
+    <Resource Include="Views\Themes\Images\VTabGroup.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,6 +128,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Update="ViewModels\Panes\HLSLCompilerViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ViewModels\Panes\ButiScriptCompilerViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ViewModels\Panes\ShaderCreateViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -57,7 +143,13 @@
     <Compile Update="ViewModels\Panes\MaterialCreateViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Panes\HLSLCompilerView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Panes\RenderTargetCreateView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Panes\ButiScriptCompilerView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Panes\ShaderCreateView.xaml.cs">
@@ -76,15 +168,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Themes\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ButigRPC\ButigRPC.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Views\Panes\HLSLCompilerView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Panes\RenderTargetCreateView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Panes\ButiScriptCompilerView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>
@@ -95,6 +191,10 @@
     <Page Update="Views\Panes\MaterialCreateView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Themes\ButiEngineThemeBrush.xaml">
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Page>
   </ItemGroup>
 

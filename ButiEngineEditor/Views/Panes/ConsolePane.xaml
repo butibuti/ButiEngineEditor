@@ -14,27 +14,30 @@
     <UserControl.DataContext>
         <vmp:ConsoleViewModel/>
     </UserControl.DataContext>
-    <Grid>
-        <ListView Name="ConsoleList" Grid.Row="0" ItemsSource="{Binding}">
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}">
-                    <Setter Property="Foreground" Value="{Binding Color}"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Message"  DisplayMemberBinding="{Binding Content}" />
-                    <GridViewColumn Header="Count"  DisplayMemberBinding="{Binding Count}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Menu Grid.Row="0" Background="{x:Null}" HorizontalAlignment="Right">
-            <Button ToolTip="Ascending/Descending" x:Name="OrderFlip" Click="OrderFlip_Click">
-                <icon:Material x:Name="OrderIcon" Kind="SortClockDescending" />
-            </Button>
-            <Button ToolTip="Clear" Click="Button_Click">
-                <icon:Modern Kind="Clear"/>
-            </Button>
-        </Menu>
-    </Grid>
+
+    <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <ListView Name="ConsoleList" Grid.Row="0" ItemsSource="{Binding}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Setter Property="Foreground" Value="{Binding Color}"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Message"  DisplayMemberBinding="{Binding Content}" />
+                        <GridViewColumn Header="Count"  DisplayMemberBinding="{Binding Count}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Menu Grid.Row="0" Background="{x:Null}" HorizontalAlignment="Right">
+                <Button ToolTip="Ascending/Descending" x:Name="OrderFlip" Click="OrderFlip_Click">
+                    <icon:Material x:Name="OrderIcon" Kind="SortClockDescending" />
+                </Button>
+                <Button ToolTip="Clear" Click="Button_Click">
+                    <icon:Modern Kind="Clear"/>
+                </Button>
+            </Menu>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

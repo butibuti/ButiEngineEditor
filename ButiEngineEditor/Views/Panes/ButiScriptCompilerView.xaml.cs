@@ -25,29 +25,12 @@ using System.Windows.Shapes;
 
 namespace ButiEngineEditor.Views.Panes
 {
-    public partial class ShaderCreateView : UserControl
+    public partial class ButiScriptCompilerView : UserControl
     {
-        public ShaderCreateView()
+        public ButiScriptCompilerView()
         {
             InitializeComponent();
         }
 
-        private void ShaderCreateButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (ShaderNameBox.Text.Length < 1) { return; }
-            ((ShaderCreateViewModel)DataContext).CreateShader();
-        }
-        private void VSDeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            ((ShaderCreateViewModel)DataContext).VertexShader.Title = "None";
-        }
-        private void PSDeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            ((ShaderCreateViewModel)DataContext).PixelShader.Title = "None";
-        }
-        private void GSDeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            ((ShaderCreateViewModel)DataContext).GeometryShader.Title = "None";
-        }
     }
 }

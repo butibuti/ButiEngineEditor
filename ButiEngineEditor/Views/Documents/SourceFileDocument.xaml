@@ -6,8 +6,10 @@
              xmlns:local="clr-namespace:ButiEngineEditor.Views.Documents"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
 
-        <TextBlock>SourceFileDocument</TextBlock>
-    </Grid>
+    <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <TextBlock>SourceFileDocument</TextBlock>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

@@ -34,9 +34,9 @@ namespace ButiEngineEditor.Models
     class ShaderCreateModel : NotificationObject
     {
         public string ShaderName { get; set; } = "";
-        public string VertexShader { get; set; } = "";
-        public string PixelShader { get; set; } = "";
-        public string GeometryShader { get; set; } = "";
+        public ResourceLoadViewModel.VerexShaderData VertexShader { get; set; } = new ResourceLoadViewModel.VerexShaderData() { Title = "None", FilePath = "" };
+        public ResourceLoadViewModel.PixelShaderData PixelShader { get; set; } = new ResourceLoadViewModel.PixelShaderData() { Title = "None", FilePath = "" };
+        public ResourceLoadViewModel.GeometryShaderData GeometryShader { get; set; } = new ResourceLoadViewModel.GeometryShaderData() { Title = "None", FilePath = "" };
     }
 
 

@@ -16,6 +16,12 @@ namespace ButiEngineEditor.Models
         private static MaterialCreateModel _materialCreateModel;
         private static RenderTargetCreateModel _RTCreateModel;
         private static ShaderCreateModel _shaderCreateModel;
+        private static ButiScriptCompilerModel _butiScriptCompilerModel;
+        private static HLSLCompilerModel _hlslCompilerModel;
+        private static InspectorModel _inspectorModel;
+        private static HierarchyModel _hierarchyModel;
+        private static CollisionSettingsModel _collisionSettingsModel;
+        private static RenderingSettingsModel _renderingSettingsModel;
         public static SceneControllerModel SceneControllerModel { get { if (_sceneControllerModel == null) { _sceneControllerModel = new SceneControllerModel(); } return _sceneControllerModel; } }
         public static ProjectSettingsModel ProjectSettingsModel { get { if (_projectSettingsModel == null) { _projectSettingsModel = new ProjectSettingsModel(App.GetArgments()[0]); }   return _projectSettingsModel; } }
         public static FPSMonitorModel FPSMonitorModel { get { if (_fpsMonitorModel == null) { _fpsMonitorModel = new FPSMonitorModel(); }   return _fpsMonitorModel; } }
@@ -24,6 +30,12 @@ namespace ButiEngineEditor.Models
         public static MaterialCreateModel MaterialCreateModel { get { if (_materialCreateModel == null) { _materialCreateModel = new MaterialCreateModel(); }   return _materialCreateModel; } }
         public static RenderTargetCreateModel RenderTargetCreateModel { get { if (_RTCreateModel== null) { _RTCreateModel= new RenderTargetCreateModel(); }   return _RTCreateModel; } }
         public static ShaderCreateModel ShaderCreateModel { get { if (_shaderCreateModel == null) { _shaderCreateModel = new ShaderCreateModel(); }   return _shaderCreateModel; } }
+        public static ButiScriptCompilerModel ButiScriptCompilerModel { get { if (_butiScriptCompilerModel == null) { _butiScriptCompilerModel = new ButiScriptCompilerModel(); }   return _butiScriptCompilerModel; } }
+        public static HLSLCompilerModel HLSLCompilerModel { get { if (_hlslCompilerModel == null) { _hlslCompilerModel = new HLSLCompilerModel(); }   return _hlslCompilerModel; } }
+        public static InspectorModel InspectorModel { get { if (_inspectorModel == null) { _inspectorModel = new InspectorModel(); }   return _inspectorModel; } }
+        public static HierarchyModel HierarchyModel { get { if (_hierarchyModel == null) { _hierarchyModel = new HierarchyModel(); }   return _hierarchyModel; } }
+        public static CollisionSettingsModel CollisionSettingsModel { get { if (_collisionSettingsModel == null) { _collisionSettingsModel = new CollisionSettingsModel(); }   return _collisionSettingsModel; } }
+        public static RenderingSettingsModel RenderingSettingsModel { get { if (_renderingSettingsModel == null) { _renderingSettingsModel = new RenderingSettingsModel(); }   return _renderingSettingsModel; } }
     }
     class CommunicateEachFrame
     {

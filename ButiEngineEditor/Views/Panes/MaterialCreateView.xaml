@@ -29,112 +29,113 @@
     <UserControl.DataContext>
         <vmp:MaterialCreateViewModel/>
     </UserControl.DataContext>
-    <Grid Margin="5" Background="#FF26272C" >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Text="・Create Material" Foreground="White" />
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="・Name" Foreground="White" />
-        <TextBox Grid.Row="1" Grid.Column="1" Name="MaterialNameBox" Background="{x:Null}" Foreground="White" MinWidth="103" Text="{Binding MaterialName}"/>
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="・Diffuse" Foreground="White" />
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="・Ambient" Foreground="White" />
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="・Emissive" Foreground="White" />
-        <TextBlock Grid.Row="5" Grid.Column="0" Text="・Specular" Foreground="White" />
-        <!--<TextBlock Grid.Row="6" Grid.Column="0" Text="・Roughness" Foreground="White" />
-                            <Slider Grid.Row="6" Grid.Column="1" MinWidth="200"/>-->
-        <ToggleButton Name="DiffuseColorPickerButton" Grid.Row="2" Grid.Column="1"  ClickMode="Release" IsEnabled="{Binding Path=IsOpen, ElementName=DiffusePopUp, Converter={StaticResource BoolToInvertedBoolConverter}}" 
+
+    <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid Margin="5" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Text="・Create Material" />
+            <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Text="・Name"  />
+            <TextBox Grid.Row="1" Grid.Column="1" Name="MaterialNameBox" VerticalAlignment="Center"  MinWidth="103" Text="{Binding MaterialName}"/>
+            <TextBlock Grid.Row="2" Grid.Column="0"  VerticalAlignment="Center" Text="・Diffuse" />
+            <TextBlock Grid.Row="3" Grid.Column="0"  VerticalAlignment="Center" Text="・Ambient" />
+            <TextBlock Grid.Row="4" Grid.Column="0"  VerticalAlignment="Center" Text="・Emissive "  />
+            <TextBlock Grid.Row="5" Grid.Column="0"  VerticalAlignment="Center" Text="・Specular " />
+            <ToggleButton Name="DiffuseColorPickerButton" Grid.Row="2" Grid.Column="1"  ClickMode="Release" IsEnabled="{Binding Path=IsOpen, ElementName=DiffusePopUp, Converter={StaticResource BoolToInvertedBoolConverter}}" 
                                           Background="{Binding Path=SelectedColor, ElementName=DiffuseMain, Converter={StaticResource ColorToBrushConverter}}"/>
-        <ToggleButton Name="AmbientColorPickerButton" Grid.Row="3" Grid.Column="1"  ClickMode="Release" IsEnabled="{Binding Path=IsOpen, ElementName=AmbientPopUp, Converter={StaticResource BoolToInvertedBoolConverter}}" 
+            <ToggleButton Name="AmbientColorPickerButton" Grid.Row="3" Grid.Column="1"  ClickMode="Release" IsEnabled="{Binding Path=IsOpen, ElementName=AmbientPopUp, Converter={StaticResource BoolToInvertedBoolConverter}}" 
                                           Background="{Binding Path=SelectedColor, ElementName=AmbientMain, Converter={StaticResource ColorToBrushConverter}}"/>
-        <ToggleButton Name="EmissiveColorPickerButton" Grid.Row="4" Grid.Column="1"  ClickMode="Release" IsEnabled="{Binding Path=IsOpen, ElementName=EmissivePopUp, Converter={StaticResource BoolToInvertedBoolConverter}}" 
+            <ToggleButton Name="EmissiveColorPickerButton" Grid.Row="4" Grid.Column="1"  ClickMode="Release" IsEnabled="{Binding Path=IsOpen, ElementName=EmissivePopUp, Converter={StaticResource BoolToInvertedBoolConverter}}" 
                                           Background="{Binding Path=SelectedColor, ElementName=EmissiveMain, Converter={StaticResource ColorToBrushConverter}}"/>
-        <ToggleButton Name="SpecularColorPickerButton" Grid.Row="5" Grid.Column="1"  ClickMode="Release" IsEnabled="{Binding Path=IsOpen, ElementName=SpecularPopUp, Converter={StaticResource BoolToInvertedBoolConverter}}" 
+            <ToggleButton Name="SpecularColorPickerButton" Grid.Row="5" Grid.Column="1"  ClickMode="Release" IsEnabled="{Binding Path=IsOpen, ElementName=SpecularPopUp, Converter={StaticResource BoolToInvertedBoolConverter}}" 
                                           Background="{Binding Path=SelectedColor, ElementName=SpecularMain, Converter={StaticResource ColorToBrushConverter}}"/>
 
-        <TextBlock Text="・Textures" Grid.Row="6" Grid.Column="0" Foreground="White"/>
-        <Menu Grid.Row="6" Grid.Column="1" Background="{x:Null}">
-            <Button Name="TextureDeleteButton" Click="TextureDeleteButton_Click">
-                <icon:PackIconMaterial Grid.Row="0" Grid.Column="1" Kind="TrashCan" HorizontalAlignment="Center"  />
+            <TextBlock Text="・Textures" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center"/>
+            <Menu Grid.Row="6" Grid.Column="1" Background="{x:Null}" HorizontalAlignment="Center">
+                <Button Name="TextureDeleteButton" Click="TextureDeleteButton_Click">
+                    <icon:PackIconMaterial Grid.Row="0" Grid.Column="1" Kind="TrashCan" HorizontalAlignment="Center"  />
+                </Button>
+            </Menu>
+            <Grid Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding TextureListCustomDropHandler}">
+                <ListView   Name="Textures"  SelectionMode="Extended" ItemsSource="{Binding}" >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0"  Text="{Binding Title}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+            <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" ToolTip="OK" x:Name="MaterialOKButton" Click="MaterialCreateButton_Click">
+                <icon:Material Width="50" Kind="CheckOutline" />
             </Button>
-        </Menu>
-        <Grid Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" dd:DragDrop.IsDropTarget="True" dd:DragDrop.DropHandler="{Binding TextureListCustomDropHandler}">
-            <ListView   Name="Textures"  SelectionMode="Extended" ItemsSource="{Binding}" >
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid >
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0"  Text="{Binding Title}"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+
+            <Popup Name="DiffusePopUp" StaysOpen="False"  Placement="Top" IsOpen="{Binding Path=IsChecked, ElementName=DiffuseColorPickerButton, Mode=TwoWay}" >
+                <Grid Margin="5" Background="#FF26272C" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <colorpicker:SquarePicker Grid.Row="0" MinWidth="200" MinHeight="200" Name="DiffuseMain" SelectedColor="{Binding Diffuse,Mode=TwoWay}"/>
+                    <colorpicker:ColorSliders Grid.Row="1" Name="DiffuseSlider" ColorState="{Binding ElementName=DiffuseMain, Path=ColorState, Mode=TwoWay}" ShowAlpha="True"/>
+                    <colorpicker:HexColorTextBox Grid.Row="2" Name="DiffuseText" ColorState="{Binding ElementName=DiffuseMain, Path=ColorState, Mode=TwoWay}" ShowAlpha="True"/>
+                </Grid>
+            </Popup>
+            <Popup Name="AmbientPopUp" StaysOpen="False"  Placement="Top" IsOpen="{Binding Path=IsChecked, ElementName=AmbientColorPickerButton, Mode=TwoWay}" >
+                <Grid Margin="5" Background="#FF26272C" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <colorpicker:SquarePicker Grid.Row="0" MinWidth="200" MinHeight="200" Name="AmbientMain" SelectedColor="{Binding Ambient,Mode=TwoWay}"/>
+                    <colorpicker:ColorSliders Grid.Row="1" Name="AmbientSlider" ColorState="{Binding ElementName=AmbientMain, Path=ColorState, Mode=TwoWay}" ShowAlpha="True"/>
+                    <colorpicker:HexColorTextBox Grid.Row="2" Name="AmbientText" ColorState="{Binding ElementName=AmbientMain, Path=ColorState, Mode=TwoWay}" ShowAlpha="True"/>
+                </Grid>
+            </Popup>
+            <Popup Name="EmissivePopUp" StaysOpen="False"  Placement="Top" IsOpen="{Binding Path=IsChecked, ElementName=EmissiveColorPickerButton, Mode=TwoWay}" >
+                <Grid Margin="5" Background="#FF26272C" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <colorpicker:SquarePicker Grid.Row="0" MinWidth="200" MinHeight="200" Name="EmissiveMain" SelectedColor="{Binding Emissive,Mode=TwoWay}"/>
+                    <colorpicker:ColorSliders Grid.Row="1" Name="EmissiveSlider" ColorState="{Binding ElementName=EmissiveMain, Path=ColorState, Mode=TwoWay}" ShowAlpha="True"/>
+                    <colorpicker:HexColorTextBox Grid.Row="2" Name="EmissiveText" ColorState="{Binding ElementName=EmissiveMain, Path=ColorState, Mode=TwoWay}" ShowAlpha="True"/>
+                </Grid>
+            </Popup>
+            <Popup Name="SpecularPopUp" StaysOpen="False"  Placement="Top" IsOpen="{Binding Path=IsChecked, ElementName=SpecularColorPickerButton, Mode=TwoWay}" >
+                <Grid Margin="5" Background="#FF26272C" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <colorpicker:SquarePicker Grid.Row="0" MinWidth="200" MinHeight="200" Name="SpecularMain" SelectedColor="{Binding Specular,Mode=TwoWay}"/>
+                    <colorpicker:ColorSliders Grid.Row="1" Name="SpecularSlider" ColorState="{Binding ElementName=SpecularMain, Path=ColorState, Mode=TwoWay}" ShowAlpha="True"/>
+                    <colorpicker:HexColorTextBox Grid.Row="2" Name="SpecularText" ColorState="{Binding ElementName=SpecularMain, Path=ColorState, Mode=TwoWay}" ShowAlpha="True"/>
+                </Grid>
+            </Popup>
+
         </Grid>
-        <Button Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" ToolTip="OK" x:Name="MaterialOKButton" Click="MaterialCreateButton_Click">
-            <icon:Material Width="50" Kind="CheckOutline" />
-        </Button>
-
-        <Popup Name="DiffusePopUp" StaysOpen="False"  Placement="Top" IsOpen="{Binding Path=IsChecked, ElementName=DiffuseColorPickerButton, Mode=TwoWay}" >
-            <Grid Margin="5" Background="#FF26272C" >
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <colorpicker:SquarePicker Grid.Row="0" MinWidth="200" MinHeight="200" Name="DiffuseMain" SelectedColor="{Binding Diffuse,Mode=TwoWay}"/>
-                <colorpicker:ColorSliders Grid.Row="1" Name="DiffuseSlider" ColorState="{Binding ElementName=DiffuseMain, Path=ColorState, Mode=TwoWay}" ShowAlpha="True"/>
-                <colorpicker:HexColorTextBox Grid.Row="2" Name="DiffuseText" ColorState="{Binding ElementName=DiffuseMain, Path=ColorState, Mode=TwoWay}" ShowAlpha="True"/>
-            </Grid>
-        </Popup>
-        <Popup Name="AmbientPopUp" StaysOpen="False"  Placement="Top" IsOpen="{Binding Path=IsChecked, ElementName=AmbientColorPickerButton, Mode=TwoWay}" >
-            <Grid Margin="5" Background="#FF26272C" >
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <colorpicker:SquarePicker Grid.Row="0" MinWidth="200" MinHeight="200" Name="AmbientMain" SelectedColor="{Binding Ambient,Mode=TwoWay}"/>
-                <colorpicker:ColorSliders Grid.Row="1" Name="AmbientSlider" ColorState="{Binding ElementName=AmbientMain, Path=ColorState, Mode=TwoWay}" ShowAlpha="True"/>
-                <colorpicker:HexColorTextBox Grid.Row="2" Name="AmbientText" ColorState="{Binding ElementName=AmbientMain, Path=ColorState, Mode=TwoWay}" ShowAlpha="True"/>
-            </Grid>
-        </Popup>
-        <Popup Name="EmissivePopUp" StaysOpen="False"  Placement="Top" IsOpen="{Binding Path=IsChecked, ElementName=EmissiveColorPickerButton, Mode=TwoWay}" >
-            <Grid Margin="5" Background="#FF26272C" >
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <colorpicker:SquarePicker Grid.Row="0" MinWidth="200" MinHeight="200" Name="EmissiveMain" SelectedColor="{Binding Emissive,Mode=TwoWay}"/>
-                <colorpicker:ColorSliders Grid.Row="1" Name="EmissiveSlider" ColorState="{Binding ElementName=EmissiveMain, Path=ColorState, Mode=TwoWay}" ShowAlpha="True"/>
-                <colorpicker:HexColorTextBox Grid.Row="2" Name="EmissiveText" ColorState="{Binding ElementName=EmissiveMain, Path=ColorState, Mode=TwoWay}" ShowAlpha="True"/>
-            </Grid>
-        </Popup>
-        <Popup Name="SpecularPopUp" StaysOpen="False"  Placement="Top" IsOpen="{Binding Path=IsChecked, ElementName=SpecularColorPickerButton, Mode=TwoWay}" >
-            <Grid Margin="5" Background="#FF26272C" >
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <colorpicker:SquarePicker Grid.Row="0" MinWidth="200" MinHeight="200" Name="SpecularMain" SelectedColor="{Binding Specular,Mode=TwoWay}"/>
-                <colorpicker:ColorSliders Grid.Row="1" Name="SpecularSlider" ColorState="{Binding ElementName=SpecularMain, Path=ColorState, Mode=TwoWay}" ShowAlpha="True"/>
-                <colorpicker:HexColorTextBox Grid.Row="2" Name="SpecularText" ColorState="{Binding ElementName=SpecularMain, Path=ColorState, Mode=TwoWay}" ShowAlpha="True"/>
-            </Grid>
-        </Popup>
-
-    </Grid>
+    </ScrollViewer>
 </UserControl>

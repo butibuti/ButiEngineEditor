@@ -7,19 +7,21 @@
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="ButiEngineEditor.Views.Panes.ErrorListPane"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded" mah:ControlsHelper.ContentCharacterCasing="Lower">
-    <Grid>
 
-        <ListView x:Name="listView1" ItemsSource="{Binding}" Background="White" Foreground="#FF001344" BorderBrush="White" >
-            <ListView.Resources>
-                <Style TargetType="{x:Type ListViewItem}"/>
-            </ListView.Resources>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Code"  DisplayMemberBinding="{Binding Code}" Width="50" />
-                    <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" Width="100" />
-                    <GridViewColumn Header="Location" DisplayMemberBinding="{Binding Location}" Width="100" />
-                </GridView>
-            </ListView.View>
-        </ListView>
-    </Grid>
+    <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <ListView x:Name="listView1" ItemsSource="{Binding}" Background="White" Foreground="#FF001344" BorderBrush="White" >
+                <ListView.Resources>
+                    <Style TargetType="{x:Type ListViewItem}"/>
+                </ListView.Resources>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Code"  DisplayMemberBinding="{Binding Code}" Width="50" />
+                        <GridViewColumn Header="Description" DisplayMemberBinding="{Binding Description}" Width="100" />
+                        <GridViewColumn Header="Location" DisplayMemberBinding="{Binding Location}" Width="100" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

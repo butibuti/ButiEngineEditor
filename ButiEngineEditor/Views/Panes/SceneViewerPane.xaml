@@ -32,7 +32,9 @@
         </behaviors:EventTrigger>
     </behaviors:Interaction.Triggers>
 
-    <Grid>
-        <Image x:Name="SceneImage" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center"/>
-    </Grid>
+    <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Image x:Name="SceneImage" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center"/>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

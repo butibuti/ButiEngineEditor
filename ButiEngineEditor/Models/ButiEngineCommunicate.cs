@@ -72,6 +72,19 @@ namespace ButiEngineEditor.Models
     public class ConsoleModel : NotificationObject
     {
     }
+    public class HLSLCompilerModel : NotificationObject
+    {
+        public string FilePath { get; set; }
+    }
+    public class ButiScriptCompilerModel : NotificationObject
+    {
+        public string FilePath { get; set; }
+    }
+    public class RenderingSettingsModel : NotificationObject { }
+    public class CollisionSettingsModel : NotificationObject { }
+    public class InspectorModel : NotificationObject { }
+    public class HierarchyModel : NotificationObject { }
+
 
     public class SceneControllerModel : NotificationObject
     {

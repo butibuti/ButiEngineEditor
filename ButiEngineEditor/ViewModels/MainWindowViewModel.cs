@@ -100,6 +100,8 @@ namespace ButiEngineEditor.ViewModels
             RegistPaneType<MaterialCreateViewModel>(true);
             RegistPaneType<RenderTargetCreateViewModel>(true);
             RegistPaneType<ShaderCreateViewModel>(true);
+            RegistPaneType<HLSLCompilerViewModel>(true);
+            RegistPaneType<ButiScriptCompilerViewModel>(true);
             mainWindowModel = new MainWindowModel();
 
             var t=Models.Modules.ButiEngineIO.MessageStream();
@@ -196,11 +198,11 @@ namespace ButiEngineEditor.ViewModels
             DockingDocumentViewModels.Add(arg_VM);
             return arg_VM;
         }
-        public void RemoveDockingPanel<Type>()
+        public void RemoveDockingPanel<T>()
         {
-            if (dic_uniqueViewModels[typeof(Type)] != null)
+            if (dic_uniqueViewModels[typeof(T)] != null)
             {
-                dic_uniqueViewModels[typeof(Type)] = null;
+                dic_uniqueViewModels[typeof(T)] = null;
             }
         }
         public void RemoveDockingPanel(Type arg_type)
@@ -209,6 +211,26 @@ namespace ButiEngineEditor.ViewModels
             {
                 dic_uniqueViewModels[arg_type] = null;
             }
+        }
+        public bool Contains_pane<T>()
+        {
+            var panes = DockingPaneViewModels.Where(vm => { return vm.GetType().Equals(typeof(T)); }).ToArray();
+
+            return panes.Length != 0;
+        }
+        public bool Contains_document<T>()
+        {
+            var docs = DockingDocumentViewModels.Where(vm => { return vm.GetType().Equals(typeof(T)); }).ToArray();
+
+            return docs.Length != 0;
+        }
+        public bool Contains_unique<T>()
+        {
+            return dic_uniqueViewModels[typeof(T)] != null;
+        }
+        public bool Contains_unique(Type arg_type)
+        {
+            return dic_uniqueViewModels[arg_type] != null;
         }
         protected override void Dispose(bool arg_disposing)
         {

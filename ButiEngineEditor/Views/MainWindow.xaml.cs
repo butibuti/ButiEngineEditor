@@ -16,6 +16,7 @@ using ButiEngineEditor.Models;
 using ButiEngineEditor.ViewModels;
 using ButiEngineEditor.ViewModels.Documents;
 using ButiEngineEditor.ViewModels.Panes;
+using Livet;
 using MahApps.Metro.Controls;
 
 using Xceed.Wpf.AvalonDock.Layout.Serialization;
@@ -65,7 +66,7 @@ namespace ButiEngineEditor.Views
                 }
              );
         }
-        private void RecursiveLayoutGetElements(Xceed.Wpf.AvalonDock.Layout.ILayoutContainer arg_layout,List< Xceed.Wpf.AvalonDock.Layout.LayoutContent> arg_outputContents)
+        private void RecursiveLayoutGetElements(Xceed.Wpf.AvalonDock.Layout.ILayoutContainer arg_layout, List<Xceed.Wpf.AvalonDock.Layout.LayoutContent> arg_outputContents)
         {
             if (arg_layout.ChildrenCount == 0)
             {
@@ -84,6 +85,53 @@ namespace ButiEngineEditor.Views
                 }
             });
         }
+        private void RecursiveLayoutGetElements<SearchType>(Xceed.Wpf.AvalonDock.Layout.ILayoutContainer arg_layout, List<Xceed.Wpf.AvalonDock.Layout.LayoutContent> arg_outputContents)
+        {
+            if (arg_layout.ChildrenCount == 0)
+            {
+                return;
+            }
+
+            arg_layout.Children.ToList().ForEach(layout =>
+            {
+                if (layout.GetType().IsSubclassOf(typeof(Xceed.Wpf.AvalonDock.Layout.LayoutContent)))
+                {
+                    if(((Xceed.Wpf.AvalonDock.Layout.LayoutContent)layout).Content.GetType().Equals(typeof(SearchType)))
+                    arg_outputContents.Add((Xceed.Wpf.AvalonDock.Layout.LayoutContent)layout);
+                }
+                if (layout.GetType().GetInterfaces().Contains(typeof(Xceed.Wpf.AvalonDock.Layout.ILayoutContainer)))
+                {
+                    RecursiveLayoutGetElements<SearchType>((Xceed.Wpf.AvalonDock.Layout.ILayoutContainer)layout, arg_outputContents);
+                }
+            });
+        }
+        private Xceed.Wpf.AvalonDock.Layout.LayoutContent RecursiveLayoutGetElement<SearchType>(Xceed.Wpf.AvalonDock.Layout.ILayoutContainer arg_layout)
+        {
+            if (arg_layout.ChildrenCount == 0)
+            {
+                return null;
+            }
+            Xceed.Wpf.AvalonDock.Layout.LayoutContent output = null;
+            arg_layout.Children.ToList().ForEach(layout =>
+            {
+                if (output != null)
+                {
+                    return;
+                }
+                if (layout.GetType().IsSubclassOf(typeof(Xceed.Wpf.AvalonDock.Layout.LayoutContent)))
+                {
+                    if (((Xceed.Wpf.AvalonDock.Layout.LayoutContent)layout).Content.GetType().Equals(typeof(SearchType)))
+                    {
+                        output=(Xceed.Wpf.AvalonDock.Layout.LayoutContent)layout;
+                    }   
+                }
+                if (layout.GetType().GetInterfaces().Contains(typeof(Xceed.Wpf.AvalonDock.Layout.ILayoutContainer)))
+                {
+                    output= RecursiveLayoutGetElement<SearchType>((Xceed.Wpf.AvalonDock.Layout.ILayoutContainer)layout);
+                }
+            });
+            return output;
+        }
         public void LayoutSave()
         {
             XmlLayoutSerializer layoutSerializer = new XmlLayoutSerializer(_dockingManager);
@@ -100,41 +148,69 @@ namespace ButiEngineEditor.Views
         {
             LayoutLoad();
         }
+        private void ActivatePane<T>() where T : ViewModel, new()
+        {
+            var newVM = ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<T>();
+            if (newVM == null)
+            {
+                RecursiveLayoutGetElement<T>(_dockingManager.Layout).IsActive = true;
+            }
+            else
+            {
+                var layout = RecursiveLayoutGetElement<T>(_dockingManager.Layout);
+                
+                layout.Float();
+                layout.CanClose = true;
+            }
+        }
+        private void ActivateDocument<T>() where T : ViewModel, new()
+        {
+            if (((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<T>()==null)
+            {
+                RecursiveLayoutGetElement<T>(_dockingManager.Layout).IsActive = true;
+            }
+            else
+            {
+                var layout = RecursiveLayoutGetElement<T>(_dockingManager.Layout);
+                layout.Float();
+                layout.CanClose = true;
+            }
+        }
         private void WindowCreate_SceneController(object sender, RoutedEventArgs e)
         {
-            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<SceneControllerViewModel>();
+            ActivatePane<SceneControllerViewModel>();
         }
         private void WindowCreate_Console(object sender, RoutedEventArgs e)
         {
-            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<ConsoleViewModel>();
+            ActivatePane<ConsoleViewModel>();
         }
         private void WindowCreate_Error(object sender, RoutedEventArgs e)
         {
-            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<ErrorListPaneViewModel>();
+            ActivatePane<ErrorListPaneViewModel>();
         }
         private void WindowCreate_Resource(object sender, RoutedEventArgs e)
         {
-            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<ResourceLoadViewModel>();
+            ActivatePane<ResourceLoadViewModel>();
         }
         private void WindowCreate_MaterialCreate(object sender, RoutedEventArgs e)
         {
-            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<MaterialCreateViewModel>();
+            ActivatePane<MaterialCreateViewModel>();
         }
         private void WindowCreate_FPSMonitor(object sender, RoutedEventArgs e)
         {
-            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<FPSMonitorViewModel>();
+            ActivatePane<FPSMonitorViewModel>();
         }
         private void WindowCreate_SceneViewer(object sender, RoutedEventArgs e)
         {
-            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<SceneViewerViewModel>();
+            ActivatePane<SceneViewerViewModel>();
         }
         private void WindowCreate_ProjectSettings(object sender, RoutedEventArgs e)
         {
-            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingDocument<ProjectSettingDocumentViewModel>();
+            ActivateDocument<ProjectSettingDocumentViewModel>();
         }
         private void WindowCreate_RenderTargetCreate(object sender, RoutedEventArgs e)
         {
-            ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<RenderTargetCreateViewModel>();
+            ActivatePane<RenderTargetCreateViewModel>();
         }
         private void WindowCreate_Inspector(object sender, RoutedEventArgs e)
         {
@@ -144,17 +220,25 @@ namespace ButiEngineEditor.Views
         {
             //((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<SceneControllerViewModel>();
         }
-        private void WindowCreate_ButiScriptCompiler(object sender, RoutedEventArgs e)
+        private void WindowCreate_RenderingSettings(object sender, RoutedEventArgs e)
         {
             //((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<SceneControllerViewModel>();
+        }
+        private void WindowCreate_CollisionSettings(object sender, RoutedEventArgs e)
+        {
+            //((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<SceneControllerViewModel>();
+        }
+        private void WindowCreate_ButiScriptCompiler(object sender, RoutedEventArgs e)
+        {
+            ActivatePane<ButiScriptCompilerViewModel>();
         }
         private void WindowCreate_ShaderCreater(object sender, RoutedEventArgs e)
         {
-            //((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<SceneControllerViewModel>();
+            ActivatePane<ShaderCreateViewModel>();
         }
         private void WindowCreate_HLSLCompiler(object sender, RoutedEventArgs e)
         {
-            //((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<SceneControllerViewModel>();
+            ActivatePane<HLSLCompilerViewModel>();
         }
     }
 }

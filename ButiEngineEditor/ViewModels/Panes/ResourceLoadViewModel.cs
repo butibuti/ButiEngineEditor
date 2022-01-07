@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Media;
 using static ButiEngineEditor.Models.ResourceLoadModel;
@@ -20,18 +21,81 @@ namespace ButiEngineEditor.ViewModels.Panes
 {
     public class ResourceLoadViewModel : PaneViewModelBase
     {
-        public class FilePathData
+        public class FilePathData: INotifyPropertyChanged
         {
-            public string FilePath { get; set; }
-            public string Title { get; set; }
+            private string _filePath, _title;
+            public string FilePath { get => _filePath; set 
+                {
+                    if (value == _filePath)
+                        return;
+                    _filePath = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(_filePath));
+                } }
+            public string Title { get => _title; set 
+                {
+                    if (value == _title)
+                        return;
+                    _title = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(_title));
+                } }
+            public event PropertyChangedEventHandler PropertyChanged;
+            private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public class TextureData : FilePathData
+        public class TextureData : FilePathData  {}
+        public class ScriptData : FilePathData  {}
+        public class SoundData : FilePathData  {}
+        public class ModelData : FilePathData  {}
+        public class MotionData : FilePathData  { }
+        public class FontData : FilePathData  { }
+        public class ShaderData: INotifyPropertyChanged
         {
-        }
-        public class ShaderData
-        {
+            private string _geometryShader,_pixelShader,_vertexShader;
             public string ShaderName { get; set; }
+            public string VertexShader
+            {
+                get => _vertexShader;
+                set
+                {
+                    if (value == _vertexShader)
+                        return;
+                    _vertexShader = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(_vertexShader));
+                }
+            }
+            public string PixelShader
+            {
+                get => _pixelShader;
+                set
+                {
+                    if (value == _pixelShader)
+                        return;
+                    _pixelShader = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(_pixelShader));
+                }
+            }
+            public string GeometryShader {
+                get => _geometryShader;
+                set{
+                    if (value == _geometryShader)
+                        return;
+                    _geometryShader = value;
+                    RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(_geometryShader));
+                }
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+            private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+        => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        public class VerexShaderData: FilePathData { }
+        public class PixelShaderData: FilePathData { }
+        public class GeometryShaderData: FilePathData { }
         public class MaterialData
         {
             public string MaterialName { get; set; }
@@ -40,14 +104,14 @@ namespace ButiEngineEditor.ViewModels.Panes
 
         public ObservableCollection<TextureData> textures = new ObservableCollection<TextureData>();
         public ObservableCollection<TextureData> renderTargetTextures = new ObservableCollection<TextureData>();
-        public ObservableCollection<FilePathData> motions = new ObservableCollection<FilePathData>();
-        public ObservableCollection<FilePathData> models = new ObservableCollection<FilePathData>();
-        public ObservableCollection<FilePathData> fonts = new ObservableCollection<FilePathData>();
-        public ObservableCollection<FilePathData> sounds = new ObservableCollection<FilePathData>();
-        public ObservableCollection<FilePathData> scripts = new ObservableCollection<FilePathData>();
-        public ObservableCollection<FilePathData> vShaders = new ObservableCollection<FilePathData>();
-        public ObservableCollection<FilePathData> pShaders = new ObservableCollection<FilePathData>();
-        public ObservableCollection<FilePathData> gShaders = new ObservableCollection<FilePathData>();
+        public ObservableCollection<MotionData> motions = new ObservableCollection<MotionData>();
+        public ObservableCollection<ModelData> models = new ObservableCollection<ModelData>();
+        public ObservableCollection<FontData> fonts = new ObservableCollection<FontData>();
+        public ObservableCollection<SoundData> sounds = new ObservableCollection<SoundData>();
+        public ObservableCollection<ScriptData> scripts = new ObservableCollection<ScriptData>();
+        public ObservableCollection<VerexShaderData> vShaders = new ObservableCollection<VerexShaderData>();
+        public ObservableCollection<PixelShaderData> pShaders = new ObservableCollection<PixelShaderData>();
+        public ObservableCollection<GeometryShaderData> gShaders = new ObservableCollection<GeometryShaderData>();
         public ObservableCollection<ShaderData> shaders = new ObservableCollection<ShaderData>();
         public ObservableCollection<MaterialData> materials = new ObservableCollection<MaterialData>();
         private PropertyChangedEventListener materialListListener,renderTargetListner,shaderListListner;
@@ -100,6 +164,14 @@ namespace ButiEngineEditor.ViewModels.Panes
                     renderTargetTextures.Clear();
                     Model.Data.List_renderTargets.ForEach(data => {
                         renderTargetTextures.Add(new TextureData() { FilePath = data,Title=data });
+                    });
+                }
+            };
+            shaderListListner = new PropertyChangedEventListener(_model) {
+                ()=>_model.ShaderAddition, (_, __) => {
+                    shaders.Clear();
+                    Model.Data.List_shaders.ForEach(data => {
+                        shaders.Add(new ShaderData() { ShaderName = data.ShaderName });
                     });
                 }
             };

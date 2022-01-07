@@ -25,27 +25,29 @@
         </i1:EventTrigger>
     </i1:Interaction.Triggers>
 
-    <Grid>
-        <Menu Grid.Row="0">
-            <Button ToolTip="Play" x:Name="PlayButton" Click="PlayClick">
-                <icon:Entypo x:Name="PlayIcon" Kind="ControllerPlay" />
-            </Button>
-            <Button ToolTip="Reload" Click="ReloadClick">
-                <icon:Material Kind="Reload"/>
-            </Button>
-            <Button ToolTip="Save" x:Name="SaveButton" Command="{Binding SaveClick}">
-                <icon:Material Kind="ContentSave"/>
-            </Button>
+    <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Menu Grid.Row="0">
+                <Button ToolTip="Play" x:Name="PlayButton" Click="PlayClick">
+                    <icon:Entypo x:Name="PlayIcon" Kind="ControllerPlay" />
+                </Button>
+                <Button ToolTip="Reload" Click="ReloadClick">
+                    <icon:Material Kind="Reload"/>
+                </Button>
+                <Button ToolTip="Save" x:Name="SaveButton" Command="{Binding SaveClick}">
+                    <icon:Material Kind="ContentSave"/>
+                </Button>
 
-            <Button ToolTip="SceneChange" x:Name="SceneChange" Click="SceneChange_Click">
-                <icon:Material  Kind="ArrowUp" />
-            </Button>
-            <Button ToolTip="SceneChange" x:Name="AppStart" Click="AppStart_Click">
-                <icon:Material  Kind="ArrowDown" />
-            </Button>
-            <Button ToolTip="SceneChange" x:Name="AppShutDown" Click="AppShutDown_Click">
-                <icon:Material  Kind="ArrowDown" />
-            </Button>
-        </Menu>
-    </Grid>
+                <Button ToolTip="SceneChange" x:Name="SceneChange" Click="SceneChange_Click">
+                    <icon:Material  Kind="ArrowUp" />
+                </Button>
+                <Button ToolTip="SceneChange" x:Name="AppStart" Click="AppStart_Click">
+                    <icon:Material  Kind="ArrowDown" />
+                </Button>
+                <Button ToolTip="SceneChange" x:Name="AppShutDown" Click="AppShutDown_Click">
+                    <icon:Material  Kind="ArrowDown" />
+                </Button>
+            </Menu>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

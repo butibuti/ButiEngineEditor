@@ -124,11 +124,11 @@ namespace ButiEngineEditor.Views.Panes
         private void SetDropAction(ListView arg_list,Action<string> arg_act)
         {
             arg_list.AllowDrop = true;
-            arg_list.PreviewDragOver += (s, e) => {
+            arg_list.PreviewDragOver += (_, e) => {
                 e.Effects = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : e.Effects = DragDropEffects.None;
                 e.Handled = true;
             };
-            arg_list.PreviewDrop += (s, e) =>
+            arg_list.PreviewDrop += (_, e) =>
             {
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
@@ -215,11 +215,11 @@ namespace ButiEngineEditor.Views.Panes
             {
                 return;
             }
-            var selected = ShaderList.SelectedItems.Cast<ResourceLoadViewModel.MaterialData>();
+            var selected = ShaderList.SelectedItems.Cast<ResourceLoadViewModel.ShaderData>();
             var list_remPath = new List<string>();
-            foreach (ResourceLoadViewModel.MaterialData deletePath in selected)
+            foreach (ResourceLoadViewModel.ShaderData deletePath in selected)
             {
-                list_remPath.Add(deletePath.MaterialName);
+                list_remPath.Add(deletePath.ShaderName);
             }
             list_remPath.ForEach(s => ((ResourceLoadViewModel)DataContext).UnLoadShader(s));
         }
