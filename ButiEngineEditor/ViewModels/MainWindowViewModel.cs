@@ -66,6 +66,7 @@ namespace ButiEngineEditor.ViewModels
         /// </summary>
         public MainWindowViewModel()
         {
+            mainWindowModel = new MainWindowModel();
             dic_uniqueViewModels = new Dictionary<Type, ViewModel>();
             DockingDocumentViewModels = new ObservableCollection<ViewModel>();
             DockingPaneViewModels = new ObservableCollection<ViewModel>();
@@ -102,7 +103,6 @@ namespace ButiEngineEditor.ViewModels
             RegistPaneType<ShaderCreateViewModel>(true);
             RegistPaneType<HLSLCompilerViewModel>(true);
             RegistPaneType<ButiScriptCompilerViewModel>(true);
-            mainWindowModel = new MainWindowModel();
 
             var t=Models.Modules.ButiEngineIO.MessageStream();
         }

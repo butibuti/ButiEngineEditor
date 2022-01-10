@@ -2,7 +2,7 @@
   "profiles": {
     "ButiEngineEditor": {
       "commandName": "Project",
-      "commandLineArgs": "D:\\K019G1120\\Projects\\ButiEngine\\ButiEngine_User\\SampleProject.beproj"
+      "commandLineArgs": "D:\\K019G1120\\Projects\\ButiEngine\\output\\UserSample\\Debug_Editor\\SampleProject.beproj"
     }
   }
 }

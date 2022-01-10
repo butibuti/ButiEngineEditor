@@ -5,6 +5,7 @@
     <TargetFramework>net48</TargetFramework>
     <UseWPF>true</UseWPF>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -67,21 +68,6 @@
     <Resource Include="Views\Themes\ButiEngineTheme.xaml">
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Resource>
-    <Resource Include="Views\Themes\Images\DockAnchorableBottom.png" />
-    <Resource Include="Views\Themes\Images\DockAnchorableLeft.png" />
-    <Resource Include="Views\Themes\Images\DockAnchorableRight.png" />
-    <Resource Include="Views\Themes\Images\DockAnchorableTop.png" />
-    <Resource Include="Views\Themes\Images\DockDocumentAsAnchorableBottom.png" />
-    <Resource Include="Views\Themes\Images\DockDocumentAsAnchorableLeft.png" />
-    <Resource Include="Views\Themes\Images\DockDocumentAsAnchorableRight.png" />
-    <Resource Include="Views\Themes\Images\DockDocumentAsAnchorableTop.png" />
-    <Resource Include="Views\Themes\Images\DockDocumentBottom.png" />
-    <Resource Include="Views\Themes\Images\DockDocumentInside.png" />
-    <Resource Include="Views\Themes\Images\DockDocumentLeft.png" />
-    <Resource Include="Views\Themes\Images\DockDocumentRight.png" />
-    <Resource Include="Views\Themes\Images\DockDocumentTop.png" />
-    <Resource Include="Views\Themes\Images\DockPaneEmpty.png" />
-    <Resource Include="Views\Themes\Images\DockPaneLargeEmpty.png" />
     <Resource Include="Views\Themes\Images\HTabGroup.png" />
     <Resource Include="Views\Themes\Images\Locked.png" />
     <Resource Include="Views\Themes\Images\PinAutoHide.png" />
