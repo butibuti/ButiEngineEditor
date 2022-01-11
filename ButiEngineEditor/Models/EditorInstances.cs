@@ -50,21 +50,21 @@ namespace ButiEngineEditor.Models
         {
             dictionary_actions.Remove(arg_key);
         }
-        public async static void Start()
+        public static void Start()
         {
             _isActive = true;
-            await Task.Run(() =>
+        }
+        public static void Update()
+        {
+            if (!IsActive)
             {
-                while (IsActive)
-                {
-                    dictionary_actions.Values.ToList().ForEach(action => { action(); });
-                    System.Threading.Thread.Sleep(16);
-                }
-            });
+                return;
+            }
+            dictionary_actions.Values.ToList().ForEach(action => { action(); });
         }
         public static void Stop()
         {
-            _isActive = true;
+            _isActive = false;
             dictionary_actions.Clear();
         }
     }

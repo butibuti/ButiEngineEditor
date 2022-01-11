@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -37,6 +38,7 @@ namespace ButiEngineEditor.Models
         public string RenderTargetName { get { return _renderTargetName; } }
         private RenderTargetInformation _renderTargetViewInformation;
         private bool isViewd = false;
+        private Task updateTask;
         public bool IsView { get { return isViewd; } }
         public RenderTargetInformation RTInfo { get { if (_renderTargetViewInformation == null) { _renderTargetViewInformation = ButiEngineIO.GetRenderTargetInformation(RenderTargetName); } return _renderTargetViewInformation; } }
 
@@ -56,11 +58,20 @@ namespace ButiEngineEditor.Models
             if (isViewd)
             {
                 isViewd = ButiEngineIO.SetRenderTargetViewedByEditor(_renderTargetName, false);
+                
+            }
+            if (updateTask != null)
+            {
+                updateTask = null;
             }
         }
         public void GetRTData(ref Byte[] arg_bitmapAry)
         {
-            arg_bitmapAry= ButiEngineIO.GetRenderTargetData(_renderTargetName, RTInfo).Result;
+            arg_bitmapAry = ButiEngineIO.GetRenderTargetData(_renderTargetName, RTInfo).Result;
+        }
+        public void GetRTDataStream(Action<byte[]> arg_act)
+        {
+            updateTask = ButiEngineIO.GetRenderTargetStream(_renderTargetName, RTInfo,arg_act);
         }
         public void GetRTData(ref BitmapSource arg_bitmapSrc)
         {

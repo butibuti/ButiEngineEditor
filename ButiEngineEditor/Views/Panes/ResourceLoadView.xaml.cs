@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -293,6 +294,11 @@ namespace ButiEngineEditor.Views.Panes
         private void MaterialCreateWindowButton_Click(object sender, RoutedEventArgs e)
         {
             ((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<MaterialCreateViewModel>();
+        }
+
+        private void ScriptClickCheck_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start(((ResourceLoadViewModel.FilePathData) ((FrameworkElement) sender).DataContext).FilePath);
         }
     }
 }

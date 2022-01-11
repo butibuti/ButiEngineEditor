@@ -1,4 +1,6 @@
 ﻿using ButiEngineEditor.Models;
+using ButiEngineEditor.Models.Modules;
+using ButiEngineEditor.Views;
 using Livet;
 using System;
 using System.Collections.Generic;
@@ -28,8 +30,16 @@ namespace ButiEngineEditor
             }
             
             BootRuntime();
+
+            Exit += App_Exit;
             //AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
         }
+
+        private void App_Exit(object sender, ExitEventArgs e)
+        {
+            RuntimeShutDown();
+        }
+
         public static string[] GetArgments()
         {
             return argments;
@@ -53,12 +63,18 @@ namespace ButiEngineEditor
                 processStartInfo.FileName = EditorInstances.ProjectSettingsModel.GetProjFilePathDirectory() + "ButiEngine_User.exe";
                 processStartInfo.Arguments += commandLine;
                 _butiEngineProcess =Process.Start(processStartInfo);
-
             }
             else
             {
                 _butiEngineProcess = butiengineProcess[0];
                 App.SetArgment(0, DebugProjectPath);
+            }
+        }
+        public void RuntimeShutDown()
+        {
+            if (ButiEngineProcess != null && !ButiEngineProcess.HasExited)
+            {
+                ButiEngineIO.ShutDown();
             }
         }
         // Application level error handling

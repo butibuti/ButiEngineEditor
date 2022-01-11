@@ -47,17 +47,19 @@ namespace ButiEngineEditor.ViewModels.Panes
         public void RenderTargetUpdateStop()
         {
             model.ViewEnd();
-            CommunicateEachFrame.PopActions("SceneViewer");
         }
         public void RenderTargetUpdateStart(Image arg_image,Dispatcher arg_dispatcher)
         {
             model.ViewStart();
-            CommunicateEachFrame.PushActions("SceneViewer", () => {
-                model.GetRTData(ref src);
-                if(src.Length>0)
-                arg_dispatcher.Invoke(() => {
-                    arg_image.Source = FormatConvertedBitmap.Create(model.RTInfo.width, model.RTInfo.height, 96, 96, model.RTInfo.format, null, src, model.RTInfo.stride);
-                });
+            model.GetRTDataStream((data) => {
+                if (data.Length > 0)
+                {
+                    arg_dispatcher.Invoke(() => {
+                        arg_image.Source = BitmapSource.Create(model.RTInfo.width, model.RTInfo.height, 96, 96, model.RTInfo.format, null, data, model.RTInfo.stride);
+                    }); 
+                    CommunicateEachFrame.Update();
+                }
+                
             });
         }
     }

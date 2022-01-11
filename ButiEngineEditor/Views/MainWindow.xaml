@@ -62,6 +62,7 @@
         <Menu Grid.Row="0">
             <MenuItem Header="Window">
                 <MenuItem Header="Scene Controller"  Click="WindowCreate_SceneController"/>
+                <MenuItem Header="Scene Viewer"  Click="WindowCreate_SceneViewer"/>
                 <MenuItem Header="FPSMonitor" Click="WindowCreate_FPSMonitor" />
                 <MenuItem Header="Resources" Click="WindowCreate_Resource"/>
                 <MenuItem Header="Material Creater" Click="WindowCreate_MaterialCreate"/>

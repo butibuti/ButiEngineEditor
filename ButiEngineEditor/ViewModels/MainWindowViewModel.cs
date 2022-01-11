@@ -235,7 +235,6 @@ namespace ButiEngineEditor.ViewModels
         protected override void Dispose(bool arg_disposing)
         {
             Models.Modules.ButiEngineIO.MessageStreamStop();
-            Models.Modules.ButiEngineIO.ShutDown();
         }
         public void SetWindowActive(bool arg_active)
         {

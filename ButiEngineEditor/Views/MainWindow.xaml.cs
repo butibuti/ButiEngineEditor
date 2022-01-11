@@ -34,12 +34,23 @@ namespace ButiEngineEditor.Views
         public MainWindow()
         {
             InitializeComponent();
-            Loaded += (s,e)=> { CommunicateEachFrame.Start(); };
+            Loaded += (s,e)=> { 
+                CommunicateEachFrame.Start();
+                var handle = WindowHandle;
+                int i = 0;
+            };
             Unloaded += (s, e)=>{CommunicateEachFrame.Stop();};
             Activated += (s, e) => { ((MainWindowViewModel)DataContext).SetWindowActive(true); };
             Deactivated  += (s, e) => { ((MainWindowViewModel)DataContext).SetWindowActive(false); };
         }
-
+        public IntPtr WindowHandle
+        {
+            get
+            {
+                var windowInteropHelper = new System.Windows.Interop.WindowInteropHelper(this);
+                return windowInteropHelper.Handle;
+            }
+        }
         readonly string UILayoutPath = "uiLayout.xml";
         public void LayoutLoad()
         {

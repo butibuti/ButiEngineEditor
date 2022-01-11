@@ -91,7 +91,7 @@ namespace ButiEngineEditor.Views.Panes
 
         private void AppShutDown_Click(object sender, RoutedEventArgs e)
         {
-            ButiEngineIO.ApplicationShutDown();
+            ButiEngineIO.ApplicationShutDown(-1);
         }
     }
 }
