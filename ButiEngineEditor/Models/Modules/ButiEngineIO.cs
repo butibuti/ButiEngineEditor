@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using ButiEngineEditor.ViewModels.Panes;
 using Grpc.Core;
+using static ButiEngineEditor.Models.ResourceLoadModel;
+
 namespace ButiEngineEditor.Models.Modules
 {
 
@@ -275,6 +277,96 @@ namespace ButiEngineEditor.Models.Modules
             ApplicationShutDown(0);
             ButiEngineChannel.ShutdownAsync();
         }
+        public static ResourceLoadData GetLoadedResourceData()
+        {
+            var data = EditorClient.GetLoadedResources(new ButiEngine.Integer { Value = 0 });
+            ResourceLoadData output = new ResourceLoadData();
+            data.Textures.ToList().ForEach(path => {
+                if (path.Length > 0 && (path[0] == ':'|| path[0] == ';'))
+                {
+                    output.List_renderTargets.Add(path);
+                }
+                else
+                {
+                    output.List_textures.Add(path);
+                }                
+            });
+            data.Meshes.ToList().ForEach(path => output.List_meshes.Add(path));
+            data.Sounds.ToList().ForEach(path => output.List_sounds.Add(path));
+            data.Scripts.ToList().ForEach(path => output.List_scripts.Add(path));
+            data.Fonts.ToList().ForEach(path => output.List_fonts.Add(path));
+            data.Models.ToList().ForEach(path => output.List_models.Add(path));
+            data.Motions.ToList().ForEach(path => output.List_motions.Add(path));
+            data.VertexShaders.ToList().ForEach(path => output.List_vertexShaders.Add(path));
+            data.PixelShaders.ToList().ForEach(path => output.List_pixelShaders.Add(path));
+            data.GeometryShaders.ToList().ForEach(path => output.List_geometryShaders.Add(path));
+
+            data.MaterialLoadInfo.ToList().ForEach(materialLoadInfo =>
+            {
+                MaterialLoadInfo material=new MaterialLoadInfo();
+                material.materialName = materialLoadInfo.MaterialName;
+                material.filePath= materialLoadInfo.FilePath;
+                material.var.diffuse.X = materialLoadInfo.Diffuse.X; material.var.diffuse.Y = materialLoadInfo.Diffuse.Y; material.var.diffuse.Z = materialLoadInfo.Diffuse.Z; material.var.diffuse.W = materialLoadInfo.Diffuse.W;
+                material.var.ambient.X = materialLoadInfo.Ambient.X; material.var.ambient.Y = materialLoadInfo.Ambient.Y; material.var.ambient.Z = materialLoadInfo.Ambient.Z; material.var.ambient.W = materialLoadInfo.Ambient.W;
+                material.var.emissive.X = materialLoadInfo.Emissive.X; material.var.emissive.Y = materialLoadInfo.Emissive.Y; material.var.emissive.Z = materialLoadInfo.Emissive.Z; material.var.emissive.W = materialLoadInfo.Emissive.W;
+                material.var.specular.X = materialLoadInfo.Specular.X; material.var.specular.Y = materialLoadInfo.Specular.Y; material.var.specular.Z = materialLoadInfo.Specular.Z; material.var.specular.W = materialLoadInfo.Specular.W;
+                var textures= materialLoadInfo.Textures.ToList();
+                material.material_list_textures = new List<string>();
+                textures.ForEach(textureTitle => material.material_list_textures.Add(textureTitle));
+                output.List_materials.Add(material);
+            });
+
+            data.ShaderLoadInfo.ToList().ForEach(shaderLoadInfo => {
+                ShaderLoadInfo shader = new ShaderLoadInfo();
+                shader.ShaderName = shaderLoadInfo.ShaderName;
+                shader.VertexShaderName= shaderLoadInfo.VertexShaderName;
+                shader.PixelShaderName= shaderLoadInfo.PixelShaderName;
+                shader.GeometryShaderName= shaderLoadInfo.GeometryShaderName;
+                output.List_shaders.Add(shader);
+            });
+
+            return output;
+        }
+        public static void ReourceLoadDataToBinary(ResourceLoadData arg_data,string arg_filePath)
+        {
+            var req = new ButiEngine.ResourceLoadInformation();
+            req.FilePath = arg_filePath;
+            arg_data.List_textures.ForEach(path => req.Textures.Add(path));
+            arg_data.List_geometryShaders.ForEach(path => req.Textures.Add(path));
+            arg_data.List_sounds.ForEach(path => req.Sounds.Add(path));
+            arg_data.List_scripts.ForEach(path => req.Scripts.Add(path));
+            arg_data.List_models.ForEach(path => req.Models.Add(path));
+            arg_data.List_motions.ForEach(path => req.Motions.Add(path));
+            arg_data.List_fonts.ForEach(path => req.Fonts.Add(path));
+            arg_data.List_vertexShaders.ForEach(path => req.VertexShaders.Add(path));
+            arg_data.List_pixelShaders.ForEach(path => req.PixelShaders.Add(path));
+            arg_data.List_geometryShaders.ForEach(path => req.GeometryShaders.Add(path));
+
+            arg_data.List_materials.ForEach(material =>
+            {
+                var materialInfo = new ButiEngine.MaterialLoadInformation();
+                materialInfo.FilePath = material.filePath;
+                materialInfo.MaterialName = material.materialName;
+                materialInfo.Diffuse = new ButiEngine.Vector4_message() { X = material.var.diffuse.X, Y = material.var.diffuse.Y, Z = material.var.diffuse.Z, W = material.var.diffuse.W };
+                materialInfo.Ambient = new ButiEngine.Vector4_message() { X = material.var.ambient.X, Y = material.var.ambient.Y, Z = material.var.ambient.Z, W = material.var.ambient.W };
+                materialInfo.Emissive = new ButiEngine.Vector4_message() { X = material.var.emissive.X, Y = material.var.emissive.Y, Z = material.var.emissive.Z, W = material.var.emissive.W };
+                materialInfo.Specular = new ButiEngine.Vector4_message() { X = material.var.specular.X, Y = material.var.specular.Y, Z = material.var.specular.Z, W = material.var.specular.W };
+
+                material.material_list_textures.ForEach(materialTexture => materialInfo.Textures.Add(materialTexture));                
+                req.MaterialLoadInfo.Add(materialInfo);
+            });
+            arg_data.List_shaders.ForEach(shader=>
+            {
+                var shaderInfo= new ButiEngine.ShaderLoadInformation();
+                shaderInfo.ShaderName = shader.ShaderName;
+                shaderInfo.VertexShaderName = shader.VertexShaderName;
+                shaderInfo.PixelShaderName = shader.PixelShaderName;
+                shaderInfo.GeometryShaderName = shader.GeometryShaderName;
+                req.ShaderLoadInfo.Add(shaderInfo);
+            });
+
+            EditorClient.LoadedResourcesToFile(req);
+        }
         public int LoadTexture(List<string> arg_path)
         {
             var req = new ButiEngine.StringArray();
@@ -328,6 +420,25 @@ namespace ButiEngineEditor.Models.Modules
             var req = new ButiEngine.StringArray();
             req.Values.Add(arg_path);
             return EditorClient.LoadVertexShader(req).Value;
+        }
+        public int LoadShader(List<ResourceLoadViewModel.ShaderData> arg_datas)
+        {
+            var req = new ButiEngine.ShaderLoadInfoArray();
+            arg_datas.ForEach(data => req.Values.Add(new ButiEngine.ShaderLoadInformation() { ShaderName = data.ShaderName, VertexShaderName = data.VertexShader, PixelShaderName = data.PixelShader, GeometryShaderName = data.GeometryShader }));
+            return EditorClient.LoadShader(req).Value;
+        }
+        public int LoadMaterial(List<ResourceLoadModel.MaterialLoadInfo> arg_datas)
+        {
+            var req = new ButiEngine.MaterialLoadInfoArray();
+            arg_datas.ForEach(data => req.Values.Add(new ButiEngine.MaterialLoadInformation()
+            {
+                MaterialName = data.materialName,
+                Diffuse = new ButiEngine.Vector4_message() { X = data.var.diffuse.X, Y = data.var.diffuse.Y, Z = data.var.diffuse.Z, W = data.var.diffuse.W },
+                Ambient = new ButiEngine.Vector4_message() { X = data.var.ambient.X, Y = data.var.ambient.Y, Z = data.var.ambient.Z, W = data.var.ambient.W },
+                Emissive = new ButiEngine.Vector4_message() { X = data.var.emissive.X, Y = data.var.emissive.Y, Z = data.var.emissive.Z, W = data.var.emissive.W },
+                Specular = new ButiEngine.Vector4_message() { X = data.var.specular.X, Y = data.var.specular.Y, Z = data.var.specular.Z, W = data.var.specular.W },
+            }));
+            return EditorClient.LoadMaterial(req).Value;
         }
         public int UnLoadTexture(List<string> arg_path)
         {
@@ -394,23 +505,6 @@ namespace ButiEngineEditor.Models.Modules
             var req = new ButiEngine.StringArray();
             req.Values.Add(arg_path);
             return EditorClient.UnLoadMaterial(req).Value;
-        }
-        public int LoadShader(List<ResourceLoadViewModel.ShaderData> arg_datas)
-        {
-            var req = new ButiEngine.ShaderLoadInfoArray();
-            arg_datas.ForEach(data => req.Values.Add(new ButiEngine.ShaderLoadInformation() { ShaderName = data.ShaderName, VertexShaderName = data.VertexShader, PixelShaderName = data.PixelShader, GeometryShaderName = data.GeometryShader }));
-            return EditorClient.LoadShader(req).Value;
-        }
-        public int LoadMaterial(List<ResourceLoadModel.MaterialLoadInfo> arg_datas)
-        {
-            var req = new ButiEngine.MaterialLoadInfoArray();
-            arg_datas.ForEach(data => req.Values.Add(new ButiEngine.MaterialLoadInformation() { MaterialName = data.materialName,
-                Diffude = new ButiEngine.Vector4_message() { X = data.var.diffuse.X, Y = data.var.diffuse.Y, Z = data.var.diffuse.Z, W = data.var.diffuse.W },
-                Ambient = new ButiEngine.Vector4_message() { X = data.var.ambient.X, Y = data.var.ambient.Y, Z = data.var.ambient.Z, W = data.var.ambient.W },
-                Emissive = new ButiEngine.Vector4_message() { X = data.var.emissive.X, Y = data.var.emissive.Y, Z = data.var.emissive.Z, W = data.var.emissive.W },
-                Specular= new ButiEngine.Vector4_message() { X = data.var.specular.X, Y = data.var.specular.Y, Z = data.var.specular.Z, W = data.var.specular.W },
-            }));
-            return EditorClient.LoadMaterial(req).Value;
         }
     }
 

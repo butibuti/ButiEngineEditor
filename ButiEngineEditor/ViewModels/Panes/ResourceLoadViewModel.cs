@@ -44,7 +44,8 @@ namespace ButiEngineEditor.ViewModels.Panes
             private void RaisePropertyChanged([CallerMemberName] string propertyName = null)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public class TextureData : FilePathData  {}
+        public class MeshData : FilePathData  {}
+        public class TextureData : FilePathData  { }
         public class ScriptData : FilePathData  {}
         public class SoundData : FilePathData  {}
         public class ModelData : FilePathData  {}
@@ -101,7 +102,8 @@ namespace ButiEngineEditor.ViewModels.Panes
             public string MaterialName { get; set; }
         }
 
-
+        private bool isInitialized=false;
+        public ObservableCollection<MeshData> meshes = new ObservableCollection<MeshData>();
         public ObservableCollection<TextureData> textures = new ObservableCollection<TextureData>();
         public ObservableCollection<TextureData> renderTargetTextures = new ObservableCollection<TextureData>();
         public ObservableCollection<MotionData> motions = new ObservableCollection<MotionData>();
@@ -132,7 +134,12 @@ namespace ButiEngineEditor.ViewModels.Panes
                     arg_initList.Add(new T() { Title = title, FilePath = Path.Combine(arg_baseDir, title) });
                 });
             }
+            if (isInitialized)
+            {
+                return;
+            }
             string resourceAbsPath=EditorInstances.ProjectSettingsModel.GetResourceAbsoluteDirectory();
+            CollectionInit(Model.Data.List_meshes, meshes,resourceAbsPath);
             CollectionInit(Model.Data.List_textures, textures,resourceAbsPath);
             CollectionInit(Model.Data.List_renderTargets, renderTargetTextures,"");
             CollectionInit(Model.Data.List_models, models, resourceAbsPath);
@@ -175,11 +182,15 @@ namespace ButiEngineEditor.ViewModels.Panes
                     });
                 }
             };
-
+            isInitialized = true;
         }
         public void Save()
         {
             Model.FileOutput();
+        }
+        public void CreateBinaryData()
+        {
+            Model.ToBinary();
         }
         public void LoadPath<T>(string path, List<string> dataList, ObservableCollection<T> viewList) where T : FilePathData, new()
         {

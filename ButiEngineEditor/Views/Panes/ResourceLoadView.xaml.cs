@@ -71,7 +71,7 @@ namespace ButiEngineEditor.Views.Panes
     }
     public partial class ResourceLoadView : UserControl
     {
-
+        private CollectionViewSource meshView = new CollectionViewSource();
         private CollectionViewSource textureView = new CollectionViewSource();
         private CollectionViewSource renderTargetTextureView = new CollectionViewSource();
         private CollectionViewSource materialView = new CollectionViewSource();
@@ -87,6 +87,7 @@ namespace ButiEngineEditor.Views.Panes
         public ResourceLoadView()
         {
             InitializeComponent();
+            meshView.Source = ((ResourceLoadViewModel)DataContext).meshes;
             textureView.Source = ((ResourceLoadViewModel)DataContext).textures;
             modelView.Source = ((ResourceLoadViewModel)DataContext).models;
             motionView.Source = ((ResourceLoadViewModel)DataContext).motions;
@@ -99,6 +100,7 @@ namespace ButiEngineEditor.Views.Panes
             renderTargetTextureView.Source= ((ResourceLoadViewModel)DataContext).renderTargetTextures;
             materialView.Source= ((ResourceLoadViewModel)DataContext).materials;
             shaderView.Source= ((ResourceLoadViewModel)DataContext).shaders;
+            MeshList.DataContext = meshView;
             TextureList.DataContext = textureView;
             RenderTargetTextureList.DataContext = renderTargetTextureView;
             MaterialList.DataContext = materialView;
@@ -298,7 +300,31 @@ namespace ButiEngineEditor.Views.Panes
 
         private void ScriptClickCheck_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            Process.Start(((ResourceLoadViewModel.FilePathData) ((FrameworkElement) sender).DataContext).FilePath);
+            string compiledPath = ((ResourceLoadViewModel.FilePathData)((FrameworkElement)sender).DataContext).FilePath;
+            string openPath = "";
+            var splited= compiledPath.Split('\\');
+            var finalSplited = new List<string>();
+            foreach(var s in splited)
+            {
+                var slashsplit= s.Split('/');
+
+                foreach(var ss in slashsplit)
+                {
+                    finalSplited.Add(ss);
+                }
+            }
+            for(int i=0;i< finalSplited.Count() - 2; i++)
+            {
+                openPath += finalSplited[i]+"\\";
+            }
+            openPath += finalSplited[finalSplited.Count() - 1]+".bs";
+
+            Process.Start(openPath);
+        }
+
+        private void ResourceSync_Click(object sender, RoutedEventArgs e)
+        {
+            ((ResourceLoadViewModel)DataContext).CreateBinaryData();
         }
     }
 }

@@ -6,6 +6,8 @@ using Livet;
 using Newtonsoft.Json;
 using System.IO;
 using System.Numerics;
+using ButiEngineEditor.Models.Modules;
+
 namespace ButiEngineEditor.Models
 {
     public class ResourceLoadModel : NotificationObject
@@ -50,8 +52,9 @@ namespace ButiEngineEditor.Models
         public class ResourceLoadData {
             public ResourceLoadData()
             {
+                _list_meshes= new List<string>();
                 _list_textures= new List<string>();
-                _list_renderTargets= new List<string>();
+                _list_renderTargets = new List<string>();
                 _list_sounds= new List<string>();
                 _list_motions= new List<string>();
                 _list_models= new List<string>();
@@ -64,6 +67,8 @@ namespace ButiEngineEditor.Models
                 _list_shaders = new List<ShaderLoadInfo>();
             }
             //パスを指定して読み込むリソース
+            [JsonIgnore]
+            public List<string> List_meshes{ get { return _list_meshes; } }
             public List<string> List_textures{ get { return _list_textures; } }
             public List<string> List_renderTargets{ get { return _list_renderTargets; } }
             public List<string> List_sounds{ get { return _list_sounds; } }
@@ -77,6 +82,8 @@ namespace ButiEngineEditor.Models
             //パス以外の内容があるモノ
             public List<ShaderLoadInfo> List_shaders{ get { return _list_shaders; } }
             public List<MaterialLoadInfo> List_materials{ get { return _list_materials; } }
+            [JsonIgnore]
+            public List<string> _list_meshes;
             [JsonIgnore]
             public List<string> _list_textures;
             [JsonIgnore]
@@ -124,10 +131,12 @@ namespace ButiEngineEditor.Models
                 return;
             }
 
-            using (var reader = new StreamReader(_filePath, Encoding.UTF8))
-            {
-                _data= JsonConvert.DeserializeObject<ResourceLoadData>(reader.ReadToEnd());
-            }
+            SyncRuntime();
+
+            //using (var reader = new StreamReader(_filePath, Encoding.UTF8))
+            //{
+            //    _data= JsonConvert.DeserializeObject<ResourceLoadData>(reader.ReadToEnd());
+            //}
         }
         public void FileOutput()
         {
@@ -140,7 +149,11 @@ namespace ButiEngineEditor.Models
         }
         public void ToBinary()
         {
-
+            ButiEngineIO.ReourceLoadDataToBinary(_data, "resourceLoadData.resourceLoad");
+        }
+        public void SyncRuntime()
+        {
+            _data= ButiEngineIO.GetLoadedResourceData();
         }
     }
 }
