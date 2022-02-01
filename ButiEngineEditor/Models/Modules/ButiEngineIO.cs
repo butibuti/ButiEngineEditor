@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -15,6 +16,14 @@ namespace ButiEngineEditor.Models.Modules
 
     class ButiEngineIO
     {
+        private static ButiEngine.Vector3_message ToMessage(Vector3 arg_vec3)
+        {
+            return new ButiEngine.Vector3_message(){X = arg_vec3.X,Y = arg_vec3.Y,Z = arg_vec3.Z};
+        }
+        private static ButiEngine.Transform_message ToMessage(Transform arg_transform)
+        {
+            return new ButiEngine.Transform_message() { Position = ToMessage(arg_transform.position),Rotation=ToMessage(arg_transform.rotation),Scaling=ToMessage(arg_transform.scaling) };
+        }
         private static readonly string ButiEngineAddress="127.0.0.1:50051";
         private static Channel _ch;
         private static ButiEngine.EngineCommunicate.EngineCommunicateClient _cl;
@@ -43,7 +52,7 @@ namespace ButiEngineEditor.Models.Modules
 
         public static bool IsEngineActive()
         {
-            return App.ButiEngineProcess != null;
+            return  (!App.ButiEngineProcess.HasExited)&&App.ButiEngineProcess != null;
         }
 
         public static bool SetSceneActive(bool arg_isActive)
@@ -106,6 +115,7 @@ namespace ButiEngineEditor.Models.Modules
         }
         public static void GetFPS(ref float arg_ref_current,ref float arg_ref_average ,ref int arg_ref_drawMillSec,ref int arg_ref_updateMillSec)
         {
+            return;
             if (!IsEngineActive())
             {
                 return;
@@ -115,6 +125,14 @@ namespace ButiEngineEditor.Models.Modules
             arg_ref_average = frameRate.Average;
             arg_ref_drawMillSec= frameRate.DrawMillSec;
             arg_ref_updateMillSec= frameRate.UpdateMillSec;
+        }
+        public static string GetDefaultRenderTargetName()
+        {
+            if (!IsEngineActive())
+            {
+                return "";
+            }
+            return EditorClient.GetDefaultRenderTargetImageName(new ButiEngine.Integer()).Value;
         }
         public static RenderTargetInformation GetRenderTargetInformation(string arg_renderTargetName)
         {
@@ -210,7 +228,6 @@ namespace ButiEngineEditor.Models.Modules
                     if (response.Eof)
                     {
                         arg_readAct(output);
-                        index = 0;
                     }
                     if (response.StreamEnd)
                     {
@@ -268,6 +285,43 @@ namespace ButiEngineEditor.Models.Modules
             }
             return EditorClient.SetWindowActive(new ButiEngine.Boolean { Value = arg_isActive }).Value;
         }
+        public static void SetWindowHandle(IntPtr arg_handle)
+        {
+            EditorClient.SetEditorWindowHandle(new ButiEngine.LongInteger { Value = arg_handle.ToInt64() });
+        }
+        public static string CreateGameObjectFromCereal(string arg_fileName, Transform arg_transform)
+        {
+            if (!IsEngineActive())
+            {
+                return "";
+            }
+            return EditorClient.CreateGameObject(new ButiEngine.GameObjectCreate_message { GameObjectName = arg_fileName, Transform = ToMessage(arg_transform) }).Value;
+        }
+        public static string CreateGameObject(string arg_fileName, Transform arg_transform)
+        {
+            if (!IsEngineActive())
+            {
+                return "";
+            }
+            return EditorClient.CreateGameObject(new ButiEngine.GameObjectCreate_message { GameObjectName = arg_fileName, Transform = ToMessage(arg_transform) }).Value;
+        }
+        public static void SelectGameObject(string arg_fileName)
+        {
+            if (!IsEngineActive())
+            {
+                return;
+            }
+            EditorClient.SelectGameObject(new ButiEngine.String { Value = arg_fileName });
+        }
+        public static void SetTransformBase(string arg_fileName)
+        {
+            if (!IsEngineActive())
+            {
+                return;
+            }
+            EditorClient.SetBaseTransform(new ButiEngine.String { Value = arg_fileName });
+        }
+
         public static void ShutDown()
         {
             if (!IsEngineActive())

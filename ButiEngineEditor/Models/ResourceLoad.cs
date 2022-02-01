@@ -131,12 +131,12 @@ namespace ButiEngineEditor.Models
                 return;
             }
 
-            SyncRuntime();
+            //SyncRuntime();
 
-            //using (var reader = new StreamReader(_filePath, Encoding.UTF8))
-            //{
-            //    _data= JsonConvert.DeserializeObject<ResourceLoadData>(reader.ReadToEnd());
-            //}
+            using (var reader = new StreamReader(_filePath, Encoding.UTF8))
+            {
+                _data= JsonConvert.DeserializeObject<ResourceLoadData>(reader.ReadToEnd());
+            }
         }
         public void FileOutput()
         {

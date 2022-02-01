@@ -3,6 +3,7 @@ using Livet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -10,6 +11,12 @@ using System.Windows.Media.Imaging;
 
 namespace ButiEngineEditor.Models
 {
+    public class Transform {
+        public Vector3 position;
+        public Vector3 rotation;
+        public Vector3 scaling;
+    }
+
     public class ButiEngineCommunicate : NotificationObject
     {
 
@@ -42,9 +49,9 @@ namespace ButiEngineEditor.Models
         public bool IsView { get { return isViewd; } }
         public RenderTargetInformation RTInfo { get { if (_renderTargetViewInformation == null) { _renderTargetViewInformation = ButiEngineIO.GetRenderTargetInformation(RenderTargetName); } return _renderTargetViewInformation; } }
 
-        public RenderTargetViewerModel(string arg_renderTargetName)
+        public RenderTargetViewerModel()
         {
-            _renderTargetName = arg_renderTargetName;
+            _renderTargetName = ButiEngineIO.GetDefaultRenderTargetName();
         }
         public void ViewStart()
         {
@@ -94,7 +101,12 @@ namespace ButiEngineEditor.Models
     public class RenderingSettingsModel : NotificationObject { }
     public class CollisionSettingsModel : NotificationObject { }
     public class InspectorModel : NotificationObject { }
-    public class HierarchyModel : NotificationObject { }
+    public class HierarchyModel : NotificationObject {
+        public string AddGameObjectFromCereal(string arg_filename, Transform arg_transform)
+        {
+            return ButiEngineIO.CreateGameObjectFromCereal(arg_filename, arg_transform);
+        }
+    }
 
 
     public class SceneControllerModel : NotificationObject

@@ -157,6 +157,9 @@
                     <DataTemplate DataType="{x:Type vmPanes:HLSLCompilerViewModel}">
                         <vPanes:HLSLCompilerView/>
                     </DataTemplate>
+                    <DataTemplate DataType="{x:Type vmPanes:HierarchyViewModel}">
+                        <vPanes:HierarchyView/>
+                    </DataTemplate>
                 </v:LayoutItemTemplateSelector>
             </avalonDock:DockingManager.LayoutItemTemplateSelector>
             <avalonDock:DockingManager.LayoutUpdateStrategy>

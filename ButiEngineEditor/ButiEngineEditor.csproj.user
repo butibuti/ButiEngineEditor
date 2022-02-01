@@ -72,6 +72,9 @@
     <Page Update="Views\MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\Panes\HierarchyView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Panes\HLSLCompilerView.xaml">
       <SubType>Designer</SubType>
     </Page>

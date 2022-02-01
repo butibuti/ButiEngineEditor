@@ -16,6 +16,7 @@ using ButiEngineEditor.ViewModels.Documents;
 using System.Windows.Input;
 using System.Xml;
 using ButiEngineEditor.ViewModels.Panes;
+using ButiEngineEditor.Models.Modules;
 
 namespace ButiEngineEditor.ViewModels
 {
@@ -103,6 +104,7 @@ namespace ButiEngineEditor.ViewModels
             RegistPaneType<ShaderCreateViewModel>(true);
             RegistPaneType<HLSLCompilerViewModel>(true);
             RegistPaneType<ButiScriptCompilerViewModel>(true);
+            RegistPaneType<HierarchyViewModel>(true);
 
             var t=Models.Modules.ButiEngineIO.MessageStream();
         }
@@ -234,11 +236,16 @@ namespace ButiEngineEditor.ViewModels
         }
         protected override void Dispose(bool arg_disposing)
         {
-            Models.Modules.ButiEngineIO.MessageStreamStop();
+            ButiEngineIO.MessageStreamStop();
         }
         public void SetWindowActive(bool arg_active)
         {
-            Models.Modules.ButiEngineIO.SetWindowActive(arg_active);
+            ButiEngineIO.SetWindowActive(arg_active);
+        }
+        public void AppStart(IntPtr arg_handle)
+        {
+            ButiEngineIO.SetWindowHandle(arg_handle);
+            ButiEngineIO.ApplicationStartUp();
         }
     }
 }

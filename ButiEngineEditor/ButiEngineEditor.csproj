@@ -114,6 +114,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Update="ViewModels\Panes\HierarchyViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ViewModels\Panes\HLSLCompilerViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -127,6 +130,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="ViewModels\Panes\MaterialCreateViewModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Panes\HierarchyView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\Panes\HLSLCompilerView.xaml.cs">
@@ -158,6 +164,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Update="Views\Panes\HierarchyView.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\Panes\HLSLCompilerView.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>

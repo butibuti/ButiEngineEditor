@@ -41,12 +41,6 @@
                 <Button ToolTip="SceneChange" x:Name="SceneChange" Click="SceneChange_Click">
                     <icon:Material  Kind="ArrowUp" />
                 </Button>
-                <Button ToolTip="SceneChange" x:Name="AppStart" Click="AppStart_Click">
-                    <icon:Material  Kind="ArrowDown" />
-                </Button>
-                <Button ToolTip="SceneChange" x:Name="AppShutDown" Click="AppShutDown_Click">
-                    <icon:Material  Kind="ArrowDown" />
-                </Button>
             </Menu>
         </Grid>
     </ScrollViewer>

@@ -34,6 +34,7 @@ namespace ButiEngineEditor.Views
         public MainWindow()
         {
             InitializeComponent();
+            ((MainWindowViewModel)DataContext).AppStart(WindowHandle);
             Loaded += (s,e)=> { 
                 CommunicateEachFrame.Start();
                 var handle = WindowHandle;
@@ -229,7 +230,7 @@ namespace ButiEngineEditor.Views
         }
         private void WindowCreate_Hierarchy(object sender, RoutedEventArgs e)
         {
-            //((MainWindowViewModel)Application.Current.MainWindow.DataContext).AddDockingPane<SceneControllerViewModel>();
+            ActivatePane<HierarchyViewModel>();
         }
         private void WindowCreate_RenderingSettings(object sender, RoutedEventArgs e)
         {
